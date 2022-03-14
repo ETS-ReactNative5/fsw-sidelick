@@ -38,7 +38,7 @@ const OnBoardingScreen = ({ navigation }) => {
             <Text style={styles.subtext}>
               Already a member?
               {/* <Text style={{color: 'orange'}} onPress={() => navigation.navigate("SignIn")}> Sign In</Text> */}
-              <Pressable onPress={() => navigation.navigate("SignIn")}>
+              <Pressable >
                 <Text style={{ color: "orange" }}> Sign In</Text>
               </Pressable>
             </Text>
