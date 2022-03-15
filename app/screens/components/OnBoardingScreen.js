@@ -25,7 +25,7 @@ const OnBoardingScreen = () => {
   const navigation = useNavigation();
   return (
     <ImageBackground
-      style={{ flex: 1, width, height }}
+      style={{ flex: 1 }}
       source={require("../assets/dog-walker.png")}
     >
       <View style={styles.container}>
@@ -37,7 +37,7 @@ const OnBoardingScreen = () => {
             <Pressable onPress={() => navigation.navigate("SignIn")}>
               <Text style={styles.subtext}>
                 Already a member?
-                <Text style={{ color: "orange", fontWeight: "bold" }}>
+                <Text style={{ color: "orange" }}>
                   {" "}
                   Sign in
                 </Text>
