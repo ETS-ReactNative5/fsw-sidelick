@@ -14,16 +14,15 @@ import {
 } from "react-native";
 import { BlurView } from "expo-blur";
 import JoinButton from "./JoinButton";
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import SignIn from "./SignIn";
-const Stack = createNativeStackNavigator();
+import { useNavigation } from "@react-navigation/native";
 
 const { width, height } = Dimensions.get("window");
 
 const COLORS = { Primary: "#ff8400", white: "#fff" };
 
-const OnBoardingScreen = ({ navigation }) => {
+const OnBoardingScreen = () => {
+  const navigation = useNavigation();
   return (
     <ImageBackground
       style={{ flex: 1, width, height }}
@@ -35,13 +34,15 @@ const OnBoardingScreen = ({ navigation }) => {
           <Text style={styles.text}>Let us help you!</Text>
           <JoinButton />
           <View>
-            <Text style={styles.subtext}>
-              Already a member?
-              {/* <Text style={{color: 'orange'}} onPress={() => navigation.navigate("SignIn")}> Sign In</Text> */}
-              <Pressable >
-                <Text style={{ color: "orange" }}> Sign In</Text>
-              </Pressable>
-            </Text>
+            <Pressable onPress={() => navigation.navigate("SignIn")}>
+              <Text style={styles.subtext}>
+                Already a member?
+                <Text style={{ color: "orange", fontWeight: "bold" }}>
+                  {" "}
+                  Sign in
+                </Text>
+              </Text>
+            </Pressable>
           </View>
         </BlurView>
       </View>
