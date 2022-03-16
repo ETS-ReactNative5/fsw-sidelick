@@ -13,9 +13,10 @@ import {
   Pressable,
 } from "react-native";
 import { BlurView } from "expo-blur";
-import JoinButton from "./JoinButton";
+import JoinButton from "./ReusableComponents/CustomButton";
 import SignIn from "./SignIn";
 import { useNavigation } from "@react-navigation/native";
+import CustomButton from "./ReusableComponents/CustomButton";
 
 const { width, height } = Dimensions.get("window");
 
@@ -23,6 +24,9 @@ const COLORS = { Primary: "#ff8400", white: "#fff" };
 
 const OnBoardingScreen = () => {
   const navigation = useNavigation();
+  const onJoinPressed = () => {
+    navigation.navigate("SignUp")
+  }
   return (
     <ImageBackground
       style={{ flex: 1 }}
@@ -33,7 +37,7 @@ const OnBoardingScreen = () => {
         <BlurView intensity={15} tint="light" style={styles.blurContainer}>
           <Text style={styles.text}>Too tired to walk your dog?</Text>
           <Text style={styles.text}>Let us help you!</Text>
-          <JoinButton />
+          <CustomButton btnText={"Join our community"} onPress={onJoinPressed} />
           <View>
             <Pressable onPress={() => navigation.navigate("SignIn")}>
               <Text style={styles.subtext}>
