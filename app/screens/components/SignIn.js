@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView, StyleSheet } from "react-native";
+import { View, Text, SafeAreaView, StyleSheet, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 
@@ -12,6 +12,10 @@ const SignIn = () => {
   const onSignInPressed = () => {
     // navigation.navigate("")
     console.warn("signed in successfully")
+  }
+  const onForgotPwdPressed = () => {
+    // navigation.navigate("")
+    console.warn("Forgot Password")
   }
   return (
     <SafeAreaView style={styles.root}>
@@ -27,7 +31,8 @@ const SignIn = () => {
           setValue={setPassword}
           secureTextEntry
         />
-        <View style={{padding: "5%"}}/>
+        <CustomButton btnText={"Forgot password ?"} onPress={onForgotPwdPressed} type={"tertiary"} />
+        <View style={{margin: "8%"}}/>
         <CustomButton btnText={"Sign in"} onPress={onSignInPressed} />
       </View>
     </SafeAreaView>

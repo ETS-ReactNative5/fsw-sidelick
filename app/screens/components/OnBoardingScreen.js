@@ -37,7 +37,7 @@ const OnBoardingScreen = () => {
         <BlurView intensity={15} tint="light" style={styles.blurContainer}>
           <Text style={styles.text}>Too tired to walk your dog?</Text>
           <Text style={styles.text}>Let us help you!</Text>
-          <CustomButton btnText={"Join our community"} onPress={onJoinPressed} />
+          <CustomButton btnText={"Join our community"} onPress={onJoinPressed}/>
           <View>
             <Pressable onPress={() => navigation.navigate("SignIn")}>
               <Text style={styles.subtext}>
