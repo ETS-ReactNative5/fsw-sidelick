@@ -13,8 +13,6 @@ import {
   Pressable,
 } from "react-native";
 import { BlurView } from "expo-blur";
-import JoinButton from "./ReusableComponents/CustomButton";
-import SignIn from "./SignIn";
 import { useNavigation } from "@react-navigation/native";
 import CustomButton from "./ReusableComponents/CustomButton";
 
@@ -37,7 +35,9 @@ const OnBoardingScreen = () => {
         <BlurView intensity={15} tint="light" style={styles.blurContainer}>
           <Text style={styles.text}>Too tired to walk your dog?</Text>
           <Text style={styles.text}>Let us help you!</Text>
+          <View style={{marginVertical: "5%"}}>
           <CustomButton btnText={"Join our community"} onPress={onJoinPressed}/>
+          </View>
           <View>
             <Pressable onPress={() => navigation.navigate("SignIn")}>
               <Text style={styles.subtext}>

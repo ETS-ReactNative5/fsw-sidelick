@@ -17,6 +17,14 @@ const SignIn = () => {
     // navigation.navigate("")
     console.warn("Forgot Password")
   }
+  const onSignInFacebook = () => {
+    // navigation.navigate("")
+    console.warn("Connect with Facebook")
+  }
+  const onSignInGoogle = () => {
+    // navigation.navigate("")
+    console.warn("Connect with Google")
+  }
   return (
     <SafeAreaView style={styles.root}>
       <View style={styles.header}>
@@ -34,6 +42,9 @@ const SignIn = () => {
         <CustomButton btnText={"Forgot password ?"} onPress={onForgotPwdPressed} type={"tertiary"} />
         <View style={{margin: "8%"}}/>
         <CustomButton btnText={"Sign in"} onPress={onSignInPressed} />
+        <Text style={{fontSize: 20,}}>or</Text>
+        <CustomButton btnText={"Connect with Facebook"} onPress={onSignInFacebook} bgColor="#3B5998" fgColor="" />
+        <CustomButton btnText={"Connect with Google"} onPress={onSignInGoogle} bgColor="white" fgColor="black" type={"outline"} />
       </View>
     </SafeAreaView>
   );
@@ -41,6 +52,8 @@ const SignIn = () => {
 
 const styles = StyleSheet.create({
   root: {
+    width: '100%',
+    height: '100%',
     backgroundColor: "#FCFCFC",
   },
   header: {
