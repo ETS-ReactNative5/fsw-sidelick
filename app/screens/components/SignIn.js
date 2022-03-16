@@ -1,5 +1,6 @@
-import { View, Text, SafeAreaView, StyleSheet, Dimensions } from "react-native";
+import { View, Text, SafeAreaView, StyleSheet, Dimensions, TouchableWithoutFeedback } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import Icon from 'react-native-vector-icons/Entypo';
 import React, { useState } from "react";
 
 import Input from "./ReusableComponents/Input";
@@ -29,6 +30,10 @@ const SignIn = () => {
   return (
     <SafeAreaView style={[styles.root, { height: height, width: width} ]}>
       <View style={styles.header}>
+      <TouchableWithoutFeedback 
+          onPress={() => navigation.goBack()} >
+          <Icon style={{marginBottom: "2%"}} name="chevron-thin-left" size={25} color="#000" />
+      </TouchableWithoutFeedback>
         <Text style={styles.text}>Sign in</Text>
         <Text style={styles.subtext}>Enter your email and password</Text>
       </View>
@@ -45,9 +50,9 @@ const SignIn = () => {
           onPress={onForgotPwdPressed}
           type={"tertiary"}
         />
-        {/* <View style={{ margin: "2%" }} /> */}
+        <View style={{ marginVertical: "2%" }} />
         <CustomButton btnText={"Sign in"} onPress={onSignInPressed} />
-        <Text style={{ fontSize: 20 }}>or</Text>
+        <Text style={{ marginVertical: "2%",fontSize: 20 }}>or</Text>
         <CustomButton
           btnText={"Connect with Facebook"}
           onPress={onSignInFacebook}
