@@ -60,7 +60,6 @@ const styles = StyleSheet.create({
   logo:{
     width: '40%',
     justifyContent: 'flex-start',
-    paddingVerl: 10,
   },
   text: {
     color: COLORS.white,
