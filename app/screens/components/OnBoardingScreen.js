@@ -28,7 +28,8 @@ const OnBoardingScreen = () => {
       style={{ flex: 1 }}
       source={require("../assets/dog-walker.png")}
     >
-      <View style={styles.container}>
+      <Image source={require("../assets/LOGO.png")} style={[styles.logo, {height: height * 0.25}]} resizeMode="contain" />
+      <View style={[styles.container, { marginBottom: height * 0.25}]}>
         <BlurView intensity={15} tint="light" style={styles.blurContainer}>
           <Text style={styles.text}>Too tired to walk your dog?</Text>
           <Text style={styles.text}>Let us help you!</Text>
@@ -53,9 +54,13 @@ const OnBoardingScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
+    justifyContent: "flex-end",
     alignItems: "center",
-    marginTop: height * 0.3,
+  },
+  logo:{
+    width: '40%',
+    justifyContent: 'flex-start',
+    paddingVerl: 10,
   },
   text: {
     color: COLORS.white,
