@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     width: "100%",
     paddingVertical: "5%",
     borderRadius: 14,
-    marginVertical: 10,
+    marginVertical: "3%",
   },
   container_primary: {
     backgroundColor: "orange",

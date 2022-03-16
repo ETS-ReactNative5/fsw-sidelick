@@ -1,6 +1,14 @@
-import { View, Text, SafeAreaView, StyleSheet, Dimensions, TouchableWithoutFeedback } from "react-native";
+import {
+  View,
+  Text,
+  SafeAreaView,
+  StyleSheet,
+  Dimensions,
+  TouchableWithoutFeedback,
+  Pressable,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import Icon from 'react-native-vector-icons/Entypo';
+import Icon from "react-native-vector-icons/Entypo";
 import React, { useState } from "react";
 
 import Input from "./ReusableComponents/Input";
@@ -28,12 +36,16 @@ const SignIn = () => {
     console.warn("Connect with Google");
   };
   return (
-    <SafeAreaView style={[styles.root, { height: height, width: width} ]}>
+    <SafeAreaView style={[styles.root, { height: height, width: width }]}>
       <View style={styles.header}>
-      <TouchableWithoutFeedback 
-          onPress={() => navigation.goBack()} >
-          <Icon style={{marginBottom: "2%"}} name="chevron-thin-left" size={25} color="#000" />
-      </TouchableWithoutFeedback>
+        <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
+          <Icon
+            style={{ marginBottom: "3%" }}
+            name="chevron-thin-left"
+            size={25}
+            color="#000"
+          />
+        </TouchableWithoutFeedback>
         <Text style={styles.text}>Sign in</Text>
         <Text style={styles.subtext}>Enter your email and password</Text>
       </View>
@@ -45,19 +57,24 @@ const SignIn = () => {
           setValue={setPassword}
           secureTextEntry
         />
-        <CustomButton
+        {/* <CustomButton
           btnText={"Forgot password ?"}
           onPress={onForgotPwdPressed}
           type={"tertiary"}
-        />
-        <View style={{ marginVertical: "2%" }} />
+        /> */}
+        <Pressable onPress={() => navigation.navigate("SignUp")}>
+          <Text style={styles.subtext}>
+            Don't have an account?
+            <Text style={{ color: "orange" }}> Sign up</Text>
+          </Text>
+        </Pressable>
+        <View style={{ marginVertical: "8%" }} />
         <CustomButton btnText={"Sign in"} onPress={onSignInPressed} />
-        <Text style={{ marginVertical: "2%",fontSize: 20 }}>or</Text>
+        <Text style={{ marginVertical: "2%", fontSize: 20 }}>or</Text>
         <CustomButton
           btnText={"Connect with Facebook"}
           onPress={onSignInFacebook}
           bgColor="#3B5998"
-          fgColor=""
         />
         <CustomButton
           btnText={"Connect with Google"}
@@ -70,9 +87,15 @@ const SignIn = () => {
       <View style={styles.footer}>
         <Text style={styles.footerText}>
           By signing in, I agree with
-          <Text style={{ fontWeight: "bold", color: 'black' }}> Terms of Use </Text>
-          {'\n'}and
-          <Text style={{ fontWeight: "bold", color: 'black' }}> Privacy Policy</Text>
+          <Text style={{ fontWeight: "bold", color: "black" }}>
+            {" "}
+            Terms of Use{" "}
+          </Text>
+          {"\n"}and
+          <Text style={{ fontWeight: "bold", color: "black" }}>
+            {" "}
+            Privacy Policy
+          </Text>
         </Text>
       </View>
     </SafeAreaView>
@@ -105,14 +128,14 @@ const styles = StyleSheet.create({
     lineHeight: 26,
     letterSpacing: 0.4,
   },
-  footerText:{
+  footerText: {
     fontSize: 13,
     lineHeight: 20,
     letterSpacing: 0.25,
     fontWeight: "400",
     fontStyle: "normal",
     color: "#7A7A7A",
-    textAlign: 'center',
+    textAlign: "center",
   },
   inputContainer: {
     paddingVertical: "10%",
