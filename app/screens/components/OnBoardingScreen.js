@@ -32,7 +32,7 @@ const OnBoardingScreen = () => {
     >
       <Image source={require("../assets/LOGO.png")} style={[styles.logo, {height: height * 0.25}]} resizeMode="contain" />
       <View style={[styles.container, { marginBottom: height * 0.25}]}>
-        <BlurView intensity={15} tint="light" style={styles.blurContainer}>
+        <BlurView intensity={20} tint="dark" style={styles.blurContainer}>
           <Text style={styles.text}>Too tired to walk your dog?</Text>
           <Text style={styles.text}>Let us help you!</Text>
           <View style={{marginVertical: "5%"}}>
@@ -42,7 +42,7 @@ const OnBoardingScreen = () => {
             <Pressable onPress={() => navigation.navigate("SignIn")}>
               <Text style={styles.subtext}>
                 Already a member?
-                <Text style={{ color: "orange" }}>
+                <Text style={{ color: "orange", fontWeight: "bold" }}>
                   {" "}
                   Sign in
                 </Text>
