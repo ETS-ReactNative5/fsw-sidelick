@@ -6,6 +6,7 @@ import {
   Dimensions,
   TouchableWithoutFeedback,
   Pressable,
+  ScrollView
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Entypo";
@@ -23,10 +24,10 @@ const SignIn = () => {
     // navigation.navigate("")
     console.warn("signed in successfully");
   };
-  const onForgotPwdPressed = () => {
-    // navigation.navigate("")
-    console.warn("Forgot Password");
-  };
+  // const onForgotPwdPressed = () => {
+  //   // navigation.navigate("")
+  //   console.warn("Forgot Password");
+  // };
   const onSignInFacebook = () => {
     // navigation.navigate("")
     console.warn("Connect with Facebook");
@@ -36,6 +37,7 @@ const SignIn = () => {
     console.warn("Connect with Google");
   };
   return (
+    <ScrollView showsVerticalScrollIndicator={false}>
     <SafeAreaView style={[styles.root, { height: height, width: width }]}>
       <View style={styles.header}>
         <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
@@ -99,6 +101,7 @@ const SignIn = () => {
         </Text>
       </View>
     </SafeAreaView>
+    </ScrollView>
   );
 };
 
