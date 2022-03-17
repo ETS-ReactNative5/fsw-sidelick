@@ -64,7 +64,7 @@ const SignUp = () => {
           onPress={onForgotPwdPressed}
           type={"tertiary"}
         /> */}
-        <Pressable onPress={() => navigation.navigate("SignUp")}>
+        <Pressable onPress={() => navigation.navigate("SignIn")}>
           <Text style={styles.subtext}>
             Already have an account?
             <Text style={{ color: "orange" }}> Sign in</Text>
