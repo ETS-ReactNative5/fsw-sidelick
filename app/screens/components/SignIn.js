@@ -6,7 +6,7 @@ import {
   Dimensions,
   TouchableWithoutFeedback,
   Pressable,
-  ScrollView
+  ScrollView,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Entypo";
@@ -14,6 +14,7 @@ import React, { useState } from "react";
 
 import Input from "./ReusableComponents/Input";
 import CustomButton from "./ReusableComponents/CustomButton";
+import SocialMediaButtons from "./ReusableComponents/SocialMediaButtons";
 
 const SignIn = () => {
   const navigation = useNavigation();
@@ -28,79 +29,60 @@ const SignIn = () => {
   //   // navigation.navigate("")
   //   console.warn("Forgot Password");
   // };
-  const onSignInFacebook = () => {
-    // navigation.navigate("")
-    console.warn("Connect with Facebook");
-  };
-  const onSignInGoogle = () => {
-    // navigation.navigate("")
-    console.warn("Connect with Google");
-  };
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
-    <SafeAreaView style={[styles.root, { height: height, width: width }]}>
-      <View style={styles.header}>
-        <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
-          <Icon
-            style={{ marginBottom: "3%" }}
-            name="chevron-thin-left"
-            size={25}
-            color="#000"
+      <SafeAreaView style={[styles.root, { height: height, width: width }]}>
+        <View style={styles.header}>
+          <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
+            <Icon
+              style={{ marginBottom: "3%" }}
+              name="chevron-thin-left"
+              size={25}
+              color="#000"
+            />
+          </TouchableWithoutFeedback>
+          <Text style={styles.text}>Sign in</Text>
+          <Text style={styles.subtext}>Enter your email and password</Text>
+        </View>
+        <View style={styles.inputContainer}>
+          <Input placeholder="Email" value={email} setValue={setEmail} />
+          <Input
+            placeholder="Password"
+            value={password}
+            setValue={setPassword}
+            secureTextEntry
           />
-        </TouchableWithoutFeedback>
-        <Text style={styles.text}>Sign in</Text>
-        <Text style={styles.subtext}>Enter your email and password</Text>
-      </View>
-      <View style={styles.inputContainer}>
-        <Input placeholder="Email" value={email} setValue={setEmail} />
-        <Input
-          placeholder="Password"
-          value={password}
-          setValue={setPassword}
-          secureTextEntry
-        />
-        {/* <CustomButton
+          {/* <CustomButton
           btnText={"Forgot password ?"}
           onPress={onForgotPwdPressed}
           type={"tertiary"}
         /> */}
-        <Pressable onPress={() => navigation.navigate("SignUp")}>
-          <Text style={styles.subtext}>
-            Don't have an account?
-            <Text style={{ color: "orange" }}> Sign up</Text>
+          <Pressable onPress={() => navigation.navigate("SignUp")}>
+            <Text style={styles.subtext}>
+              Don't have an account?
+              <Text style={{ color: "orange" }}> Sign up</Text>
+            </Text>
+          </Pressable>
+          <View style={{ marginVertical: "8%" }} />
+          <CustomButton btnText={"Sign in"} onPress={onSignInPressed} />
+          <Text style={{ marginVertical: "2%", fontSize: 20 }}>or</Text>
+          <SocialMediaButtons />
+        </View>
+        <View style={styles.footer}>
+          <Text style={styles.footerText}>
+            By signing in, I agree with
+            <Text style={{ fontWeight: "bold", color: "black" }}>
+              {" "}
+              Terms of Use{" "}
+            </Text>
+            {"\n"}and
+            <Text style={{ fontWeight: "bold", color: "black" }}>
+              {" "}
+              Privacy Policy
+            </Text>
           </Text>
-        </Pressable>
-        <View style={{ marginVertical: "8%" }} />
-        <CustomButton btnText={"Sign in"} onPress={onSignInPressed} />
-        <Text style={{ marginVertical: "2%", fontSize: 20 }}>or</Text>
-        <CustomButton
-          btnText={"Connect with Facebook"}
-          onPress={onSignInFacebook}
-          bgColor="#3B5998"
-        />
-        <CustomButton
-          btnText={"Connect with Google"}
-          onPress={onSignInGoogle}
-          bgColor="white"
-          fgColor="black"
-          type={"outline"}
-        />
-      </View>
-      <View style={styles.footer}>
-        <Text style={styles.footerText}>
-          By signing in, I agree with
-          <Text style={{ fontWeight: "bold", color: "black" }}>
-            {" "}
-            Terms of Use{" "}
-          </Text>
-          {"\n"}and
-          <Text style={{ fontWeight: "bold", color: "black" }}>
-            {" "}
-            Privacy Policy
-          </Text>
-        </Text>
-      </View>
-    </SafeAreaView>
+        </View>
+      </SafeAreaView>
     </ScrollView>
   );
 };
