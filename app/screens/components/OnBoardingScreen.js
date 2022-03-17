@@ -1,15 +1,11 @@
-import { StatusBar } from "expo-status-bar";
 import React from "react";
 import {
-  SafeAreaView,
   StyleSheet,
   Dimensions,
   ImageBackground,
-  FlatList,
   View,
   Image,
   Text,
-  Button,
   Pressable,
 } from "react-native";
 import { BlurView } from "expo-blur";
@@ -17,8 +13,6 @@ import { useNavigation } from "@react-navigation/native";
 import CustomButton from "./ReusableComponents/CustomButton";
 
 const { width, height } = Dimensions.get("window");
-
-const COLORS = { Primary: "#ff8400", white: "#fff" };
 
 const OnBoardingScreen = () => {
   const navigation = useNavigation();
@@ -66,7 +60,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
   text: {
-    color: COLORS.white,
+    color: "white",
     fontSize: 22,
     fontWeight: "bold",
     letterSpacing: 1,
@@ -74,7 +68,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   subtext: {
-    color: COLORS.white,
+    color: "white",
     fontSize: 14,
     letterSpacing: 0.5,
     textAlign: "center",
