@@ -11,10 +11,10 @@ const Routes = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{headerShown: false}}>
-      <Stack.Screen name="Map" component={Map} />
-        {/* <Stack.Screen name="OnBoardingScreen" component={OnBoardingScreen} />
+      {/* <Stack.Screen name="Map" component={Map} /> */}
+        <Stack.Screen name="OnBoardingScreen" component={OnBoardingScreen} />
         <Stack.Screen name="SignUp" component={SignUp} />
-        <Stack.Screen name="SignIn" component={SignIn} /> */}
+        <Stack.Screen name="SignIn" component={SignIn} />
       </Stack.Navigator>
     </NavigationContainer>
   );
