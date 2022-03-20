@@ -15,8 +15,8 @@ export default function Map() {
     longitudeDelta: 0.0421,
   });
   return (
-    <View style={{marginTop: 50, flex: 1}}>
-      <GooglePlacesAutocomplete
+    <View style={styles.container}>
+      {/* <GooglePlacesAutocomplete
         placeholder="Search"
         fetchDetails={true}
         GooglePlacesSearchQuery={{
@@ -44,8 +44,7 @@ export default function Map() {
          container: { flex:0, position:"absolute", width:"100%", zIndex:1 },
          listView: { backgroundColor: "white"}
         }}
-      />
-
+      /> */}
       <MapView
         style={styles.map}
         initialRegion={{
@@ -77,16 +76,13 @@ export default function Map() {
           </Callout>
         </Marker>
       </MapView>
-    </View>
+      </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
   },
   map: {
     width: Dimensions.get("window").width,

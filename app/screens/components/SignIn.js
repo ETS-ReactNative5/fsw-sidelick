@@ -15,6 +15,7 @@ import React, { useState } from "react";
 import Input from "./ReusableComponents/Input";
 import CustomButton from "./ReusableComponents/CustomButton";
 import SocialMediaButtons from "./ReusableComponents/SocialMediaButtons";
+import { HomeScreen } from "../../Routes/Routes";
 
 const SignIn = () => {
   const navigation = useNavigation();
@@ -22,7 +23,7 @@ const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const onSignInPressed = () => {
-    // navigation.navigate("")
+    // navigation.navigate("HomeScreen")
     console.warn("signed in successfully");
   };
   // const onForgotPwdPressed = () => {
