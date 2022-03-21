@@ -38,8 +38,12 @@ const SignUp = () => {
         password: password,
       })
     });
+    if (!userData.ok) {
+      const message = `An error has occured: ${userData.status}`;
+      // throw new Error(message);
+      console.log(message);
+    }
     userData = await userData.json();
-      console.log(userData)
   };
 
   return (
