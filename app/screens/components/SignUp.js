@@ -23,10 +23,25 @@ const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const onSignUpPressed = () => {
-    // navigation.navigate("")
-    console.warn("signed up successfully");
+  const Register_URL = 'http://192.168.1.108:3000/api/user/register';
+  
+  const onSignUpPressed = async() => {
+    let userData = await fetch(Register_URL, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        fullName: fullName,
+        email: email,
+        password: password,
+      })
+    });
+    userData = await userData.json();
+      console.log(userData)
   };
+
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <SafeAreaView style={[styles.root, { height: height, width: width }]}>
