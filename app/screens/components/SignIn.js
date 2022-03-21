@@ -22,10 +22,29 @@ const SignIn = () => {
   const { width, height } = Dimensions.get("window");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const onSignInPressed = () => {
-    // navigation.navigate("HomeScreen")
-    console.warn("signed in successfully");
+
+  const Login_URL = 'http://192.168.1.108:3000/api/user/login';
+
+  const onSignInPressed = async() => {
+    let userData = await fetch(Login_URL, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        email: email,
+        password: password,
+      })
+    })
+    if (!userData.ok) {
+      const message = `An error has occured: ${userData.status}`;
+      // throw new Error(message);
+      console.log(message);
+    }
+    userData = await userData.json();
   };
+
   // const onForgotPwdPressed = () => {
   //   // navigation.navigate("")
   //   console.warn("Forgot Password");
