@@ -47,8 +47,9 @@ const SignUp = () => {
       console.log(message);
     }
     userData = await userData.json();
-    console.log(userData);
+    console.log(userData.message);
   };
+
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>

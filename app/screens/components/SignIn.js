@@ -14,8 +14,7 @@ import React, { useState } from "react";
 
 import Input from "./ReusableComponents/Input";
 import CustomButton from "./ReusableComponents/CustomButton";
-import SocialMediaButtons from "./ReusableComponents/SocialMediaButtons";
-import { HomeScreen } from "../../Routes/Routes";
+import * as SecureStore from 'expo-secure-store';
 
 const SignIn = () => {
   const navigation = useNavigation();
@@ -37,18 +36,17 @@ const SignIn = () => {
         password: password,
       })
     })
-    if (!userData.ok) {
+    userData = await userData.json().then(data => {
       const message = `An error has occured: ${userData.status}`;
-      // throw new Error(message);
-      console.log(message);
-    }
-    userData = await userData.json();
-  };
+    !userData.ok ? 
+      console.log(message) :
+      save('userToken', data.token);
+      });
+}
+  async function save(key, value) {
+    await SecureStore.setItemAsync(key, value);
+  }
 
-  // const onForgotPwdPressed = () => {
-  //   // navigation.navigate("")
-  //   console.warn("Forgot Password");
-  // };
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <SafeAreaView style={[styles.root, { height: height, width: width }]}>
@@ -72,11 +70,6 @@ const SignIn = () => {
             setValue={setPassword}
             secureTextEntry
           />
-          {/* <CustomButton
-          btnText={"Forgot password ?"}
-          onPress={onForgotPwdPressed}
-          type={"tertiary"}
-        /> */}
           <Pressable onPress={() => navigation.navigate("SignUp")}>
             <Text style={styles.subtext}>
               Don't have an account?
@@ -85,7 +78,6 @@ const SignIn = () => {
           </Pressable>
           <View style={{ marginVertical: "8%" }} />
           <CustomButton btnText={"Sign in"} onPress={onSignInPressed} />
-          {/* <Text style={{ marginVertical: "2%", fontSize: 20 }}>or</Text> */}
         </View>
         <View style={styles.footer}>
           <Text style={styles.footerText}>
