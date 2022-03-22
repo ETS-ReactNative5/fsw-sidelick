@@ -30,6 +30,10 @@ const userSchema = new mongoose.Schema({
 		max: 1024,
 		min: 6
 	},
+	status: {
+		type: Boolean,
+		default: false,
+	},
 	createdAt: {
 		type: Date,
 		immutable: true,
