@@ -7,6 +7,7 @@ import {
   TouchableWithoutFeedback,
   Pressable,
   ScrollView,
+  Switch,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Entypo";
@@ -14,8 +15,6 @@ import React, { useState } from "react";
 
 import Input from "./ReusableComponents/Input";
 import CustomButton from "./ReusableComponents/CustomButton";
-import SocialMediaButtons from "./ReusableComponents/SocialMediaButtons";
-import Switcheu from "./ReusableComponents/Switcheu";
 
 const SignUp = () => {
   const navigation = useNavigation();
@@ -23,21 +22,24 @@ const SignUp = () => {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isEnabled, setIsEnabled] = useState(false);
+  const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
 
-  const Register_URL = 'http://192.168.1.108:3000/api/user/register';
-  
-  const onSignUpPressed = async() => {
+  const Register_URL = "http://192.168.1.108:3000/api/user/register";
+
+  const onSignUpPressed = async () => {
     let userData = await fetch(Register_URL, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
+        Accept: "application/json",
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         fullName: fullName,
         email: email,
         password: password,
-      })
+        status: isEnabled,
+      }),
     });
     if (!userData.ok) {
       const message = `An error has occured: ${userData.status}`;
@@ -45,6 +47,7 @@ const SignUp = () => {
       console.log(message);
     }
     userData = await userData.json();
+    console.log(userData);
   };
 
   return (
@@ -87,8 +90,17 @@ const SignUp = () => {
             </Text>
           </Pressable>
           <View style={styles.switcheucontainer}>
-        <Switcheu/>
-        </View>
+            <View style={styles.switchContainer}>
+              <Text style={styles.switchText}>Walker</Text>
+              <Switch
+                trackColor={{ false: "#767577", true: "rgba(255, 151, 54, 1)" }}
+                thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={toggleSwitch}
+                value={isEnabled}
+              />
+            </View>
+          </View>
           <View style={{ marginVertical: "2%" }} />
           <CustomButton btnText={"Sign up"} onPress={onSignUpPressed} />
           {/* <Text style={{ marginVertical: "2%", fontSize: 20 }}>or</Text>
@@ -153,10 +165,23 @@ const styles = StyleSheet.create({
     paddingHorizontal: "5%",
     alignItems: "center",
   },
-  switcheucontainer:{
+  switcheucontainer: {
     flexDirection: "row",
     marginVertical: 10,
-  }
+  },
+  switchContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  switchText: {
+    fontSize: 18,
+    fontWeight: "bold",
+    fontStyle: "normal",
+    letterSpacing: 0.3,
+    marginRight: 5,
+    color: "#3e3e3e",
+  },
 });
 
 export default SignUp;

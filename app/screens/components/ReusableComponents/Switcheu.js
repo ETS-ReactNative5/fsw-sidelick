@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { View, Switch, StyleSheet, Text } from "react-native";
 
-const Switcheu = () => {
+const Switcheu = ({value,onValueChange}) => {
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
   return (
-    <View style={styles.container}>
-		<Text style={styles.text}>Walker?</Text>
+    <View style={styles.switchContainer}>
+		<Text style={styles.text}>Walker</Text>
       <Switch
         trackColor={{ false: "#767577", true: "rgba(255, 151, 54, 1)" }}
         thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
@@ -20,13 +20,13 @@ const Switcheu = () => {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  switchContainer: {
     flex: 1,
     flexDirection: "row",
 	alignItems: "center",
 	justifyContent: "center",
   },
-  text:{
+  switchText:{
 	fontSize: 18,
 	fontWeight: "bold",
 	marginRight: 5,
