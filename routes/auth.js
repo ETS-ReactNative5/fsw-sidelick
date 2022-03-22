@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const User = require("../models/User");
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const { registerValidation, loginValidation } = require("../validation");
 
@@ -28,7 +28,17 @@ router.post("/register", async (req, res) => {
   });
   try {
     await user.save();
-    res.status(201).json({ message: `${user.fullName} successfully registered and has this id: ${user._id}` });
+    user.status
+      ? res
+          .status(201)
+          .json({
+            message: `${user.fullName} successfully registered and has this id: ${user._id} as a walker`,
+          })
+      : res
+          .status(201)
+          .json({
+            message: `${user.fullName} successfully registered and has this id: ${user._id} as a customer`,
+          });
   } catch (err) {
     res.status(400).json(err);
   }
@@ -36,7 +46,7 @@ router.post("/register", async (req, res) => {
 
 // LOGIN
 
-router.post("/login", async(req, res) => {
+router.post("/login", async (req, res) => {
   // LET'S VALIDATE THE DATA BEFORE WE MAKE A USER
   const { error } = loginValidation(req.body);
   if (error) return res.status(400).json({ message: error.details[0].message });
@@ -47,14 +57,18 @@ router.post("/login", async(req, res) => {
 
   // Check if Password is Correct
   const validPass = await bcrypt.compare(req.body.password, user.password);
-  if(!validPass) return res.status(400).json({ message: "Password is incorrect" });
+  if (!validPass)
+    return res.status(400).json({ message: "Password is incorrect" });
 
-	// Create and assign a token
-	const token = jwt.sign({ _id: user._id,
-    expire: Date.now() + (1000 * 60 * 60) //1 hour
-   }, process.env.TOKEN_SECRET);
-	res.header('auth-token', token).json({ token });
-
+  // Create and assign a token
+  const token = jwt.sign(
+    {
+      _id: user._id,
+      expire: Date.now() + 1000 * 60 * 60, //1 hour
+    },
+    process.env.TOKEN_SECRET
+  );
+  res.header("auth-token", token).json({ token });
 });
 
 module.exports = router;
