@@ -85,8 +85,7 @@ const SignIn = () => {
           </Pressable>
           <View style={{ marginVertical: "8%" }} />
           <CustomButton btnText={"Sign in"} onPress={onSignInPressed} />
-          <Text style={{ marginVertical: "2%", fontSize: 20 }}>or</Text>
-          <SocialMediaButtons />
+          {/* <Text style={{ marginVertical: "2%", fontSize: 20 }}>or</Text> */}
         </View>
         <View style={styles.footer}>
           <Text style={styles.footerText}>
