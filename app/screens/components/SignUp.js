@@ -15,6 +15,7 @@ import React, { useState } from "react";
 import Input from "./ReusableComponents/Input";
 import CustomButton from "./ReusableComponents/CustomButton";
 import SocialMediaButtons from "./ReusableComponents/SocialMediaButtons";
+import Switcheu from "./ReusableComponents/Switcheu";
 
 const SignUp = () => {
   const navigation = useNavigation();
@@ -85,10 +86,13 @@ const SignUp = () => {
               <Text style={{ color: "orange" }}> Sign in</Text>
             </Text>
           </Pressable>
+          <View style={styles.switcheucontainer}>
+        <Switcheu/>
+        </View>
           <View style={{ marginVertical: "2%" }} />
           <CustomButton btnText={"Sign up"} onPress={onSignUpPressed} />
-          <Text style={{ marginVertical: "2%", fontSize: 20 }}>or</Text>
-          <SocialMediaButtons />
+          {/* <Text style={{ marginVertical: "2%", fontSize: 20 }}>or</Text>
+          <SocialMediaButtons /> */}
         </View>
         <View style={styles.footer}>
           <Text style={styles.footerText}>
@@ -149,6 +153,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: "5%",
     alignItems: "center",
   },
+  switcheucontainer:{
+    flexDirection: "row",
+    marginVertical: 10,
+  }
 });
 
 export default SignUp;
