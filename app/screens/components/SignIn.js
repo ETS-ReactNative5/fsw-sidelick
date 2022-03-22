@@ -55,7 +55,7 @@ const SignIn = () => {
         <View style={styles.header}>
           <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
             <Icon
-              style={{ marginBottom: "3%" }}
+              style={{ marginBottom: "5%" }}
               name="chevron-thin-left"
               size={25}
               color="#000"
