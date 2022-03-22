@@ -80,7 +80,7 @@ const SignIn = () => {
           <Pressable onPress={() => navigation.navigate("SignUp")}>
             <Text style={styles.subtext}>
               Don't have an account?
-              <Text style={{ color: "orange" }}> Sign up</Text>
+              <Text style={{ color: "#ff8500" }}> Sign up</Text>
             </Text>
           </Pressable>
           <View style={{ marginVertical: "8%" }} />

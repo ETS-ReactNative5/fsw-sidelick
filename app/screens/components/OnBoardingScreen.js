@@ -36,7 +36,7 @@ const OnBoardingScreen = () => {
             <Pressable onPress={() => navigation.navigate("SignIn")}>
               <Text style={styles.subtext}>
                 Already a member?
-                <Text style={{ color: "orange", fontWeight: "bold" }}>
+                <Text style={{ color: "#ff8500", fontWeight: "bold" }}>
                   {" "}
                   Sign in
                 </Text>
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   logo:{
-    width: '40%',
+    width: '45%',
     justifyContent: 'flex-start',
   },
   text: {

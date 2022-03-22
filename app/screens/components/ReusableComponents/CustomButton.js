@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     marginVertical: "3%",
   },
   container_primary: {
-    backgroundColor: "orange",
+    backgroundColor: "#ff8500",
   },
   container_tertiary: {},
   container_outline:{

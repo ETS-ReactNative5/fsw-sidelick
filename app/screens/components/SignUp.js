@@ -86,7 +86,7 @@ const SignUp = () => {
           <Pressable onPress={() => navigation.navigate("SignIn")}>
             <Text style={styles.subtext}>
               Already have an account?
-              <Text style={{ color: "orange" }}> Sign in</Text>
+              <Text style={{ color: "#ff8500" }}> Sign in</Text>
             </Text>
           </Pressable>
           <View style={styles.switcheucontainer}>
@@ -94,7 +94,7 @@ const SignUp = () => {
               <Text style={styles.switchText}>Walker</Text>
               <Switch
                 trackColor={{ false: "#767577", true: "rgba(255, 151, 54, 1)" }}
-                thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
+                thumbColor={isEnabled ? "#f5dd40" : "#f4f3f4"}
                 ios_backgroundColor="#3e3e3e"
                 onValueChange={toggleSwitch}
                 value={isEnabled}
