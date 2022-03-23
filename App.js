@@ -13,6 +13,7 @@ import {NavigationContainer} from '@react-navigation/native'
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
 
 import {LoggingScreen, HomeScreen} from './app/Routes/Routes'
+import Form from './app/screens/components/Form';
 
 const Tab = createBottomTabNavigator()
 
@@ -20,7 +21,8 @@ const App= () => {
   return (
     <>
       <NavigationContainer>
-        <LoggingScreen/>
+        <Form/>
+        {/* <LoggingScreen/> */}
         {/* <Tab.Navigator
          screenOptions={{ headerShown: false }}
           tabBarOptions={{
