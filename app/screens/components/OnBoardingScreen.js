@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
   blurContainer: {
     paddingVertical: 20,
     paddingHorizontal: 10,
-    width: "80%",
+    width: "100%",
   },
 });
 export default OnBoardingScreen;
