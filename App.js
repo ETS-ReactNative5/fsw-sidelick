@@ -20,8 +20,8 @@ const App= () => {
   return (
     <>
       <NavigationContainer>
-        {/* <LoggingScreen/> */}
-        <Tab.Navigator
+        <LoggingScreen/>
+        {/* <Tab.Navigator
          screenOptions={{ headerShown: false }}
           tabBarOptions={{
             labelStyle:{fontSize:16},
@@ -31,7 +31,7 @@ const App= () => {
           <Tab.Screen
             name="Home"
             component={HomeScreen}
-          />
+          /> */}
           {/* <Tab.Screen
             name="Screen2"
             component={SecondScreenNavigator}
@@ -40,7 +40,7 @@ const App= () => {
             name="Screen3"
             component={ThirdScreenNavigator}
           /> */}
-        </Tab.Navigator>
+        {/* </Tab.Navigator> */}
       </NavigationContainer>
     </>
   );

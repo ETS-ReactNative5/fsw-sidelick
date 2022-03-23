@@ -132,14 +132,14 @@ const styles = StyleSheet.create({
   text: {
     fontWeight: "700",
     fontStyle: "normal",
-    fontSize: 34,
+    fontSize: 36,
     lineHeight: 51,
     letterSpacing: 0.4,
   },
   subtext: {
     fontWeight: "500",
     fontStyle: "normal",
-    fontSize: 17,
+    fontSize: 19,
     color: "#7A7A7A",
     lineHeight: 26,
     letterSpacing: 0.4,
