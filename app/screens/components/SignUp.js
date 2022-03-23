@@ -50,7 +50,6 @@ const SignUp = () => {
     console.log(userData.message);
   };
 
-
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <SafeAreaView style={[styles.root, { height: height, width: width }]}>
@@ -79,11 +78,6 @@ const SignUp = () => {
             setValue={setPassword}
             secureTextEntry
           />
-          {/* <CustomButton
-          btnText={"Forgot password ?"}
-          onPress={onForgotPwdPressed}
-          type={"tertiary"}
-        /> */}
           <Pressable onPress={() => navigation.navigate("SignIn")}>
             <Text style={styles.subtext}>
               Already have an account?
@@ -104,8 +98,6 @@ const SignUp = () => {
           </View>
           <View style={{ marginVertical: "2%" }} />
           <CustomButton btnText={"Sign up"} onPress={onSignUpPressed} />
-          {/* <Text style={{ marginVertical: "2%", fontSize: 20 }}>or</Text>
-          <SocialMediaButtons /> */}
         </View>
         <View style={styles.footer}>
           <Text style={styles.footerText}>
