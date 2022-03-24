@@ -10,18 +10,17 @@ import {
   ScrollView,
   SafeAreaView,
   TouchableWithoutFeedback,
-
+  Pressable,
 } from "react-native";
 
 import PhoneInput from "react-native-phone-number-input";
 import Icon from "react-native-vector-icons/Entypo";
 
-export default function Form() {
+const Form = () => {
   const { width, height } = Dimensions.get("window");
   const [phoneNumber, setPhoneNumber] = useState("");
 
   const phoneInput = useRef(null);
-
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <SafeAreaView style={[styles.root, { height: height, width: width }]}>
@@ -35,13 +34,15 @@ export default function Form() {
             />
           </TouchableWithoutFeedback>
           <Text style={styles.text}>Little introduction</Text>
-          <Text style={styles.subtext}>Tell us something about you and your furry fren</Text>
+          <Text style={styles.subtext}>
+            Tell us something about you and your furry fren
+          </Text>
         </View>
         <View style={styles.MainContainer}>
           <PhoneInput
             ref={phoneInput}
             defaultValue={phoneNumber}
-            defaultCode="IN"
+            defaultCode="US"
             layout="first"
             withShadow
             autoFocus
@@ -51,6 +52,10 @@ export default function Form() {
               setPhoneNumber(text);
             }}
           />
+          <View style={{ marginVertical: "5%" }} />
+          <View>
+		  
+          </View>
         </View>
       </SafeAreaView>
     </ScrollView>
@@ -66,7 +71,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: "5%",
   },
   MainContainer: {
-	  marginVertical: "5%",
+    marginVertical: "10%",
     justifyContent: "center",
     alignItems: "center",
   },
@@ -110,3 +115,5 @@ const styles = StyleSheet.create({
     color: "white",
   },
 });
+
+export default Form;
