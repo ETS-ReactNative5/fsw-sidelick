@@ -12,6 +12,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Entypo";
 import React, { useState } from "react";
+import SignIn from "./SignIn";
 
 import Input from "./ReusableComponents/Input";
 import CustomButton from "./ReusableComponents/CustomButton";
@@ -25,7 +26,7 @@ const SignUp = () => {
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
 
-  const Register_URL = "http://192.168.1.108:3000/api/user/register";
+  const Register_URL = "http://192.168.1.234:3000/api/user/register";
 
   const onSignUpPressed = async () => {
     let userData = await fetch(Register_URL, {
@@ -45,6 +46,8 @@ const SignUp = () => {
       const message = `An error has occured: ${userData.status}`;
       // throw new Error(message);
       console.log(message);
+    }else{
+      navigation.navigate("SignIn");
     }
     userData = await userData.json();
     console.log(userData.message);

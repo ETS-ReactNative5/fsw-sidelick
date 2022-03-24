@@ -6,43 +6,32 @@ import SignIn from "../screens/components/SignIn";
 import SignUp from "../screens/components/SignUp";
 import OnBoardingScreen from "../screens/components/OnBoardingScreen";
 import Map from "../screens/components/Map";
+import Tabs from "./Tabs";
 
-// function Login() {
-//   const Stack = createNativeStackNavigator();
-//   return (
-//     <NavigationContainer>
+const Stack = createNativeStackNavigator();
+
+// const LoggingScreen = () => {
+//     return(
 //       <Stack.Navigator screenOptions={{ headerShown: false }}>
 //         <Stack.Screen name="OnBoardingScreen" component={OnBoardingScreen} />
 //         <Stack.Screen name="SignUp" component={SignUp} />
 //         <Stack.Screen name="SignIn" component={SignIn} />
 //       </Stack.Navigator>
-//     </NavigationContainer>
-//   );
+//     )
 // }
-// ##################################################
+// export {LoggingScreen}
 
-const Stack = createNativeStackNavigator();
-
-const LoggingScreen = () => {
-    return(
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
+const Routes = () => {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="OnBoardingScreen" screenOptions={{ headerShown: false }}>
         <Stack.Screen name="OnBoardingScreen" component={OnBoardingScreen} />
         <Stack.Screen name="SignUp" component={SignUp} />
         <Stack.Screen name="SignIn" component={SignIn} />
+        <Stack.Screen name="Tabs" component={Tabs} />
       </Stack.Navigator>
-    )
-}
-export {LoggingScreen}
+    </NavigationContainer>
+  );
+};
 
-const HomeScreen = () => {
-    return(
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen 
-                name="HomeScreen"
-                component={Map}
-            />
-        </Stack.Navigator>
-    )
-}
-export {HomeScreen}
-
+export default Routes;

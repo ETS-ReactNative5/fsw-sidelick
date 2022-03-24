@@ -15,6 +15,7 @@ import React, { useState } from "react";
 import Input from "./ReusableComponents/Input";
 import CustomButton from "./ReusableComponents/CustomButton";
 import * as SecureStore from 'expo-secure-store';
+import Tabs from "../../Routes/Tabs";
 
 const SignIn = () => {
   const navigation = useNavigation();
@@ -22,7 +23,7 @@ const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const Login_URL = 'http://192.168.1.108:3000/api/user/login';
+  const Login_URL = 'http://192.168.1.234:3000/api/user/login';
 
   const onSignInPressed = async() => {
     let userData = await fetch(Login_URL, {
@@ -40,7 +41,7 @@ const SignIn = () => {
       const message = `An error has occured: ${userData.status}`;
     !userData.ok ? 
       console.log(message) :
-      save('userToken', data.token);
+      [save('userToken', data.token), navigation.navigate("Home")];
       });
 }
   async function save(key, value) {
