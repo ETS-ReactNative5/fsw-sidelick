@@ -12,9 +12,6 @@ const registerValidation = data => {
   			.min(6)
   			.required()
   			.email(),
-		age: Joi.number().trim()
-			.required()
-			.max(2),
 		phoneNumber: Joi.number().trim()
 			.required(),
 		gender: Joi.string().trim()

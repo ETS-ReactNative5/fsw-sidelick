@@ -24,11 +24,6 @@ const userSchema = new mongoose.Schema({
 		type: Boolean,
 		default: false,
 	},
-	age: {
-		type: Number,
-		min: 13,
-		max: 100,
-	},
 	gender:{
 		type: String,
 	},
