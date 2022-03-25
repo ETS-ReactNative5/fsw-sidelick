@@ -11,11 +11,12 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Entypo";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import SignIn from "./SignIn";
 
 import Input from "./ReusableComponents/Input";
 import CustomButton from "./ReusableComponents/CustomButton";
+import PhoneInput from "react-native-phone-number-input";
 
 const SignUp = () => {
   const navigation = useNavigation();
@@ -23,10 +24,12 @@ const SignUp = () => {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const phoneInput = useRef(null);
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
 
-  const Register_URL = "http://192.168.1.234:3000/api/user/register";
+  const Register_URL = "http://192.168.1.108:3000/api/user/register";
 
   const onSignUpPressed = async () => {
     let userData = await fetch(Register_URL, {
@@ -46,7 +49,7 @@ const SignUp = () => {
       const message = `An error has occured: ${userData.status}`;
       // throw new Error(message);
       console.log(message);
-    }else{
+    } else {
       navigation.navigate("SignIn");
     }
     userData = await userData.json();
@@ -81,6 +84,17 @@ const SignUp = () => {
             setValue={setPassword}
             secureTextEntry
           />
+            <PhoneInput
+              ref={phoneInput}
+              defaultValue={phoneNumber}
+              defaultCode="US"
+              layout="first"
+              containerStyle={styles.phoneNumberView}
+              textContainerStyle={{ paddingVertical: 0, backgroundColor: "#f0f0f0" }}
+              onChangeFormattedText={(text) => {
+                setPhoneNumber(text);
+              }}
+            />
           <Pressable onPress={() => navigation.navigate("SignIn")}>
             <Text style={styles.subtext}>
               Already have an account?
@@ -178,6 +192,14 @@ const styles = StyleSheet.create({
     letterSpacing: 0.3,
     marginRight: 5,
     color: "#3e3e3e",
+  },
+  phoneNumberView: {
+    width: "100%",
+		backgroundColor: "#f0f0f0",
+		borderRadius: 14,
+		paddingHorizontal: 15,
+		paddingVertical: 12,
+		marginVertical: "3%",
   },
 });
 

@@ -142,13 +142,10 @@ const Form = () => {
   const { width, height } = Dimensions.get("window");
   const [age, setAge] = useState("");
   const [phonenumber, setPhoneNumber] = useState("");
-  const [password, setPassword] = useState("");
-  const [isEnabled, setIsEnabled] = useState(false);
-  const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
 
   const Register_URL = "http://192.168.1.234:3000/api/user/register";
 
-  const onSignUpPressed = async () => {
+  const onSubmit = async () => {
     let userData = await fetch(Register_URL, {
       method: "POST",
       headers: {
@@ -197,7 +194,7 @@ const Form = () => {
           />
           <Input placeholder="Phone Number" value={phonenumber} setValue={setPhoneNumber} keyboardType="number-pad" />
           <View style={{ marginVertical: "2%" }} />
-          <CustomButton btnText={"Submit"} onPress={onSignUpPressed} />
+          <CustomButton btnText={"Submit"} onPress={onSubmit} />
         </View>
       </SafeAreaView>
     </ScrollView>
@@ -206,6 +203,7 @@ const Form = () => {
 
 const styles = StyleSheet.create({
   root: {
+    flex:1,
     backgroundColor: "#FCFCFC",
   },
   header: {

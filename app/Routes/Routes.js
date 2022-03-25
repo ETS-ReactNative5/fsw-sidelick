@@ -10,17 +10,6 @@ import Tabs from "./Tabs";
 
 const Stack = createNativeStackNavigator();
 
-// const LoggingScreen = () => {
-//     return(
-//       <Stack.Navigator screenOptions={{ headerShown: false }}>
-//         <Stack.Screen name="OnBoardingScreen" component={OnBoardingScreen} />
-//         <Stack.Screen name="SignUp" component={SignUp} />
-//         <Stack.Screen name="SignIn" component={SignIn} />
-//       </Stack.Navigator>
-//     )
-// }
-// export {LoggingScreen}
-
 const Routes = () => {
   return (
     <NavigationContainer>
