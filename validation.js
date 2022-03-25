@@ -8,9 +8,6 @@ const registerValidation = data => {
   			.required(),
 		status: Joi.boolean()
 		.required(),
-		// lastName: Joi.string()
-  		// 	.min(2)
-  		// 	.required(),
   		email: Joi.string()
   			.min(6)
   			.required()
@@ -35,6 +32,18 @@ const loginValidation = data => {
 	});
 	return schema.validate(data)
 }
+// Form Validation
+const formValidation = data => {
+	const schema = Joi.object({
+  		age: Joi.number().trim()
+  			.min(13)
+  			.required(),
+  		phoneNumber: Joi.number().trim()
+  			.required()
+	});
+	return schema.validate(data)
+}
 
 module.exports.registerValidation = registerValidation;
 module.exports.loginValidation = loginValidation;
+module.exports.formValidation = formValidation;
