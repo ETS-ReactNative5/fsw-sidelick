@@ -2,26 +2,16 @@ const router = require("express").Router();
 const User = require("../models/User");
 const { formValidation } = require("../validation");
 
-router.post("/register", async (req, res) => {
+router.post("/form", async (req, res) => {
   // LET'S VALIDATE THE DATA BEFORE WE MAKE A USER
-  const { error } = registerValidation(req.body);
+  const { error } = formValidation(req.body);
   if (error) return res.status(400).json({ message: error.details[0].message });
-
-  // Checking if the user is already in the database
-  const emailExist = await User.findOne({ email: req.body.email });
-  if (emailExist)
-    return res.status(400).json({ message: "Email Already Exists" });
-
-  // Hash the password
-  const salt = await bcrypt.genSalt(10);
-  const hashedPassword = await bcrypt.hash(req.body.password, salt);
 
   // Create a new user
   const user = new User({
-    fullName: req.body.fullName,
-    status: req.body.status,
-    email: req.body.email,
-    password: hashedPassword,
+    age: req.body.age,
+	phoneNumber: req.body.phoneNumber,
+	gender: req.body.gender
   });
   try {
     await user.save();

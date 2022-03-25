@@ -38,6 +38,8 @@ const formValidation = data => {
   		age: Joi.number().trim()
   			.min(13)
   			.required(),
+		gender: Joi.string().trim()
+			.required,
   		phoneNumber: Joi.number().trim()
   			.required()
 	});
