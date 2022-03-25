@@ -12,7 +12,8 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Entypo";
 import React, { useState, useRef } from "react";
-import SignIn from "./SignIn";
+import {Picker} from '@react-native-community/picker';
+import RadioForm from 'react-native-simple-radio-button';
 
 import Input from "./ReusableComponents/Input";
 import CustomButton from "./ReusableComponents/CustomButton";
@@ -24,8 +25,14 @@ const SignUp = () => {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [age, setAge] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const phoneInput = useRef(null);
+  const [chosenOption, setChosenOption] = useState(''); //will store our current user options
+  const options = [
+    { label: 'Female ', value: 'female' },
+    { label: 'Male ', value: 'male' },
+  ]; //create our options for radio group
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
 
@@ -43,6 +50,7 @@ const SignUp = () => {
         email: email,
         password: password,
         status: isEnabled,
+
       }),
     });
     if (!userData.ok) {
@@ -95,12 +103,16 @@ const SignUp = () => {
                 setPhoneNumber(text);
               }}
             />
-          <Pressable onPress={() => navigation.navigate("SignIn")}>
-            <Text style={styles.subtext}>
-              Already have an account?
-              <Text style={{ color: "#ff8500" }}> Sign in</Text>
-            </Text>
-          </Pressable>
+            <View style={{marginTop:"3%"}}>
+      <RadioForm
+       formHorizontal={true}
+        radio_props={options}
+        initial={0} //initial value of this group
+        onPress={(value) => {
+          setChosenOption(value);
+        }} //if the user changes options, set the new value
+      />
+    </View>
           <View style={styles.switcheucontainer}>
             <View style={styles.switchContainer}>
               <Text style={styles.switchText}>Walker</Text>
@@ -113,8 +125,14 @@ const SignUp = () => {
               />
             </View>
           </View>
-          <View style={{ marginVertical: "2%" }} />
+          {/* <View style={{ marginVertical: "2%" }} /> */}
           <CustomButton btnText={"Sign up"} onPress={onSignUpPressed} />
+          <Pressable onPress={() => navigation.navigate("SignIn")}>
+            <Text style={styles.subtext}>
+              Already have an account?
+              <Text style={{ color: "#ff8500" }}> Sign in</Text>
+            </Text>
+          </Pressable>
         </View>
         <View style={styles.footer}>
           <Text style={styles.footerText}>
@@ -200,6 +218,10 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 15,
 		paddingVertical: 12,
 		marginVertical: "3%",
+  },
+  dropdown:{
+    width: "100%",
+    height: "10%",
   },
 });
 
