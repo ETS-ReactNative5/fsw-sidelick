@@ -25,13 +25,8 @@ import PhoneInput from "react-native-phone-number-input";
 const SignUp = () => {
   const navigation = useNavigation();
   const { width, height } = Dimensions.get("window");
-  const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [age, setAge] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
   const phoneInput = useRef(null);
-  const [chosenOption, setChosenOption] = useState(''); //will store our current user options
+  const [chosenOption, setChosenOption] = useState('female'); //will store our current user options
   const options = [
     { label: 'Female ', value: 'female' },
     { label: 'Male ', value: 'male' },
@@ -40,33 +35,6 @@ const SignUp = () => {
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
 
   const Register_URL = "http://192.168.1.108:3000/api/user/register";
-
-  const onSignUpPressed = async () => {
-    let userData = await fetch(Register_URL, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        fullName: fullName,
-        email: email,
-        password: password,
-        status: isEnabled,
-
-      }),
-    });
-    if (!userData.ok) {
-      const message = `An error has occured: ${userData.status}`;
-      // throw new Error(message);
-      console.log(message);
-    } else {
-      navigation.navigate("SignIn");
-    }
-    userData = await userData.json();
-    console.log(userData.message);
-  };
-
   return (
     <Formik
     initialValues={{ 
@@ -75,7 +43,35 @@ const SignUp = () => {
       password: '' ,
       phoneNumber: '',
     }}
-    onSubmit={values => Alert.alert(JSON.stringify(values))}
+    onSubmit={
+      async (values) => {
+        let userData = await fetch(Register_URL, {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            fullName: values.fullName,
+            email: values.email,
+            password: values.password,
+            status: isEnabled,
+            phoneNumber: values.phoneNumber,
+            gender: chosenOption,
+          }),
+        });
+        if (!userData.ok) {
+          const message = `An error has occured: ${userData.status}`;
+          // throw new Error(message);
+          console.log(message);
+        } 
+        else {
+          navigation.navigate("SignIn");
+        }
+        userData = await userData.json();
+        console.log(userData.message);
+      }
+    }
     validationSchema={yup.object().shape({
       fullName: yup
         .string()
@@ -147,7 +143,7 @@ const SignUp = () => {
             }
             <PhoneInput
               ref={phoneInput}
-              defaultValue={phoneNumber}
+              defaultValue={values.phoneNumber}
               value={values.phoneNumber}
               defaultCode="US"
               layout="first"
@@ -155,9 +151,6 @@ const SignUp = () => {
               onChangeText={handleChange('phoneNumber')}
               onBlur={() => setFieldTouched('phoneNumber')}
               textContainerStyle={{ paddingVertical: 0, backgroundColor: "#f0f0f0" }}
-              onChangeFormattedText={(text) => {
-                setPhoneNumber(text);
-              }}
             />
             {touched.phoneNumber && errors.phoneNumber &&
               <Text style={{ fontSize: 12, color: '#FF0D10' }}>{errors.phoneNumber}</Text>
@@ -286,5 +279,3 @@ const styles = StyleSheet.create({
 });
 
 export default SignUp;
-
-console.disableYellowBox = true;
