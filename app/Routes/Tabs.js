@@ -1,5 +1,6 @@
 import {NavigationContainer} from '@react-navigation/native'
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import Routes from './Routes';
 import Map from '../screens/components/Map';
@@ -21,11 +22,21 @@ const Tabs= () => {
           <Tab.Screen
             name="Home"
             component={Map}
-          />
+            options={{
+              tabBarIcon: () => (
+                <MaterialCommunityIcons name="home-variant-outline" size={24} />
+              ),
+            }}
+            />
           <Tab.Screen
             name="Profile"
             component={UserProfile}
-          />
+            options={{
+              tabBarIcon: () => (
+                <MaterialCommunityIcons name="emoticon-neutral-outline" size={24} />
+              ),
+            }}
+            />
           {/* <Tab.Screen
             name="Screen3"
             component={ThirdScreenNavigator}

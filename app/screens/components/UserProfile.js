@@ -11,7 +11,7 @@ import {
   Image,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import Icon from "react-native-vector-icons/Entypo";
+import Icon from "react-native-vector-icons/AntDesign";
 import React, { useState } from "react";
 
 import CustomButton from "./ReusableComponents/CustomButton";
@@ -32,7 +32,12 @@ const UserProfile = () => {
 		  <Text style={styles.userName} value={name} setValue={setName} >{name}</Text>
         </View>
         <View style={styles.buttonContainer}>
-          <CustomButton btnText={"User"} type="outline" />
+          <CustomButton btnText={[<Icon
+              style={{ marginBottom: "5%" }}
+              name="meh"
+              size={25}
+              color="#000"
+            />,"User"]} type="outline" />
 		  <CustomButton btnText={"Pets"} type="outline" />
         </View>
 		<View style={styles.footer}>
