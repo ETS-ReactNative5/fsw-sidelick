@@ -15,6 +15,8 @@ import React, { useState } from "react";
 import Input from "./ReusableComponents/Input";
 import CustomButton from "./ReusableComponents/CustomButton";
 import * as SecureStore from 'expo-secure-store';
+import * as yup from 'yup'
+import { Formik } from 'formik'
 
 const SignIn = () => {
   const navigation = useNavigation();
@@ -24,30 +26,50 @@ const SignIn = () => {
 
   const Login_URL = 'http://192.168.1.108:3000/api/user/login';
 
-  const onSignInPressed = async() => {
-    let userData = await fetch(Login_URL, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        email: email,
-        password: password,
-      })
-    })
-    userData = await userData.json().then(data => {
-      const message = `An error has occured: ${userData.status}`;
-    !userData.ok ? 
-      console.log(message) :
-      [save('userToken', data.token), navigation.navigate("Home")];
-      });
-}
   async function save(key, value) {
     await SecureStore.setItemAsync(key, value);
   }
 
   return (
+    <Formik
+    initialValues={{ 
+      fullName: '',
+      email: '', 
+      password: '' ,
+      phoneNumber: '',
+    }}
+    onSubmit={
+      async(values) => {
+        let userData = await fetch(Login_URL, {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            email: values.email,
+            password: values.password,
+          })
+        })
+        userData = await userData.json().then(data => {
+          const message = `An error has occured: ${userData.status}`;
+        !userData.ok ? 
+          console.log(message) :
+          [save('userToken', data.token), navigation.navigate("Home")];
+          });
+    }
+    }
+    validationSchema={yup.object().shape({
+      email: yup
+        .string()
+        .email()
+        .required(),
+      password: yup
+        .string()
+        .required(),
+    })}
+   >
+    {({ values, handleChange, errors, setFieldTouched, touched, isValid, handleSubmit }) => (
     <ScrollView showsVerticalScrollIndicator={false}>
       <SafeAreaView style={[styles.root, { height: height, width: width }]}>
         <View style={styles.header}>
@@ -63,13 +85,27 @@ const SignIn = () => {
           <Text style={styles.subtext}>Enter your email and password</Text>
         </View>
         <View style={styles.inputContainer}>
-          <Input placeholder="Email" value={email} setValue={setEmail} />
-          <Input
-            placeholder="Password"
-            value={password}
-            setValue={setPassword}
-            secureTextEntry
-          />
+        <TextInput
+              value={values.email}
+              style={styles.inputStyle}
+              onChangeText={handleChange('email')}
+              onBlur={() => setFieldTouched('email')}
+              placeholder="E-mail"
+            />
+            {touched.email && errors.email &&
+              <Text style={{ fontSize: 12, color: '#FF0D10' }}>{errors.email}</Text>
+            }
+            <TextInput
+              value={values.password}
+              style={styles.inputStyle}
+              onChangeText={handleChange('password')}
+              placeholder="Password"
+              onBlur={() => setFieldTouched('password')}
+              secureTextEntry={true}
+            />
+            {touched.password && errors.password &&
+              <Text style={{ fontSize: 12, color: '#FF0D10' }}>{errors.password}</Text>
+            }
           <Pressable onPress={() => navigation.navigate("SignUp")}>
             <Text style={styles.subtext}>
               Don't have an account?
@@ -95,7 +131,10 @@ const SignIn = () => {
         </View>
       </SafeAreaView>
     </ScrollView>
-  );
+    )}
+    </Formik>
+  )
+  
 };
 
 const styles = StyleSheet.create({
@@ -137,6 +176,14 @@ const styles = StyleSheet.create({
     paddingVertical: "10%",
     paddingHorizontal: "5%",
     alignItems: "center",
+  },
+  inputStyle:{
+    width:'100%',
+		backgroundColor: "#F0F0F0",
+		borderRadius: 14,
+		paddingHorizontal: 15,
+		paddingVertical: 20,
+		marginVertical: "3%",
   },
 });
 
