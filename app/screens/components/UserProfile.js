@@ -13,6 +13,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Entypo";
 import React, { useState } from "react";
+import * as SecureStore from 'expo-secure-store';
 
 import CustomButton from "./ReusableComponents/CustomButton";
 
@@ -20,6 +21,15 @@ const UserProfile = () => {
   const navigation = useNavigation();
   const { width, height } = Dimensions.get("window");
   const [name, setName] = useState('User Name');
+
+  const onLogOut = async() => {
+	await SecureStore.deleteToken("userToken").then(
+	navigation.navigate("SignIn"));
+
+	async function deleteToken(key) {
+		await SecureStore.deleteItemAsync(key)
+	  }
+  }
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
@@ -42,7 +52,7 @@ const UserProfile = () => {
               name="baidu"
               size={20}
               color="orange"
-            />," Pets"]} type="outline" onPress={() => navigation.navigate("PetsInfo")} />
+            />," Pets"]} type="outline" onPress={onLogOut} />
         </View>
 		<View style={styles.footer}>
 			<Pressable onPress={() => navigation.navigate("SignIn")}>
