@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   container_outline:{
     borderWidth:1,
     borderColor:'rgba(176, 176, 176, 1)',
-  },  
+  }, 
   text: {
     fontSize: 17,
     fontWeight: "bold",
@@ -54,6 +54,9 @@ const styles = StyleSheet.create({
     color: "#7A7A7A",
     lineHeight: 26,
     letterSpacing: 0.25,
+  },
+  text_outline: {
+    color:"black",
   },
 });
 
