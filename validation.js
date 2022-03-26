@@ -12,11 +12,11 @@ const registerValidation = data => {
   			.min(6)
   			.required()
   			.email(),
-		phoneNumber: Joi.number().trim()
+		phoneNumber: Joi.number()
 			.required(),
 		gender: Joi.string().trim()
 			.required(),
-  		password: Joi.string()
+  		password: Joi.string().trim()
   			.min(6)
   			.required()
 	});
