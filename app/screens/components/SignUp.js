@@ -8,12 +8,15 @@ import {
   Pressable,
   ScrollView,
   Switch,
+  TextInput,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Entypo";
 import React, { useState, useRef } from "react";
 import {Picker} from '@react-native-community/picker';
 import RadioForm from 'react-native-simple-radio-button';
+import * as yup from 'yup'
+import { Formik } from 'formik'
 
 import Input from "./ReusableComponents/Input";
 import CustomButton from "./ReusableComponents/CustomButton";
@@ -65,12 +68,43 @@ const SignUp = () => {
   };
 
   return (
+    <Formik
+    initialValues={{ 
+      fullName: '',
+      email: '', 
+      password: '' ,
+      phoneNumber: '',
+    }}
+    onSubmit={values => Alert.alert(JSON.stringify(values))}
+    validationSchema={yup.object().shape({
+      fullName: yup
+        .string()
+        .required('Full name is required'),
+      email: yup
+        .string()
+        .email()
+        .required(),
+      password: yup
+        .string()
+        .min(6)
+        .max(30, 'Password should not exceed 30 chars.')
+        .required(),
+      phoneNumber: yup
+      .string()
+      .required("This field is Required")
+      .matches(
+        /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/,
+        "Phone number is not valid"
+      )
+    })}
+   >
+    {({ values, handleChange, errors, setFieldTouched, touched, isValid, handleSubmit }) => (
     <ScrollView showsVerticalScrollIndicator={false}>
       <SafeAreaView style={[styles.root, { height: height, width: width }]}>
         <View style={styles.header}>
           <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
             <Icon
-              style={{ marginBottom: "5%" }}
+              style={{ marginBottom: "3%" }}
               name="chevron-thin-left"
               size={25}
               color="#000"
@@ -80,29 +114,54 @@ const SignUp = () => {
           <Text style={styles.subtext}>Fill in your details to begin</Text>
         </View>
         <View style={styles.inputContainer}>
-          <Input
-            placeholder="Full Name"
-            value={fullName}
-            setValue={setFullName}
-          />
-          <Input placeholder="Email" value={email} setValue={setEmail} />
-          <Input
-            placeholder="Password"
-            value={password}
-            setValue={setPassword}
-            secureTextEntry
-          />
+        <TextInput
+              value={values.fullName}
+              style={styles.inputStyle}
+              onChangeText={handleChange('fullName')}
+              onBlur={() => setFieldTouched('fullName')}
+              placeholder="Full Name"
+            />
+            {touched.fullName && errors.fullName &&
+              <Text style={{ fontSize: 12, color: '#FF0D10' }}>{errors.fullName}</Text>
+            }      
+            <TextInput
+              value={values.email}
+              style={styles.inputStyle}
+              onChangeText={handleChange('email')}
+              onBlur={() => setFieldTouched('email')}
+              placeholder="E-mail"
+            />
+            {touched.email && errors.email &&
+              <Text style={{ fontSize: 12, color: '#FF0D10' }}>{errors.email}</Text>
+            }
+            <TextInput
+              value={values.password}
+              style={styles.inputStyle}
+              onChangeText={handleChange('password')}
+              placeholder="Password"
+              onBlur={() => setFieldTouched('password')}
+              secureTextEntry={true}
+            />
+            {touched.password && errors.password &&
+              <Text style={{ fontSize: 12, color: '#FF0D10' }}>{errors.password}</Text>
+            }
             <PhoneInput
               ref={phoneInput}
               defaultValue={phoneNumber}
+              value={values.phoneNumber}
               defaultCode="US"
               layout="first"
-              containerStyle={styles.phoneNumberView}
+              containerStyle={[styles.inputStyle, styles.phoneNumberView]}
+              onChangeText={handleChange('phoneNumber')}
+              onBlur={() => setFieldTouched('phoneNumber')}
               textContainerStyle={{ paddingVertical: 0, backgroundColor: "#f0f0f0" }}
               onChangeFormattedText={(text) => {
                 setPhoneNumber(text);
               }}
             />
+            {touched.phoneNumber && errors.phoneNumber &&
+              <Text style={{ fontSize: 12, color: '#FF0D10' }}>{errors.phoneNumber}</Text>
+            }
             <View style={{marginTop:"3%"}}>
       <RadioForm
        formHorizontal={true}
@@ -125,8 +184,8 @@ const SignUp = () => {
               />
             </View>
           </View>
-          {/* <View style={{ marginVertical: "2%" }} /> */}
-          <CustomButton btnText={"Sign up"} onPress={onSignUpPressed} />
+          <CustomButton btnText={"Sign up"}
+              onPress={handleSubmit} />
           <Pressable onPress={() => navigation.navigate("SignIn")}>
             <Text style={styles.subtext}>
               Already have an account?
@@ -150,6 +209,8 @@ const SignUp = () => {
         </View>
       </SafeAreaView>
     </ScrollView>
+    )}
+    </Formik>
   );
 };
 
@@ -189,7 +250,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   inputContainer: {
-    paddingVertical: "10%",
+    paddingVertical: "7%",
     paddingHorizontal: "5%",
     alignItems: "center",
   },
@@ -212,17 +273,18 @@ const styles = StyleSheet.create({
     color: "#3e3e3e",
   },
   phoneNumberView: {
-    width: "100%",
-		backgroundColor: "#f0f0f0",
+		paddingVertical: 12,
+  },
+  inputStyle:{
+    width:'100%',
+		backgroundColor: "#F0F0F0",
 		borderRadius: 14,
 		paddingHorizontal: 15,
-		paddingVertical: 12,
+		paddingVertical: 20,
 		marginVertical: "3%",
-  },
-  dropdown:{
-    width: "100%",
-    height: "10%",
   },
 });
 
 export default SignUp;
+
+console.disableYellowBox = true;
