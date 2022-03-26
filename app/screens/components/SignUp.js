@@ -60,16 +60,16 @@ const SignUp = () => {
             gender: chosenOption,
           }),
         });
-        if (!userData.ok) {
+        if (!userData.ok || userData.status !== 201) {
           const message = `An error has occured: ${userData.status}`;
-          // throw new Error(message);
-          console.log(message);
+          userData = await userData.json();
+          alert(userData.message);
+          // console.log(userData.message);
         } 
         else {
           navigation.navigate("SignIn");
         }
-        userData = await userData.json();
-        console.log(userData.message);
+        // userData = await userData.json();
       }
     }
     validationSchema={yup.object().shape({
