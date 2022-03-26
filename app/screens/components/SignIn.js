@@ -7,12 +7,12 @@ import {
   TouchableWithoutFeedback,
   Pressable,
   ScrollView,
+  TextInput
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Entypo";
 import React, { useState } from "react";
 
-import Input from "./ReusableComponents/Input";
 import CustomButton from "./ReusableComponents/CustomButton";
 import * as SecureStore from 'expo-secure-store';
 import * as yup from 'yup'
@@ -21,15 +21,9 @@ import { Formik } from 'formik'
 const SignIn = () => {
   const navigation = useNavigation();
   const { width, height } = Dimensions.get("window");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
 
   const Login_URL = 'http://192.168.1.108:3000/api/user/login';
-
-  async function save(key, value) {
-    await SecureStore.setItemAsync(key, value);
-  }
-
+  
   return (
     <Formik
     initialValues={{ 
@@ -55,8 +49,12 @@ const SignIn = () => {
           const message = `An error has occured: ${userData.status}`;
         !userData.ok ? 
           console.log(message) :
-          [save('userToken', data.token), navigation.navigate("Home")];
+          [save('userToken', data.token), navigation.navigate("Tabs")];
           });
+
+          async function save(key, value) {
+            await SecureStore.setItemAsync(key, value);
+          }
     }
     }
     validationSchema={yup.object().shape({
@@ -113,7 +111,7 @@ const SignIn = () => {
             </Text>
           </Pressable>
           <View style={{ marginVertical: "8%" }} />
-          <CustomButton btnText={"Sign in"} onPress={onSignInPressed} />
+          <CustomButton btnText={"Sign in"} onPress={handleSubmit} />
         </View>
         <View style={styles.footer}>
           <Text style={styles.footerText}>

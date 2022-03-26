@@ -3,6 +3,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
 
 import Routes from './Routes';
 import Map from '../screens/components/Map';
+import UserProfile from '../screens/components/UserProfile';
 
 const Tab = createBottomTabNavigator()
 
@@ -21,11 +22,11 @@ const Tabs= () => {
             name="Home"
             component={Map}
           />
-          {/* <Tab.Screen
-            name="Screen2"
-            component={SecondScreenNavigator}
-          />
           <Tab.Screen
+            name="Profile"
+            component={UserProfile}
+          />
+          {/* <Tab.Screen
             name="Screen3"
             component={ThirdScreenNavigator}
           /> */}
