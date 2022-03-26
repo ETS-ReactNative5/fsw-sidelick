@@ -11,7 +11,7 @@ import {
   Image,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import Icon from "react-native-vector-icons/AntDesign";
+import Icon from "react-native-vector-icons/Entypo";
 import React, { useState } from "react";
 
 import CustomButton from "./ReusableComponents/CustomButton";
@@ -33,17 +33,23 @@ const UserProfile = () => {
         </View>
         <View style={styles.buttonContainer}>
           <CustomButton btnText={[<Icon
-              style={{ marginBottom: "5%" }}
-              name="meh"
-              size={25}
-              color="#000"
-            />,"User"]} type="outline" />
-		  <CustomButton btnText={"Pets"} type="outline" />
+              name="emoji-happy"
+              size={20}
+              color="orange"
+            />," User"]} type="outline" onPress={() => navigation.navigate("EditProfile")} />
+			<View style={{marginVertical: '2%'}}/> 
+		  <CustomButton btnText={[<Icon
+              name="baidu"
+              size={20}
+              color="orange"
+            />," Pets"]} type="outline" onPress={() => navigation.navigate("PetsInfo")} />
         </View>
 		<View style={styles.footer}>
-			<Pressable>
+			<Pressable onPress={() => navigation.navigate("SignIn")}>
           <Text style={styles.footerText}>
-            Logout
+            <Icon name="log-out"
+              size={15}
+			  color='orange' /><View style={{paddingHorizontal: '2%'}}/>Logout
           </Text>
 		  </Pressable>
         </View>
@@ -58,13 +64,16 @@ const styles = StyleSheet.create({
     backgroundColor: "#FCFCFC",
   },
   header: {
-    marginTop: "15%",
+    marginTop: "10%",
     marginBottom: "5%",
     justifyContent: "center",
     alignItems: "center",
   },
   footer: {
+	  flex:1,
+	  justifyContent: "flex-end",
     alignItems: "center",
+	marginBottom: "25%",
   },
   userName: {
     fontWeight: "700",
@@ -82,7 +91,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.4,
   },
   footerText: {
-    fontSize: 13,
+    fontSize: 15,
     lineHeight: 20,
     letterSpacing: 0.25,
     fontWeight: "400",
