@@ -11,6 +11,7 @@ import {
   Image,
   ImageBackground,
   TouchableOpacity,
+  Platform,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Entypo";
@@ -59,7 +60,7 @@ const WalkerProfile = () => {
             <View style={{ marginRight: "15%" }}></View>
           </View>
         </ImageBackground>
-        <View style={[styles.card , {height: height}]}>
+        <View style={[styles.card , {height: height, borderRadius: 15, shadowOpacity: 20 ,paddingHorizontal: "5%"}]}>
           <Text style={styles.userName}>Alex Murray</Text>
           <Text
             style={[
@@ -120,7 +121,7 @@ const WalkerProfile = () => {
             </Text>
 			{/* <Text style={{color: '#FB724C',}}>Read more</Text> */}
           </View>
-		  <Pressable style={[styles.btn, { backgroundColor: "#ff8500", marginVertical: "5%" }]}>
+		  <Pressable style={[styles.btn, { backgroundColor: "#ff8500", marginVertical: "5%" }]} >
 			  <Text style={{ textAlign: "center", color: "white" }}>
 				  Book a walk
 			  </Text>

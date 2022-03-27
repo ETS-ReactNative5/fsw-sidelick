@@ -70,9 +70,7 @@ const EditWalkerProfile = () => {
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView> */}
 
-        <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"} style={styles.inputContainer}>
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={styles.inputContainer}>
           <Input placeholder={"Full Name"} value={name} setValue={setName} />
           <Input placeholder={"Email"} value={email} setValue={setEmail} />
           <Input
@@ -82,8 +80,7 @@ const EditWalkerProfile = () => {
           />
           <Input placeholder={"Rate"} value={rate} setValue={setRate} />
           <Input placeholder={"Bio"} value={bio} setValue={setBio} multiline={true} />
-          </TouchableWithoutFeedback>
-        </KeyboardAvoidingView>
+        </View>
         <View style={styles.footer}>
           <Pressable>
             <Text style={styles.footerText}>
