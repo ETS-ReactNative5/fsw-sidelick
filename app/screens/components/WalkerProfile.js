@@ -10,6 +10,7 @@ import {
   TextInput,
   Image,
   ImageBackground,
+  TouchableOpacity,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Entypo";
@@ -31,72 +32,152 @@ const WalkerProfile = () => {
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
-		<View>
-		  <ImageBackground
-            source={require("../assets/dog-walking.png")}
-			style={[styles.root, { height: height*0.65, width: width }]}>
-        <View
-          style={{
-            flexDirection: "row",
-            marginHorizontal: "5%",
-            marginVertical: "8%",
-			justifyContent: "space-between"
-          }}
+      <View>
+        <ImageBackground
+          source={require("../assets/dog-walking.png")}
+          style={[styles.root, { height: height * 0.5, width: width }]}
         >
-          <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
-		  <BlurView
-            intensity={15}
-            tint="dark"
-            style={styles.blurContainer}
-          ><Icon name="cross" size={30} color="#fff" />
-		  </BlurView>
-          </TouchableWithoutFeedback>
-          <BlurView
-            intensity={10}
-            tint="dark"
-            style={styles.blurContainer}
+          <View
+            style={{
+              flexDirection: "row",
+              marginVertical: "8%",
+              justifyContent: "space-between",
+            }}
           >
-			  <Text style={styles.blurText} >Walker Profile</Text>
-		  </BlurView>
-		  <View style={{marginRight: "12%"}}>
-		  </View>
+            <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
+              <BlurView
+                intensity={15}
+                tint="dark"
+                style={[styles.blurContainer, { marginLeft: "5%" }]}
+              >
+                <Icon name="cross" size={30} color="#fff" />
+              </BlurView>
+            </TouchableWithoutFeedback>
+            <BlurView intensity={10} tint="dark" style={styles.blurContainer}>
+              <Text style={styles.blurText}>Walker Profile</Text>
+            </BlurView>
+            <View style={{ marginRight: "15%" }}></View>
+          </View>
+        </ImageBackground>
+        <View style={[styles.card , {height: height}]}>
+          <Text style={styles.userName}>Alex Murray</Text>
+          <Text
+            style={[
+              styles.subText,
+              {
+                textAlign: "center",
+              },
+            ]}
+          >
+            <Text style={{ fontWeight: "bold", color: "black" }}>5$</Text>/hr |{" "}
+            <Text style={{ fontWeight: "bold", color: "black" }}>10</Text> km
+          </Text>
+          {/* <View style={{ alignItems: "center" }}> */}
+          <View
+            style={{
+              borderWidth: 1.5,
+              borderColor: "rgba(232, 232, 232, 1)",
+              backgroundColor: "rgba(232, 232, 232, 1)",
+              width: width * 0.9,
+              marginVertical: "5%",
+            }}
+          />
+          {/* </View> */}
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+            }}
+          >
+            <TouchableOpacity
+              style={[styles.btn, { backgroundColor: "#2b2b2b" }]}
+            >
+              <Text style={{ textAlign: "center", color: "white" }}>About</Text>
+            </TouchableOpacity>
+            {/* <Pressable style={[styles.btn, { backgroundColor: "#f5f5f5" }]}>
+              <Text style={{ textAlign: "center", color: "#b0b0b0" }}>
+                Location
+              </Text>
+            </Pressable> */}
+          </View>
+          <View>
+            <Text style={[styles.subText, { marginTop: "5%" }]}>Age</Text>
+            <Text
+              style={{
+                fontWeight: "500",
+                fontSize: 17,
+                lineHeight: 25.5,
+                letterSpacing: -0.41,
+              }}
+            >
+              30 Years
+            </Text>
+          </View>
+          <View>
+            <Text style={[styles.subText, { marginTop: "5%" }]}>
+              Alex has loved dogs since childhood. He is currently a veterinary
+              student. Visits the dog shelter we...
+            </Text>
+			{/* <Text style={{color: '#FB724C',}}>Read more</Text> */}
+          </View>
+		  <Pressable style={[styles.btn, { backgroundColor: "#ff8500", marginVertical: "5%" }]}>
+			  <Text style={{ textAlign: "center", color: "white" }}>
+				  Book a walk
+			  </Text>
+		  </Pressable>
         </View>
-		</ImageBackground>
-		<View style={styles.card}>
-			<Text>
-				Name
-			</Text>
-		</View>
-		</View>
+      </View>
     </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   root: {
-	display:"flex",
+    display: "flex",
   },
   card: {
-	alignItems: "center",
-	backgroundColor: "#fbfbfb",
-	borderRadius: 30,
-	
+    backgroundColor: "#fbfbfb",
+    paddingTop: "5%",
+    alignItems: "center",
   },
   blurContainer: {
     paddingVertical: 15,
     paddingHorizontal: 10,
-	borderRadius: 50,
-	justifyContent: "center",
+    borderRadius: 50,
+    justifyContent: "center",
   },
   blurText: {
-	fontWeight: "bold",
-	fontStyle: "normal",
-	fontSize: 17,
-	lineHeight: 25.5,
-	letterSpacing: -0.41,
-	textAlign: "center",
-	color: "white",
-  },	
+    fontWeight: "bold",
+    fontStyle: "normal",
+    fontSize: 17,
+    lineHeight: 25.5,
+    letterSpacing: -0.41,
+    textAlign: "center",
+    color: "white",
+  },
+  userName: {
+    fontWeight: "bold",
+    fontStyle: "normal",
+    fontSize: 28,
+    lineHeight: 42,
+    letterSpacing: -0.41,
+    textAlign: "center",
+  },
+  subText: {
+    fontWeight: "500",
+    fontStyle: "normal",
+    fontSize: 13,
+    lineHeight: 19.5,
+    letterSpacing: -0.41,
+    color: "#a1a1a1",
+  },
+  btn: {
+    textAlign: "center",
+    paddingVertical: 12,
+    paddingHorizontal: 29,
+    borderRadius: 14,
+    marginHorizontal: "5%",
+  },
 });
 
 export default WalkerProfile;
