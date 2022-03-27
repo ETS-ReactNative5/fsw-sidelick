@@ -8,6 +8,7 @@ import OnBoardingScreen from "./app/screens/components/OnBoardingScreen";
 import Tabs from "./app/Routes/Tabs";
 import EditProfile from "./app/screens/components/EditProfile";
 import EditWalkerProfile from "./app/screens/components/EditWalkerProfile";
+import WalkerProfile from "./app/screens/components/WalkerProfile";
 
 const App = () => {
   const Stack = createNativeStackNavigator();
@@ -17,9 +18,10 @@ const App = () => {
         {/* <Stack.Screen name="OnBoardingScreen" component={OnBoardingScreen} />
         <Stack.Screen name="SignUp" component={SignUp} />
         <Stack.Screen name="SignIn" component={SignIn} /> */}
-        <Stack.Screen name="Tabs" component={Tabs} />
+        {/* <Stack.Screen name="Tabs" component={Tabs} />
         <Stack.Screen name="EditProfile" component={EditProfile} />
-        <Stack.Screen name="EditWalkerProfile" component={EditWalkerProfile} />
+        <Stack.Screen name="EditWalkerProfile" component={EditWalkerProfile} /> */}
+        <Stack.Screen name="WalkerProfile" component={WalkerProfile} />
       </Stack.Navigator>
     </NavigationContainer>
   );
