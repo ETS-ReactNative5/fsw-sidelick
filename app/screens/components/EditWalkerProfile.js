@@ -55,21 +55,6 @@ const EditWalkerProfile = () => {
           </Text>
         </View>
 
-{/* <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={styles.container}
-    >
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={styles.inner}>
-          <Text style={styles.header}>Header</Text>
-          <TextInput placeholder="Username" style={styles.textInput} />
-          <View style={styles.btnContainer}>
-            <Button title="Submit" onPress={() => null} />
-          </View>
-        </View>
-      </TouchableWithoutFeedback>
-    </KeyboardAvoidingView> */}
-
         <View style={styles.inputContainer}>
           <Input placeholder={"Full Name"} value={name} setValue={setName} />
           <Input placeholder={"Email"} value={email} setValue={setEmail} />

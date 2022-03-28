@@ -13,17 +13,13 @@ const Tabs= () => {
     <>
         <Tab.Navigator
          screenOptions={{ headerShown: false }}
-          tabBarOptions={{
-            labelStyle:{fontSize:16},
-            activeTintColor: 'orange'
-          }}
         >
           <Tab.Screen
             name="Home"
             component={Map}
             options={{
-              tabBarIcon: () => (
-                <MaterialCommunityIcons name="home-variant-outline" size={24} />
+              tabBarIcon: ({color}) => (
+                <MaterialCommunityIcons name="home-variant-outline" color={color} size={24} />
               ),
             }}
             />
@@ -31,8 +27,8 @@ const Tabs= () => {
             name="Profile"
             component={UserProfile}
             options={{
-              tabBarIcon: () => (
-                <MaterialCommunityIcons name="emoticon-neutral-outline" size={24} />
+              tabBarIcon: ({color}) => (
+                <MaterialCommunityIcons name="emoticon-neutral-outline" color={color} size={24} />
               ),
             }}
             />
