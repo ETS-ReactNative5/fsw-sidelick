@@ -96,8 +96,6 @@ const Map = () => {
       setErrorMsg("Permission to access location was denied");
       return;
     }
-
-    let slocation = await Location.getCurrentPositionAsync({});
   };
 
   useEffect(() => {
@@ -110,7 +108,6 @@ const Map = () => {
         let latitude = position.coords.latitude;
         let longitude = position.coords.longitude;
         setLocation({ latitude, longitude });
-        console.log(JSON.stringify(position));
         console.log(JSON.stringify(position.coords.latitude));
         console.log(JSON.stringify(position.coords.longitude));
       },
@@ -120,13 +117,6 @@ const Map = () => {
       { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
     );
   }, []);
-
-  // let text = 'Waiting..';
-  // if (errorMsg) {
-  //   text = errorMsg;
-  // } else if (location) {
-  //   text = JSON.stringify(location);
-  // }
 
   return (
     <SafeAreaView style={styles.container}>
