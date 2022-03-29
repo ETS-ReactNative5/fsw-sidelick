@@ -7,6 +7,7 @@ import {
   FlatList,
   TouchableOpacity,
   Pressable,
+  Image,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
@@ -19,21 +20,27 @@ const Requests = ({ data }) => {
   const [request, setRequest] = useState([
     {
       id: 1,
-      time: "29/3/2022",
-      client: "Hala Zbib",
+      date: "10:45 • 29/3/2022",
+      walker: "Hala Zbib",
+      age: '21',
       location: "Beirut",
+      image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRAd7SeoDA2PxCcdbtBxBAHYw1xiP_CpXmRFyKSyyiC2Pr_A_vf34p816fwajWCCR9eHBo&usqp=CAU'
     },
     {
       id: 2,
-      time: "29/3/2022",
-      client: "Charbel Daoud",
+      date: "16:20 • 29/3/2022",
+      walker: "Charbel Daoud",
+      age: '32',
       location: "Beirut",
+      image: 'https://icon-library.com/images/avatar-icon-png/avatar-icon-png-25.jpg'
     },
     {
       id: 3,
-      time: "29/3/2022",
-      client: "Saad",
+      date: "9:13 • 29/3/2022",
+      walker: "Saad",
+      age: '30',
       location: "Jbeil",
+      image: 'https://e7.pngegg.com/pngimages/341/821/png-clipart-art-rick-sanchez-adult-swim-meeseeks-and-destroy-pickle-rick-rick-and-morty-portal-food-vehicle.png'
     },
   ]);
 
@@ -51,10 +58,6 @@ const Requests = ({ data }) => {
     );
   };
 
-  const deleteItemById = (id) => {
-	const filteredData = this.state.request.filter(item => String(item.id) !== id);
-	this.setState({ request: filteredData });}
-
   return (
     <SafeAreaView style={[styles.root, { height: height, width: width }]}>
 		<Text style={styles.title}>Your Requests</Text>
@@ -62,12 +65,15 @@ const Requests = ({ data }) => {
         style={{ paddingHorizontal: "5%" }}
         renderItem={({ item }) => (
           <View style={styles.container}>
-			  <Pressable style={{alignItems:"flex-end"}} onPress={() => this.deleteItemById(item.id)}>
+            <Image style={{width:80, height:80, borderRadius: 50, shadowOpacity: 0.3, marginHorizontal: 10, }}source={{uri: item.image}}/>
+			  {/* <Pressable style={{alignItems:"flex-end"}} >
 			  <Icon name="close" size={14}/>
-			  </Pressable>
-            <Text style={styles.text}>{item.client}
-			</Text>
+			  </Pressable> */}
+        <View style={{justifyContent:'center'}}>
+            <Text style={styles.text}>{item.walker}, {item.age}</Text>
+            <Text style={styles.date}>{item.date}</Text>
             <Text style={styles.subtext}>{status}</Text>
+            </View>
           </View>
         )}
         data={request}
@@ -85,6 +91,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
+    flexDirection: "row",
     paddingVertical: 20,
     paddingHorizontal: 20,
     width: "100%",
@@ -95,7 +102,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 22,
-    fontWeight: "bold",
+    fontWeight: "500",
     letterSpacing: 1,
   },
   subtext: {
@@ -104,14 +111,18 @@ const styles = StyleSheet.create({
     letterSpacing: 0.5,
   },
   title:{
-	fontWeight: "700",
+	fontWeight: "400",
     fontStyle: "normal",
     fontSize: 36,
     lineHeight: 51,
     letterSpacing: 0.4,
-	textAlign: "center",
 	marginVertical: "2%",
+  marginHorizontal: '5%',
   },
+  date:{
+    fontSize: 14,
+    letterSpacing: 0.5,
+  },  
 });
 
 export default Requests;
