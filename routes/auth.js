@@ -67,9 +67,10 @@ router.post("/login", async (req, res) => {
       _id: user._id,
       expire: Date.now() + 1000 * 60 * 60, //1 hour
     },
-    process.env.TOKEN_SECRET
+    process.env.TOKEN_SECRET,
   );
-  res.header("auth-token", token).json({ token });
+  // save user token
+  res.header('Authorization', `Bearer ${token}`).json({ token });
 });
 
 module.exports = router;

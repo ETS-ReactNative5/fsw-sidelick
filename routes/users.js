@@ -14,6 +14,19 @@ router.get("/get-walkers", verifyToken, async (req, res) => {
   }
 });
 
+router.post("/location", verifyToken, async (req, res) => {
+  try {
+    const update = { location:{latitude: req.body.latitude, longitude: req.body.longitude }};
+    const filter = req.user._id;
+    const updatedDocument = await User.findOneAndUpdate(filter, update, {
+      new: true,
+    });
+    res.status(200).send(updatedDocument.location);
+  } catch (err) {
+    res.status(400).json(err);
+  }
+});
+
 router.post("/update", verifyToken, async (req, res) => {
   try {
     const emailExist = await User.findOne({ email: req.body.email });
@@ -34,19 +47,6 @@ router.post("/update", verifyToken, async (req, res) => {
     });
 
     return res.status(200).send(updatedDocument);
-  } catch (err) {
-    return res.status(400).json(err);
-  }
-});
-
-router.post("/update-location", verifyToken, async (req, res) => {
-  try {
-    const update = { location: {latitude: req.body.latitude, longitude: req.body.longitude }};
-    const filter = req.user._id;
-    const updatedDocument = await User.findOneAndUpdate(filter, update, {
-      new: true,
-    });
-    return  res.status(200).send(updatedDocument.location);
   } catch (err) {
     return res.status(400).json(err);
   }
