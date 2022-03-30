@@ -21,8 +21,8 @@ import React, { useState } from "react";
 import * as SecureStore from "expo-secure-store";
 import { BlurView } from "expo-blur";
 
-import Input from "./ReusableComponents/Input";
-import CustomButton from "./ReusableComponents/CustomButton";
+import Input from "../ReusableComponents/Input";
+import CustomButton from "../ReusableComponents/CustomButton";
 
 const WalkerProfile = () => {
   const navigation = useNavigation();

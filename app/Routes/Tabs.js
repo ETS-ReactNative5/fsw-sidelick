@@ -4,7 +4,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 
 import Map from "../screens/components/Map";
 import UserProfile from "../screens/components/UserProfile";
-import Requests from "../screens/components/ReusableComponents/Requests";
+import Requests from "../screens/components/Requests";
 
 const Tab = createBottomTabNavigator();
 

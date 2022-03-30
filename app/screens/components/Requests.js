@@ -12,6 +12,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import Icon from "react-native-vector-icons/AntDesign";
+import Swipeable from 'react-native-gesture-handler/Swipeable';
 
 const Requests = ({ data }) => {
   const navigation = useNavigation();
@@ -122,7 +123,7 @@ const styles = StyleSheet.create({
   date:{
     fontSize: 14,
     letterSpacing: 0.5,
-  },  
+  },
 });
 
 export default Requests;

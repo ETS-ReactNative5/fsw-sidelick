@@ -15,7 +15,7 @@ import Icon from "react-native-vector-icons/Entypo";
 import React, { useState } from "react";
 import * as SecureStore from 'expo-secure-store';
 
-import CustomButton from "./ReusableComponents/CustomButton";
+import CustomButton from "../ReusableComponents/CustomButton";
 
 const UserProfile = () => {
   const navigation = useNavigation();

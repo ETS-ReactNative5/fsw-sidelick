@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { BlurView } from "expo-blur";
 import { useNavigation } from "@react-navigation/native";
-import CustomButton from "./ReusableComponents/CustomButton";
+import CustomButton from "../ReusableComponents/CustomButton";
 
 const { width, height } = Dimensions.get("window");
 

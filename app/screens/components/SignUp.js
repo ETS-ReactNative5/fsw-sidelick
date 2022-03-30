@@ -18,8 +18,8 @@ import RadioForm from 'react-native-simple-radio-button';
 import * as yup from 'yup'
 import { Formik } from 'formik'
 
-import Input from "./ReusableComponents/Input";
-import CustomButton from "./ReusableComponents/CustomButton";
+import Input from "../ReusableComponents/Input";
+import CustomButton from "../ReusableComponents/CustomButton";
 import PhoneInput from "react-native-phone-number-input";
 
 const SignUp = () => {
@@ -34,7 +34,7 @@ const SignUp = () => {
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
 
-  const Register_URL = "http://192.168.1.108:3000/api/user/register";
+  const Register_URL = "http://192.168.1.108:3000/api/auth/register";
   return (
     <Formik
     initialValues={{ 

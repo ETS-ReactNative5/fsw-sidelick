@@ -15,8 +15,8 @@ import Icon from "react-native-vector-icons/Entypo";
 import React, { useState } from "react";
 import * as SecureStore from "expo-secure-store";
 
-import Input from "./ReusableComponents/Input";
-import CustomButton from "./ReusableComponents/CustomButton";
+import Input from "../ReusableComponents/Input";
+import CustomButton from "../ReusableComponents/CustomButton";
 
 const EditWalkerProfile = () => {
   const navigation = useNavigation();

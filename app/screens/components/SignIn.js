@@ -13,7 +13,7 @@ import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Entypo";
 import React, { useState } from "react";
 
-import CustomButton from "./ReusableComponents/CustomButton";
+import CustomButton from "../ReusableComponents/CustomButton";
 import * as SecureStore from 'expo-secure-store';
 import * as yup from 'yup'
 import { Formik } from 'formik'
@@ -22,7 +22,7 @@ const SignIn = () => {
   const navigation = useNavigation();
   const { width, height } = Dimensions.get("window");
 
-  const Login_URL = 'http://192.168.1.108:3000/api/user/login';
+  const Login_URL = 'http://192.168.1.108:3000/api/auth/login';
   
   return (
     <Formik
