@@ -8,9 +8,9 @@ router.get("/get-walkers", verifyToken, async (req, res) => {
     const walkers = await User.find({ status: true });
     const walkersInfo = await walkers.map((walker) => walker.fullName);
 
-    res.status(201).send(walkersInfo);
+    return res.status(201).send(walkersInfo);
   } catch (err) {
-    res.status(400).json(err);
+    return res.status(400).json(err);
   }
 });
 
@@ -41,12 +41,12 @@ router.post("/update", verifyToken, async (req, res) => {
 
 router.post("/update-location", verifyToken, async (req, res) => {
   try {
-    const update = { latitude: req.body.latitude, longitude: req.body.longitude };
+    const update = { location: {latitude: req.body.latitude, longitude: req.body.longitude }};
     const filter = req.user._id;
     const updatedDocument = await User.findOneAndUpdate(filter, update, {
       new: true,
     });
-    return  res.status(200).send(updatedDocument);
+    return  res.status(200).send(updatedDocument.location);
   } catch (err) {
     return res.status(400).json(err);
   }
