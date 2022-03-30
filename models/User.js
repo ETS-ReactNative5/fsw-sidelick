@@ -1,5 +1,17 @@
 const mongoose = require('mongoose');
 
+
+const locationSchema = new mongoose.Schema({
+	latitude:{
+		type: Number ,
+		default:0
+	},
+	longitude: {
+		type: Number ,
+		default:0
+	},
+});
+
 const userSchema = new mongoose.Schema({
 	fullName: {
 		type: String,
@@ -29,6 +41,13 @@ const userSchema = new mongoose.Schema({
 	},
 	phoneNumber:{
 		type: Number,
+	},
+	location: {
+		type: locationSchema,
+		default: () => ({})
+	},
+	image:{
+		type: String,
 	},
 	createdAt: {
 		type: Date,

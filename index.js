@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 // import routes
 const authRoute = require('./routes/auth');
 const postRoute = require('./routes/posts');
+const clientRoute = require('./routes/users')
 
 dotenv.config();
 
@@ -17,10 +18,11 @@ mongoose.connect(process.env.DB_CONNECT,
 app.use(express.json());
 
 // Route Middlewares
-// when we navigate to api/user then I wanna run this authRoute
+// when we navigate to api/auth then I wanna run this authRoute
 // this means that this is always gonna have this prefix in the authRoute
-app.use('/api/user', authRoute);
+app.use('/api/auth', authRoute);
 app.use('/api/posts', postRoute);
+app.use('/api/users', clientRoute);
 
 app.listen(3000, () => console.log('Server Up and Running'));
 
