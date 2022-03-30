@@ -44,7 +44,7 @@ import {
 	  </Pressable>
 	  </View>
 			<Image
-			  source={require("../assets/avatar.png")}
+			  source={require("../../../assets/avatar.png")}
 			  style={styles.profilepicture}
 			/>
 			<Text style={styles.userName} value={name} >{name}</Text>

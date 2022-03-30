@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import ActionButton from 'react-native-action-button';
 import Icon from 'react-native-vector-icons/Ionicons';
-import ImagePicker from 'react-native-image-crop-picker';
+import ImagePicker from 'expo-image-picker';
 
 import storage from '@react-native-firebase/storage';
 import firestore from '@react-native-firebase/firestore';
@@ -21,12 +21,9 @@ import {
   SubmitBtn,
   SubmitBtnText,
   StatusWrapper,
-} from '../styles/AddPost';
-
-import { AuthContext } from '../navigation/AuthProvider';
+} from './AddPost';
 
 const ImageUpload = () => {
-  const {user, logout} = useContext(AuthContext);
 
   const [image, setImage] = useState(null);
   const [uploading, setUploading] = useState(false);

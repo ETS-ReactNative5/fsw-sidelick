@@ -38,7 +38,7 @@ const WalkerProfile = () => {
     <ScrollView showsVerticalScrollIndicator={false}>
       <View>
         <ImageBackground
-          source={require("../assets/dog-walking.png")}
+          source={require("../../../assets/dog-walking.png")}
           style={[styles.root, { height: height * 0.5, width: width }]}
         >
           <View

@@ -36,7 +36,7 @@ const UserProfile = () => {
       <SafeAreaView style={[styles.root, { height: height, width: width }]}>
         <View style={styles.header}>
           <Image
-            source={require("../assets/avatar.png")}
+            source={require("../../../assets/avatar.png")}
             style={styles.profilepicture}
           />
 		  <Text style={styles.userName} value={name} setValue={setName} >{name}</Text>

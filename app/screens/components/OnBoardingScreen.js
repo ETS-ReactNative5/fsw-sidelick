@@ -22,9 +22,9 @@ const OnBoardingScreen = () => {
   return (
     <ImageBackground
       style={{ flex: 1 }}
-      source={require("../assets/dog-walker.png")}
+      source={require("../../../assets/dog-walker.png")}
     >
-      <Image source={require("../assets/LOGO.png")} style={[styles.logo, {height: height * 0.25}]} resizeMode="contain" />
+      <Image source={require("../../../assets/LOGO.png")} style={[styles.logo, {height: height * 0.25}]} resizeMode="contain" />
       <View style={[styles.container, { marginBottom: height * 0.25}]}>
         <BlurView intensity={20} tint="dark" style={styles.blurContainer}>
           <Text style={styles.text}>Too tired to walk your dog?</Text>
