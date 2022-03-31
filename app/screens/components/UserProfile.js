@@ -48,7 +48,7 @@ const UserProfile = () => {
             //   size={20}
             //   color="orange"
             // />,
-            " User"} type="outline" onPress={() => navigation.navigate("EditProfile")} />
+            "Edit User"} type="outline" onPress={() => navigation.navigate("EditProfile")} />
 			<View style={{marginVertical: '2%'}}/> 
 		  <CustomButton btnText={
         // [<Icon
@@ -56,7 +56,7 @@ const UserProfile = () => {
         //       size={20}
         //       color="orange"
         //     />,
-            " Pets"} type="outline" />
+            "Edit Pets"} type="outline" />
         </View>
 		<View style={styles.footer}>
 			<Pressable onPress={onLogOut}>

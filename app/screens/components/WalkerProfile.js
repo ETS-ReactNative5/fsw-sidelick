@@ -1,17 +1,13 @@
 import {
   View,
   Text,
-  SafeAreaView,
   StyleSheet,
   Dimensions,
   TouchableWithoutFeedback,
   Pressable,
   ScrollView,
-  TextInput,
-  Image,
   ImageBackground,
   TouchableOpacity,
-  Platform,
   Alert, 
   Modal
 } from "react-native";
@@ -21,18 +17,37 @@ import React, { useState } from "react";
 import * as SecureStore from "expo-secure-store";
 import { BlurView } from "expo-blur";
 
-import Input from "../ReusableComponents/Input";
-import CustomButton from "../ReusableComponents/CustomButton";
-
 const WalkerProfile = () => {
   const navigation = useNavigation();
   const { width, height } = Dimensions.get("window");
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [rate, setRate] = useState("");
-  const [bio, setBio] = useState(""); 
   const [modalVisible, setModalVisible] = useState(false);
+
+  const sendRequest_URL = "http://192.168.1.108:3000/api/users/send-request";
+
+  async function getValueFor(key) {
+    let result = await SecureStore.getItemAsync(key);
+    return result;
+  }
+
+  const sendRequest = async() => {
+    let result;
+    await getValueFor("userToken").then((value) => {
+      result = value;
+    });
+    let requestInfo = await fetch(sendRequest_URL, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "auth-token": result
+      },
+      body: JSON.stringify({
+        to: "Alex Murray",
+      }),
+    });
+    (!requestInfo) ? alert("Error") : setModalVisible(true);
+    console.log("successful")
+  };
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
@@ -147,7 +162,11 @@ const WalkerProfile = () => {
       </Modal>
       <Pressable
         style={[styles.btn, { backgroundColor: "#ff8500", marginVertical: "5%" }]}
-        onPress={() => setModalVisible(true)}
+        onPress={
+          sendRequest
+          // () => setModalVisible(true)
+
+        }
       >
         <Text 
         style={styles.textStyle}

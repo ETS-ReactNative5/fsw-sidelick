@@ -9,6 +9,7 @@ import {
 	ScrollView,
 	TextInput,
 	Image,
+	TouchableOpacity
   } from "react-native";
   import { useNavigation } from "@react-navigation/native";
   import Icon from "react-native-vector-icons/Entypo";
@@ -24,6 +25,41 @@ import {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 
+	const Update_URL = "http://192.168.1.108:3000/api/users/update";
+
+	async function getValueFor(key) {
+		let result = await SecureStore.getItemAsync(key);
+		return result;
+	  }
+
+	const UpdateProfile = async() => {
+		let result;
+		await getValueFor("userToken").then((value) => {
+			result = value;
+		  });
+		let userData = await fetch(Update_URL, {
+			method: "POST",
+			headers: {
+			  Accept: "application/json",
+			  "Content-Type": "application/json",
+			  "auth-token" : result
+			},
+			body: JSON.stringify({
+			  fullName: name,
+			  email: email,
+			  password: password,
+			}),
+		  });
+		  if (!userData.ok || userData.status !== 201) {
+			  userData = await userData.json();
+			const message = `An error has occured: ${userData.status}`;
+			console.log("userDate message: ",userData.message);
+			console.log("Message: ",message);
+		  } else{
+			  alert("Changes saved!");
+		  }
+	}
+
 	return (
 	  <ScrollView showsVerticalScrollIndicator={false}>
 		<SafeAreaView style={[styles.root, { height: height, width: width }]}>
@@ -36,25 +72,25 @@ import {
             />
           </TouchableWithoutFeedback>
 	  </View>
-		  <View style={styles.header}>
-			  <View style={{marginLeft: "20%"}}>
-			  		  <Pressable>
-	  <Icon name="edit" size={24} style={{ position: 'absolute'}}/>
-	  </Pressable>
+		  <TouchableOpacity style={styles.header}>
+			  		  <View style={{ position:'absolute', top:0,right:130, }}>
+			  <View style={{ backgroundColor: "#F0F0F0", borderRadius: 30, padding:8,}} >
+	  <Icon name="edit" size={22}/>
+	  </View>
 	  </View>
 			<Image
 			  source={require("../../../assets/avatar.png")}
 			  style={styles.profilepicture}
 			/>
 			<Text style={styles.userName} value={name} >{name}</Text>
-		  </View>
+		  </TouchableOpacity>
 		  <View style={styles.inputContainer}>
 			<Input placeholder={"Full Name"} value={name} setValue={setName} />
 			<Input placeholder={"Email"} value={email} setValue={setEmail} />
 			<Input placeholder={"Password"} value={password} setValue={setPassword} />
 		  </View>
 		  <View style={styles.footer}>
-			  <Pressable>
+			  <Pressable onPress={() => UpdateProfile()}>
 			<Text style={styles.footerText}>
 			  <Icon name="download"
 				size={22}

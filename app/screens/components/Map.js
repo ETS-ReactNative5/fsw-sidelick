@@ -23,7 +23,7 @@ const Map = () => {
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
   const [isLoading, setLoading] = useState(true);
-  const [markers, setMarkers] = useState([]);
+  const [markers, setMarkers] = useState();
   
   const navigation = useNavigation();
 
@@ -68,7 +68,7 @@ const Map = () => {
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
-            "auth-token": result,
+            "auth-token": result
           },
           body: JSON.stringify({
             latitude: lat,
@@ -83,7 +83,7 @@ const Map = () => {
           console.log("message: ",message);
         } else {
           getUserLocation = await getUserLocation.json();
-          console.log("after fetch:", getUserLocation);
+          console.log("after fetch:", getUserLocation.location);
         }
       },
       { enableHighAccuracy: true, timeout: 1000, maximumAge: 10000 }
@@ -143,6 +143,27 @@ const Map = () => {
         }}
         showsUserLocation={true}
       >
+
+{markers &&
+          markers.map((item) => {
+            return (
+              <View key={item.id}>
+                <Marker
+                  onPress={() => {
+                    setSelectedProvider(item);
+                    setVisible(true);
+                  }}
+                  pinColor="#1B8B6A"
+                  coordinate={{
+                    latitude: item.latitude,
+                    longitude: item.longitude,
+                  }}
+                  title={item.fullName}
+                />
+              </View>
+            );
+          })}
+
         <Marker
           description="Hooman"
           coordinate={{ latitude: 33.890532761432226, longitude: 35.48 }}
