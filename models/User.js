@@ -18,11 +18,8 @@ const requestSchema = new mongoose.Schema({
 	to : {
 		type: String,
 	},
-	duration : {
-		type: Number,
-	},
 	status: {
-		type: Boolean,
+		type: String,
 	},
 	createdAt: {
 		type: Date,

@@ -52,8 +52,17 @@ router.post("/update", verifyToken, async (req, res) => {
   }
 });
 
-router.get("/send-request", verifyToken, async(res,req)=>{
-  
-})
+router.post("/send-request", verifyToken, async(req,res)=>{
+  try{
+    const update = { request:{ from: req.body.from, to : req.body.to, status: req.body.status}};
+    const filter = req.user._id;
+    const updatedDocument = await User.findOneAndUpdate(filter, update, {
+      new: true,
+    });
+    res.status(200).send(updatedDocument.request);
+  }catch(err){
+    return res.status(400).json(err);
+  }
+});
 
 module.exports = router;
