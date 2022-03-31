@@ -54,12 +54,24 @@ router.post("/update", verifyToken, async (req, res) => {
 
 router.post("/send-request", verifyToken, async(req,res)=>{
   try{
-    const update = { request:{ from: req.body.from, to : req.body.to, status: req.body.status}};
+    const update = { request:{ from: req.user.fullName, to : req.body.to, status: req.body.status}};
     const filter = req.user._id;
     const updatedDocument = await User.findOneAndUpdate(filter, update, {
       new: true,
     });
     res.status(200).send(updatedDocument.request);
+  }catch(err){
+    return res.status(400).json(err);
+  }
+});
+
+router.get("/get-request", verifyToken, async(req,res)=>{
+  try{
+    const userRequest = await User.findOne(req.user._id)
+    if (!userRequest.request) return res.status(400).json({ message: "No request sent" });
+    const requestInfo = await userRequest.map((data) => [data.from, data.to, data.status]);
+    return res.status(201).send(requestInfo);
+
   }catch(err){
     return res.status(400).json(err);
   }

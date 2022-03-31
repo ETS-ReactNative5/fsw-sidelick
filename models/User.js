@@ -3,11 +3,9 @@ const mongoose = require('mongoose');
 const locationSchema = new mongoose.Schema({
 	latitude:{
 		type: Number ,
-		default:0
 	},
 	longitude: {
 		type: Number ,
-		default:0
 	},
 });
 
@@ -23,7 +21,6 @@ const requestSchema = new mongoose.Schema({
 	},
 	createdAt: {
 		type: Date,
-		expires: "5m",
 		immutable: true,
 		default: Date.now
 		// default: () => Date.now(),
@@ -66,11 +63,9 @@ const userSchema = new mongoose.Schema({
 	},
 	location: {
 		type: locationSchema,
-		default: () => ({})
 	},
 	request:{
 		type: requestSchema,
-		default: () => ({})
 	},
 	image:{
 		type: String,
