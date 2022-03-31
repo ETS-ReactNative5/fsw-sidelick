@@ -11,13 +11,14 @@ const locationSchema = new mongoose.Schema({
 
 const requestSchema = new mongoose.Schema({
 	from: {
-		type: String,	
+		type: String,
 	},
 	to : {
 		type: String,
 	},
 	status: {
 		type: String,
+		default: "pending",
 	},
 	createdAt: {
 		type: Date,
@@ -63,9 +64,11 @@ const userSchema = new mongoose.Schema({
 	},
 	location: {
 		type: locationSchema,
+		default: () => ({})
 	},
 	request:{
 		type: requestSchema,
+		default: () => ({})
 	},
 	image:{
 		type: String,
