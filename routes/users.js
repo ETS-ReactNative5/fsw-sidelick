@@ -41,8 +41,7 @@ router.post("/update", verifyToken, async (req, res) => {
       email: req.body.email,
       password: hashedPassword,
     };
-    const filter = req.user._id;
-    const updatedDocument = await User.findOneAndUpdate(filter, update, {
+    const updatedDocument = await User.findOneAndUpdate({_id: req.user._id}, update, {
       new: true,
     });
 
@@ -58,11 +57,10 @@ router.post("/send-request", verifyToken, async(req,res)=>{
     // if (reqexist)
     //   return res.status(400).json({ message: "Request Already Exists" });
     const update = { request:{ to : req.body.to }};
-    const filter = req.user._id;
-    const updatedDocument = await User.findOneAndUpdate(filter, update, {
+    const updatedDocument = await User.findOneAndUpdate({_id: req.user._id}, update, {
       new: true,
     });
-    res.status(201).json(updatedDocument.request);
+    res.status(201).json(updatedDocument);
   }catch(err){
     return res.status(400).json(err);
   }

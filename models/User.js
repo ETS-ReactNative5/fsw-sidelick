@@ -64,11 +64,9 @@ const userSchema = new mongoose.Schema({
 	},
 	location: {
 		type: locationSchema,
-		default: () => ({})
 	},
 	request:{
 		type: requestSchema,
-		default: () => ({})
 	},
 	image:{
 		type: String,
