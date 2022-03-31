@@ -16,7 +16,6 @@ import {
   import * as SecureStore from 'expo-secure-store';
   
   import Input from "../ReusableComponents/Input";
-  import CustomButton from "../ReusableComponents/CustomButton";
   
   const EditProfile = () => {
 	const navigation = useNavigation();

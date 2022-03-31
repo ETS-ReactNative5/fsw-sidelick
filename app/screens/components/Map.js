@@ -1,88 +1,34 @@
-// import React, { useState } from "react";
-// import MapView, { Callout, Marker } from "react-native-maps";
-// import { StyleSheet, Text, View, Dimensions,Pressable } from "react-native";
-// import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
-// import Icon from "react-native-vector-icons/Entypo";
-
-// export default function Map() {
-//   const [pin, setPin] = useState({
-//     latitude: 33.890536626710244,
-//     longitude: 35.489303601542964,
-//   });
-//   const [region, setRegion] = useState({
-//     latitude: 33.890536626710244,
-//     longitude: 35.489303601542964,
-//     latitudeDelta: 0.0922,
-//     longitudeDelta: 0.0421,
-//   });
-//   return (
-//     <View style={styles.container}>
-//       <MapView
-//         style={styles.map}
-//         initialRegion={{
-//           latitude: 33.890536626710244,
-//           longitude: 35.489303601542964,
-//           latitudeDelta: 0.0922,
-//           longitudeDelta: 0.0421,
-//         }}
-//         provider="google"
-//       >
-//         <Marker coordinate={{latitude: region.latitude, longitude: region.longitude}} />
-//         <Marker
-//           coordinate={pin}
-//           pinColor="purple"
-//           draggable={true}
-//           onDragStart={(e) => {
-//             console.log("Drag start", e.nativeEvent.coordinate);
-//           }}
-//           onDragEnd={(e) => {
-//             console.log("Drag end", e.nativeEvent.coordinate),
-//             setPin({
-//               latitude: e.nativeEvent.coordinate.latitude,
-//               longitude: e.nativeEvent.coordinate.longitude,
-//             });
-//           }}
-//         >
-//           <Callout>
-//             <Text>I'm here</Text>
-//           </Callout>
-//         </Marker>
-//         <View style={{alignItems: "flex-end", marginTop: "90%", marginRight
-//       : "5%",}}>
-//         <Pressable style={{
-//     backgroundColor: "white",
-//     paddingVertical: 12,
-//     paddingHorizontal: 25,
-//     borderRadius: 14,}} onPress={LocateUser}>
-//         <Icon name="direction" size={24} />
-//       </Pressable>
-//       </View>
-//       </MapView>
-//       </View>
-//   );
-// }
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//   },
-//   map: {
-//     width: Dimensions.get("window").width,
-//     height: Dimensions.get("window").height,
-//   },
-// });
-
 import React, { useEffect, useState } from "react";
-import { SafeAreaView, StatusBar, StyleSheet, Platform } from "react-native";
-import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
+import {
+  SafeAreaView,
+  StatusBar,
+  StyleSheet,
+  Platform,
+  Pressable,
+  Image,
+  View,
+  Text,
+  ActivityIndicator,
+} from "react-native";
+import MapView, { Callout, Marker, PROVIDER_GOOGLE } from "react-native-maps";
 // import { check, request, PERMISSIONS, RESULTS } from "react-native-permissions"
 // import Geolocation from "react-native-geolocation-service"
 // import Constants from 'expo-constants';
+import { useNavigation } from "@react-navigation/native";
+import Icon from "react-native-vector-icons/Entypo";
 import * as Location from "expo-location";
+import * as SecureStore from "expo-secure-store";
 
 const Map = () => {
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
+  const [isLoading, setLoading] = useState(true);
+  const [markers, setMarkers] = useState([]);
+  
+  const navigation = useNavigation();
+
+  const Location_URL = "http://192.168.1.108:3000/api/users/location";
+  const Walkers_URL = "http://192.168.1.108:3000/api/users/get-walkers";
 
   const handleLocationPermission = async () => {
     if (Platform.OS === "android") {
@@ -102,21 +48,86 @@ const Map = () => {
     handleLocationPermission();
   }, []);
 
-  useEffect(() => {
+  async function getValueFor(key) {
+    let result = await SecureStore.getItemAsync(key);
+    return result;
+  }
+
+  const getLocation = () => {
+    let result;
     Location.getCurrentPositionAsync({}).then(
-      (position) => {
-        let latitude = position.coords.latitude;
-        let longitude = position.coords.longitude;
-        setLocation({ latitude, longitude });
-        console.log(JSON.stringify(position.coords.latitude));
-        console.log(JSON.stringify(position.coords.longitude));
+      async (position) => {
+        let lat = position.coords.latitude;
+        let long = position.coords.longitude;
+        setLocation({ lat, long });
+        await getValueFor("userToken").then((value) => {
+          result = value;
+        });
+        let getUserLocation = await fetch(Location_URL, {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            "auth-token": result,
+          },
+          body: JSON.stringify({
+            latitude: lat,
+            longitude: long,
+          }),
+        });
+        if (!getUserLocation.ok || getUserLocation.status !== 201) {
+          console.log(getUserLocation);
+          getUserLocation = await getUserLocation.json();
+          console.log(getUserLocation);
+          const message = `An error has occured: ${getUserLocation.status}`;
+          console.log("message: ",message);
+        } else {
+          getUserLocation = await getUserLocation.json();
+          console.log("after fetch:", getUserLocation);
+        }
       },
-      (error) => {
-        console.log(error.code, error.message);
-      },
-      { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+      { enableHighAccuracy: true, timeout: 1000, maximumAge: 10000 }
     );
+  };
+
+  // // to render the walkers on log in
+  // useEffect(() => {
+  //   // write the code
+  // }, []);
+
+  useEffect(() => {
+    getLocation();
   }, []);
+
+  const getWalkers = async () => {
+    let result;
+    await getValueFor("userToken").then((value) => {
+      result = value;
+    });
+    try {
+     const response = await fetch(Walkers_URL,  {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "auth-token": result,
+      }});
+      if(!response.ok || response.status !== 201){
+        response = await response.json();
+        alert(response);
+      }
+     const data = await response.json();
+     console.log(data);
+     setMarkers(data);
+   } catch (error) {
+     console.error(error);
+   }
+ }
+  
+  // to render the walkers on log in
+  useEffect(() => {
+    getWalkers();
+  }, []);  
 
   return (
     <SafeAreaView style={styles.container}>
@@ -131,7 +142,83 @@ const Map = () => {
           longitudeDelta: 50,
         }}
         showsUserLocation={true}
-      />
+      >
+        <Marker
+          description="Hooman"
+          coordinate={{ latitude: 33.890532761432226, longitude: 35.48 }}
+          image={require("../../../assets/human-figure.png")}
+        >
+          <Callout tooltip onPress={() => navigation.navigate("WalkerProfile")}>
+              <View>
+                <View style={styles.bubble}>
+                  <Text style={styles.name}>Alex Murray</Text>
+                  {/* <Image 
+                    style={styles.image}
+                    source={require('../../../assets/image2.jpg')}
+                  /> */}
+                </View>
+                <View style={styles.arrowBorder} />
+                <View style={styles.arrow} />
+              </View>
+            </Callout>
+        </Marker>
+
+        <Marker
+          description="Hooman"
+          coordinate={{ latitude: 33.890532761432226, longitude: 35.5 }}
+          image={require("../../../assets/human-figure.png")}
+        >
+          <Callout tooltip onPress={() => navigation.navigate("WalkerProfile")}>
+              <View>
+                <View style={styles.bubble}>
+                  <Text style={styles.name}>Alex Murray</Text>
+                  {/* <Image 
+                    style={styles.image}
+                    source={require('../../../assets/image2.jpg')}
+                  /> */}
+                </View>
+                <View style={styles.arrowBorder} />
+                <View style={styles.arrow} />
+              </View>
+            </Callout>
+        </Marker>
+
+        <Marker
+          description="Hooman"
+          coordinate={{ latitude: 33.890532761432226, longitude: 35.55 }}
+          image={require("../../../assets/human-figure.png")}
+        >
+            <Callout tooltip onPress={() => navigation.navigate("WalkerProfile")}>
+              <View>
+                <View style={styles.bubble}>
+                  <Text style={styles.name}>Alex Murray</Text>
+                  {/* <Image 
+                    style={styles.image}
+                    source={require('../../../assets/image2.jpg')}
+                  /> */}
+                </View>
+                <View style={styles.arrowBorder} />
+                <View style={styles.arrow} />
+              </View>
+            </Callout>
+        </Marker>
+      </MapView>
+      <Pressable
+        style={{
+          position: "absolute",
+          right: 0,
+          bottom: 0,
+          margin: 18,
+          paddingVertical: 15,
+          paddingHorizontal: 15,
+          backgroundColor: "white",
+          borderRadius: 30,
+          shadowOpacity: 0.5,
+        }}
+        onPress={getLocation}
+      >
+        <Icon name="direction" size={24} />
+      </Pressable>
     </SafeAreaView>
   );
 };
@@ -144,6 +231,45 @@ const styles = StyleSheet.create({
   map: {
     ...StyleSheet.absoluteFillObject,
   },
+ // Callout bubble
+ bubble: {
+  flexDirection: 'column',
+  alignSelf: 'flex-start',
+  backgroundColor: '#fff',
+  borderRadius: 6,
+  borderColor: '#ccc',
+  borderWidth: 0.5,
+  padding: 15,
+  width: 150,
+},
+// Arrow below the bubble
+arrow: {
+  backgroundColor: 'transparent',
+  borderColor: 'transparent',
+  borderTopColor: '#fff',
+  borderWidth: 16,
+  alignSelf: 'center',
+  marginTop: -32,
+},
+arrowBorder: {
+  backgroundColor: 'transparent',
+  borderColor: 'transparent',
+  borderTopColor: '#007a87',
+  borderWidth: 16,
+  alignSelf: 'center',
+  marginTop: -0.5,
+  // marginBottom: -15
+},// Character name
+name: {
+  fontSize: 16,
+  marginBottom: 5,
+  textAlign: 'center',
+},
+// Character image
+image: {
+  width: "100%",
+  height: 80,
+},
 });
 
 export default Map;

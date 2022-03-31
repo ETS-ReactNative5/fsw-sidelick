@@ -42,17 +42,21 @@ const UserProfile = () => {
 		  <Text style={styles.userName} value={name} setValue={setName} >{name}</Text>
         </View>
         <View style={styles.buttonContainer}>
-          <CustomButton btnText={[<Icon
-              name="emoji-happy"
-              size={20}
-              color="orange"
-            />," User"]} type="outline" onPress={() => navigation.navigate("EditProfile")} />
+          <CustomButton btnText={
+            // [<Icon
+            //   name="emoji-happy"
+            //   size={20}
+            //   color="orange"
+            // />,
+            " User"} type="outline" onPress={() => navigation.navigate("EditProfile")} />
 			<View style={{marginVertical: '2%'}}/> 
-		  <CustomButton btnText={[<Icon
-              name="baidu"
-              size={20}
-              color="orange"
-            />," Pets"]} type="outline" />
+		  <CustomButton btnText={
+        // [<Icon
+        //       name="baidu"
+        //       size={20}
+        //       color="orange"
+        //     />,
+            " Pets"} type="outline" />
         </View>
 		<View style={styles.footer}>
 			<Pressable onPress={onLogOut}>
