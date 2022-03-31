@@ -6,7 +6,7 @@ const verifyToken = require("./verifyToken");
 router.get("/get-walkers", verifyToken, async (req, res) => {
   try {
     const walkers = await User.find({ status: true });
-    const walkersInfo = await walkers.map((walker) => walker.fullName);
+    const walkersInfo = await walkers.map((walker) => [walker.fullName, walker.location]);
 
     return res.status(201).send(walkersInfo);
   } catch (err) {
@@ -51,5 +51,9 @@ router.post("/update", verifyToken, async (req, res) => {
     return res.status(400).json(err);
   }
 });
+
+router.get("/send-request", verifyToken, async(res,req)=>{
+  
+})
 
 module.exports = router;

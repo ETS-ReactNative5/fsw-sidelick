@@ -70,7 +70,8 @@ router.post("/login", async (req, res) => {
     process.env.TOKEN_SECRET,
   );
   // save user token
-  res.header('Authorization', `Bearer ${token}`).json({ token });
+  // res.header('Authorization', `Bearer ${token}`).json({ token });
+  res.header('auth-token', token).json({ token });
 });
 
 module.exports = router;
