@@ -23,7 +23,7 @@ const Map = () => {
   const [location, setLocation] = useState({lat:30, long:30, latDelta: 20, longDelta:20 });
   const [errorMsg, setErrorMsg] = useState(null);
   const [isLoading, setLoading] = useState(true);
-  const [markers, setMarkers] = useState([]);
+  const [userData, setUserData] = useState([]);
   
   const navigation = useNavigation();
 
@@ -115,8 +115,7 @@ const Map = () => {
         alert(response);
       }
      const data = await response.json();
-     console.log("db data: ",data);
-     setMarkers(data); 
+     setUserData(data); 
    } catch (error) {
      console.error(error);
    }
@@ -143,16 +142,17 @@ const Map = () => {
         
       >
 
-{markers &&
-          markers.map(item => {
-            console.log("LIST OF ITEMS :",item)
+{userData &&
+          userData.map(item => {
+            console.log("LIST OF ITEMS: ", item)
             return (
               <View key={item[0].id}>
                 <Marker
-                  pinColor="#FF8500"
+                onPress={() => navigation.navigate(WalkerProfile, {userData})}
+                  image={require("../../../assets/human-figure.png")}
                   coordinate={{
-                    latitude: item[2].latitude,
-                    longitude: item[3].longitude,
+                    latitude: item[3].latitude,
+                    longitude: item[4].longitude,
                   }}
                   title={item[1].fullName}
                 />
@@ -160,65 +160,6 @@ const Map = () => {
             );
           })} 
 
-        <Marker
-          description="Hooman"
-          coordinate={{ latitude: 33.890532761432226, longitude: 35.48 }}
-          image={require("../../../assets/human-figure.png")}
-        >
-          <Callout tooltip onPress={() => navigation.navigate("WalkerProfile")}>
-              <View>
-                <View style={styles.bubble}>
-                  <Text style={styles.name}>Alex Murray</Text>
-                  {/* <Image 
-                    style={styles.image}
-                    source={require('../../../assets/image2.jpg')}
-                  /> */}
-                </View>
-                <View style={styles.arrowBorder} />
-                <View style={styles.arrow} />
-              </View>
-            </Callout>
-        </Marker>
-
-        <Marker
-          description="Hooman"
-          coordinate={{ latitude: 33.890532761432226, longitude: 35.5 }}
-          image={require("../../../assets/human-figure.png")}
-        >
-          <Callout tooltip onPress={() => navigation.navigate("WalkerProfile")}>
-              <View>
-                <View style={styles.bubble}>
-                  <Text style={styles.name}>Alex Murray</Text>
-                  {/* <Image 
-                    style={styles.image}
-                    source={require('../../../assets/image2.jpg')}
-                  /> */}
-                </View>
-                <View style={styles.arrowBorder} />
-                <View style={styles.arrow} />
-              </View>
-            </Callout>
-        </Marker>
-
-        <Marker
-          description="Hooman"
-          coordinate={{ latitude: 33.890532761432226, longitude: 35.55 }}
-          image={require("../../../assets/human-figure.png")}
-        >
-            <Callout tooltip onPress={() => navigation.navigate("WalkerProfile")}>
-              <View>
-                <View style={styles.bubble}>
-                  <Text style={styles.name}>Alex Murray</Text>
-                  {/* <Image 
-                    style={styles.image}
-                    source={require('../../../assets/image2.jpg')}
-                  /> */}
-                </View>
-                <View style={styles.arrowBorder} />
-                <View style={styles.arrow} />
-              </View>
-            </Callout>
-        </Marker>
       </MapView>
       <Pressable
         style={{
