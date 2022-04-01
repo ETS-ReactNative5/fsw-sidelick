@@ -8,8 +8,8 @@ import {
   ScrollView,
   ImageBackground,
   TouchableOpacity,
-  Alert, 
-  Modal
+  Alert,
+  Modal,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Entypo";
@@ -17,10 +17,11 @@ import React, { useState } from "react";
 import * as SecureStore from "expo-secure-store";
 import { BlurView } from "expo-blur";
 
-const WalkerProfile = () => {
-  const navigation = useNavigation();
+const WalkerProfile = ({ route, navigation }) => {
   const { width, height } = Dimensions.get("window");
   const [modalVisible, setModalVisible] = useState(false);
+  const { item } = route.params;
+  console.log("USER DATA:", JSON.stringify(item));
 
   const sendRequest_URL = "http://192.168.1.108:3000/api/users/send-request";
 
@@ -29,7 +30,7 @@ const WalkerProfile = () => {
     return result;
   }
 
-  const sendRequest = async() => {
+  const sendRequest = async () => {
     let result;
     await getValueFor("userToken").then((value) => {
       result = value;
@@ -39,14 +40,14 @@ const WalkerProfile = () => {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        "auth-token": result
+        "auth-token": result,
       },
       body: JSON.stringify({
         to: "Alex Murray",
       }),
     });
-    (!requestInfo) ? alert("Error") : setModalVisible(true);
-    console.log("successful")
+    !requestInfo ? alert("Error") : setModalVisible(true);
+    console.log("successful");
   };
 
   return (
@@ -78,8 +79,18 @@ const WalkerProfile = () => {
             <View style={{ marginRight: "15%" }}></View>
           </View>
         </ImageBackground>
-        <View style={[styles.card , {height: height, borderRadius: 15, shadowOpacity: 20 ,paddingHorizontal: "5%"}]}>
-          <Text style={styles.userName}>Alex Murray</Text>
+        <View
+          style={[
+            styles.card,
+            {
+              height: height,
+              borderRadius: 15,
+              shadowOpacity: 20,
+              paddingHorizontal: "5%",
+            },
+          ]}
+        >
+          <Text style={styles.userName}>{item[1].fullName}</Text>
           <Text
             style={[
               styles.subText,
@@ -129,49 +140,51 @@ const WalkerProfile = () => {
                 letterSpacing: -0.41,
               }}
             >
-              30 Years
+            24{" "}Years
             </Text>
           </View>
           <View>
             <Text style={[styles.subText, { marginTop: "5%" }]}>
-              Alex has loved dogs since childhood. He is currently a veterinary
-              student. Visits the dog shelter we...
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+              enim ad minim veniam, quis nostrud exercitation ullamco laboris
+              nisi ut aliquip ex ea commodo consequat.
             </Text>
-			{/* <Text style={{color: '#FB724C',}}>Read more</Text> */}
+            {/* <Text style={{color: '#FB724C',}}>Read more</Text> */}
           </View>
-            <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          Alert.alert("Modal has been closed.");
-          setModalVisible(!modalVisible);
-        }}
-      >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={styles.modalText}>Request Sent!</Text>
-            <Pressable
-              style={[styles.button, styles.buttonClose]}
-              onPress={() => setModalVisible(!modalVisible)}
-            >
-              <Text style={styles.textStyle}>Close</Text>
-            </Pressable>
-          </View>
-        </View>
-      </Modal>
-      <Pressable
-        style={[styles.btn, { backgroundColor: "#ff8500", marginVertical: "5%" }]}
-        onPress={
-          sendRequest
-          // () => setModalVisible(true)
-
-        }
-      >
-        <Text 
-        style={styles.textStyle}
-        >Book a walk</Text>
-      </Pressable>
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={modalVisible}
+            onRequestClose={() => {
+              Alert.alert("Modal has been closed.");
+              setModalVisible(!modalVisible);
+            }}
+          >
+            <View style={styles.centeredView}>
+              <View style={styles.modalView}>
+                <Text style={styles.modalText}>Request Sent to {item[1].fullName}!</Text>
+                <Pressable
+                  style={[styles.button, styles.buttonClose]}
+                  onPress={() => setModalVisible(!modalVisible)}
+                >
+                  <Text style={styles.textStyle}>Close</Text>
+                </Pressable>
+              </View>
+            </View>
+          </Modal>
+          <Pressable
+            style={[
+              styles.btn,
+              { backgroundColor: "#ff8500", marginVertical: "5%" },
+            ]}
+            onPress={
+              sendRequest
+              // () => setModalVisible(true)
+            }
+          >
+            <Text style={styles.textStyle}>Book a walk</Text>
+          </Pressable>
         </View>
       </View>
     </ScrollView>
@@ -229,7 +242,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 22
+    marginTop: 22,
   },
   modalView: {
     margin: 20,
@@ -240,16 +253,16 @@ const styles = StyleSheet.create({
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: 2
+      height: 2,
     },
     shadowOpacity: 0.25,
     shadowRadius: 4,
-    elevation: 5
+    elevation: 5,
   },
   button: {
     borderRadius: 20,
     padding: 10,
-    elevation: 2
+    elevation: 2,
   },
   buttonOpen: {
     backgroundColor: "#ff8500",
@@ -260,12 +273,12 @@ const styles = StyleSheet.create({
   textStyle: {
     color: "white",
     fontWeight: "bold",
-    textAlign: "center"
+    textAlign: "center",
   },
   modalText: {
     marginBottom: 15,
-    textAlign: "center"
-  }
+    textAlign: "center",
+  },
 });
 
 export default WalkerProfile;

@@ -42,6 +42,7 @@ const Map = () => {
       setErrorMsg("Permission to access location was denied");
       return;
     }
+    getLocation();
   };
 
   useEffect(() => {
@@ -84,18 +85,8 @@ const Map = () => {
           console.log("after fetch:", getUserLocation.location);
         }
       },
-      { enableHighAccuracy: true, timeout: 500, maximumAge: 1000 }
     );
   };
-
-  // // to render the walkers on log in
-  // useEffect(() => {
-  //   // write the code
-  // }, []);
-
-  useEffect(() => {
-    getLocation();
-  }, []);
 
   const getWalkers = async () => {
     let result;
@@ -148,14 +139,22 @@ const Map = () => {
             return (
               <View key={item[0].id}>
                 <Marker
-                onPress={() => navigation.navigate(WalkerProfile, {userData})}
                   image={require("../../../assets/human-figure.png")}
                   coordinate={{
-                    latitude: item[3].latitude,
-                    longitude: item[4].longitude,
+                    latitude: item[2].latitude,
+                    longitude: item[3].longitude,
                   }}
-                  title={item[1].fullName}
-                />
+                >
+                  <Callout tooltip onPress={() => navigation.navigate('WalkerProfile', {item})}>
+              <View>
+                <View style={styles.bubble}>
+                  <Text style={styles.name}><Icon name="info-with-circle" size={18} />{" "}{item[1].fullName}</Text>
+                </View>
+                <View style={styles.arrowBorder} />
+                <View style={styles.arrow} />
+              </View>
+            </Callout>
+                </Marker>
               </View>
             );
           })} 
