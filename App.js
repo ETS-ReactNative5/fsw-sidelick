@@ -22,15 +22,14 @@ const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="OnBoardingScreen" screenOptions={{ headerShown: false }}>
-        {/* <Stack.Screen name="OnBoardingScreen" component={OnBoardingScreen} />
+        <Stack.Screen name="OnBoardingScreen" component={OnBoardingScreen} />
          <Stack.Screen name="SignUp" component={SignUp} />
         <Stack.Screen name="SignIn" component={SignIn} /> 
          <Stack.Screen name="Tabs" component={Tabs} />
-        <Stack.Screen name="EditProfile" component={EditProfile} />  */}
-        {/* <Stack.Screen name="EditWalkerProfile" component={EditWalkerProfile} /> */}
-        {/* <Stack.Screen name="WalkerProfile" component={WalkerProfile} /> */}
-        <Stack.Screen name="ImageUpload" component={ImageUpload} />
-
+        <Stack.Screen name="EditProfile" component={EditProfile} /> 
+        <Stack.Screen name="EditWalkerProfile" component={EditWalkerProfile} />
+        <Stack.Screen name="WalkerProfile" component={WalkerProfile} />
+        {/* <Stack.Screen name="ImageUpload" component={ImageUpload} /> */}
       </Stack.Navigator>
     </NavigationContainer>
   );

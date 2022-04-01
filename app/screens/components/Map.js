@@ -20,10 +20,10 @@ import * as Location from "expo-location";
 import * as SecureStore from "expo-secure-store";
 
 const Map = () => {
-  const [location, setLocation] = useState(null);
+  const [location, setLocation] = useState({lat:30, long:30, latDelta: 20, longDelta:20 });
   const [errorMsg, setErrorMsg] = useState(null);
   const [isLoading, setLoading] = useState(true);
-  const [markers, setMarkers] = useState();
+  const [markers, setMarkers] = useState([]);
   
   const navigation = useNavigation();
 
@@ -59,7 +59,7 @@ const Map = () => {
       async (position) => {
         let lat = position.coords.latitude;
         let long = position.coords.longitude;
-        setLocation({ lat, long });
+        setLocation({ lat, long, latDelta: 0.05, longDelta: 0.05 });
         await getValueFor("userToken").then((value) => {
           result = value;
         });
@@ -76,9 +76,7 @@ const Map = () => {
           }),
         });
         if (!getUserLocation.ok || getUserLocation.status !== 201) {
-          console.log(getUserLocation);
           getUserLocation = await getUserLocation.json();
-          console.log(getUserLocation);
           const message = `An error has occured: ${getUserLocation.status}`;
           console.log("message: ",message);
         } else {
@@ -86,7 +84,7 @@ const Map = () => {
           console.log("after fetch:", getUserLocation.location);
         }
       },
-      { enableHighAccuracy: true, timeout: 1000, maximumAge: 10000 }
+      { enableHighAccuracy: true, timeout: 500, maximumAge: 1000 }
     );
   };
 
@@ -117,8 +115,8 @@ const Map = () => {
         alert(response);
       }
      const data = await response.json();
-     console.log(data);
-     setMarkers(data);
+     console.log("db data: ",data);
+     setMarkers(data); 
    } catch (error) {
      console.error(error);
    }
@@ -135,34 +133,32 @@ const Map = () => {
       <MapView
         style={styles.map}
         provider={PROVIDER_GOOGLE}
-        initialRegion={{
-          latitude: 30,
-          longitude: 30,
-          latitudeDelta: 50,
-          longitudeDelta: 50,
+        region={{
+          latitude: location.lat,
+          longitude: location.long,
+          latitudeDelta: location.latDelta,
+          longitudeDelta: location.longDelta,
         }}
         showsUserLocation={true}
+        
       >
 
 {markers &&
-          markers.map((item) => {
+          markers.map(item => {
+            console.log("LIST OF ITEMS :",item)
             return (
-              <View key={item.id}>
+              <View key={item[0].id}>
                 <Marker
-                  onPress={() => {
-                    setSelectedProvider(item);
-                    setVisible(true);
-                  }}
-                  pinColor="#1B8B6A"
+                  pinColor="#FF8500"
                   coordinate={{
-                    latitude: item.latitude,
-                    longitude: item.longitude,
+                    latitude: item[2].latitude,
+                    longitude: item[3].longitude,
                   }}
-                  title={item.fullName}
+                  title={item[1].fullName}
                 />
               </View>
             );
-          })}
+          })} 
 
         <Marker
           description="Hooman"
