@@ -18,8 +18,8 @@ import * as SecureStore from "expo-secure-store";
 import Input from "../ReusableComponents/Input";
 import CustomButton from "../ReusableComponents/CustomButton";
 
-const EditWalkerProfile = () => {
-  const navigation = useNavigation();
+const EditWalkerProfile = ({navigation}) => {
+  // const navigation = useNavigation();
   const { width, height } = Dimensions.get("window");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");

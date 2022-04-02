@@ -17,8 +17,8 @@ import * as SecureStore from 'expo-secure-store';
 
 import CustomButton from "../ReusableComponents/CustomButton";
 
-const UserProfile = () => {
-  const navigation = useNavigation();
+const UserProfile = ({navigation}) => {
+  // const navigation = useNavigation();
   const { width, height } = Dimensions.get("window");
   const [name, setName] = useState('User Name');
 

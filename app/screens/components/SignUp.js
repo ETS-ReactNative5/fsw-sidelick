@@ -22,8 +22,8 @@ import Input from "../ReusableComponents/Input";
 import CustomButton from "../ReusableComponents/CustomButton";
 import PhoneInput from "react-native-phone-number-input";
 
-const SignUp = () => {
-  const navigation = useNavigation();
+const SignUp = ({navigation}) => {
+  // const navigation = useNavigation();
   const { width, height } = Dimensions.get("window");
   const phoneInput = useRef(null);
   const [chosenOption, setChosenOption] = useState('female'); //will store our current user options

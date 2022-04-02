@@ -20,8 +20,8 @@ const handleUpload = (image) => {
   })
     .then((res) => res.json())
     .then((data) => {
-      // setProfileImageURL(data.url);
       setImg(data.url);
+      saveImageURL(data.url);
     });
 };
   const PostImageHandler = async() => {
@@ -42,6 +42,37 @@ const handleUpload = (image) => {
   };
   handleUpload(selectedImage);
 };
+
+async function getValueFor(key) {
+  let result = await SecureStore.getItemAsync(key);
+  return result;
+}
+
+const saveImageURL = async(img_URL) => {
+  let result;
+      await getValueFor("userToken").then((value) => {
+        result = value;
+      });
+      let savedImage = await fetch(Image_URL, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "auth-token": result
+        },
+        body: JSON.stringify({
+          image: img_URL
+        }),
+      });
+      if (!savedImage.ok || savedImage.status !== 201) {
+        savedImage = await savedImage.json();
+        const message = `An error has occured: ${savedImage.status}`;
+        console.log("message: ",message);
+      } else {
+        savedImage = await savedImage.json();
+        console.log("after fetch:", savedImage.location);
+      }
+    };
 
   return (
     <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginVertical: "10%"}}>

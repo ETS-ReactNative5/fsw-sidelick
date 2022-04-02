@@ -18,8 +18,8 @@ import * as SecureStore from 'expo-secure-store';
 import * as yup from 'yup'
 import { Formik } from 'formik'
 
-const SignIn = () => {
-  const navigation = useNavigation();
+const SignIn = ({navigation}) => {
+  // const navigation = useNavigation();
   const { width, height } = Dimensions.get("window");
 
   const Login_URL = 'http://192.168.1.108:3000/api/auth/login';

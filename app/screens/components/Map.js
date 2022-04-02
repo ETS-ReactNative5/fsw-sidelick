@@ -16,26 +16,26 @@ import Icon from "react-native-vector-icons/Entypo";
 import * as Location from "expo-location";
 import * as SecureStore from "expo-secure-store";
 
-const Map = () => {
+const Map = ({navigation}) => {
   const [location, setLocation] = useState({lat:30, long:30, latDelta: 20, longDelta:20 });
   const [errorMsg, setErrorMsg] = useState(null);
   const [userData, setUserData] = useState([]);
   
-  const navigation = useNavigation();
+  // const navigation = useNavigation();
 
   const Location_URL = "http://192.168.1.108:3000/api/users/location";
   const Walkers_URL = "http://192.168.1.108:3000/api/users/get-walkers";
 
   const handleLocationPermission = async () => {
     if (Platform.OS === "android") {
-      setErrorMsg(
+      alert(
         "Oops, this will not work on an Android emulator. Try it on your device!"
       );
       return;
     }
     let { status } = await Location.requestForegroundPermissionsAsync();
     if (status !== "granted") {
-      setErrorMsg("Permission to access location was denied");
+      alert("Permission to access location was denied");
       return;
     }
     getLocation();
