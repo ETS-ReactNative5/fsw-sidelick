@@ -12,16 +12,64 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Entypo";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import * as SecureStore from 'expo-secure-store';
 
-import CustomButton from "../ReusableComponents/CustomButton";
+import CustomButton from "../ReusableComponents/CustomButton"; 
 
-const UserProfile = ({navigation}) => {
+const UserProfile = ({navigation,route}) => {
   // const navigation = useNavigation();
   const { width, height } = Dimensions.get("window");
-  const [name, setName] = useState('User Name');
+  const [userData, setUserData] = useState([]);
+  const [picture,setPicture] = useState(userData.image);
+  const [name,setName] = useState(userData.fullName);
+  
+  useEffect(() => {
+    getUser();
+  }, [])
 
+  useEffect(() => {
+    setPicture(route.params?.img)
+  }, [route.params?.img]);
+
+  useEffect(() => {
+    setName(route.params?.name)
+  }, [route.params?.name]);
+  
+  const GetUser_URL = "http://192.168.1.108:3000/api/users/get-user";
+
+  async function getValueFor(key) {
+    let result = await SecureStore.getItemAsync(key);
+    return result;
+  }
+
+  const getUser = async() => {
+    let result;
+    await getValueFor("userToken").then((value) => {
+      result = value;
+    });
+    try {
+     const response = await fetch(GetUser_URL,  {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "auth-token": result,
+      }});
+      if(!response.ok || response.status !== 201){
+        response = await response.json();
+        console.log(response);
+      }
+     const data = await response.json();
+     setUserData(data); 
+     setName(data.fullName);
+     setPicture(data.image);
+     console.log("BEFORE RETURN:",data); 
+   } catch (error) {
+     console.error(error);
+   }
+  }
+  
   const onLogOut = async() => {
 	  await deleteToken("userToken")
 	  .then(
@@ -36,10 +84,10 @@ const UserProfile = ({navigation}) => {
       <SafeAreaView style={[styles.root, { height: height, width: width }]}>
         <View style={styles.header}>
           <Image
-            source={require("../../../assets/avatar.png")}
+            source={{uri:picture}}
             style={styles.profilepicture}
           />
-		  <Text style={styles.userName} value={name} setValue={setName} >{name}</Text>
+		  <Text style={styles.userName} >{name}</Text>
         </View>
         <View style={styles.buttonContainer}>
           <CustomButton btnText={
@@ -48,7 +96,7 @@ const UserProfile = ({navigation}) => {
             //   size={20}
             //   color="orange"
             // />,
-            "Edit User"} type="outline" onPress={() => navigation.navigate("EditProfile")} />
+            "Edit User"} type="outline" onPress={() => navigation.navigate("EditProfile", {userData:userData})} />
 			<View style={{marginVertical: '2%'}}/> 
 		  <CustomButton btnText={
         // [<Icon

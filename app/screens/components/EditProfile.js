@@ -20,88 +20,97 @@ import * as ImagePicker from "expo-image-picker";
 
 import Input from "../ReusableComponents/Input";
 
-const EditProfile = ({ navigation }) => {
-  // const navigation = useNavigation();
-  const { width, height } = Dimensions.get("window");
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [img, setImg] = useState(
-    "https://cdn3.iconfinder.com/data/icons/vector-icons-6/96/256-512.png"
-  );
+const EditProfile = ({navigation,route}) => {
 
+//   const navigation = useNavigation();
+  const { width, height } = Dimensions.get("window");
+  const { userData } = route.params;
+  const namedb = userData.fullName;
+  const emaildb = userData.email;
+  const [name, setName] = useState(namedb);
+  const [email, setEmail] = useState(emaildb);
+  const [password, setPassword] = useState("");
+  const [img, setImg] = useState(userData.image);
   const Update_URL = "http://192.168.1.108:3000/api/users/update-user";
   const Image_URL = "http://192.168.1.108:3000/api/users/post-image";
 
-async function getValueFor(key) {
-	let result = await SecureStore.getItemAsync(key);
-	return result;
+  async function getValueFor(key) {
+    let result = await SecureStore.getItemAsync(key);
+    return result;
   }
 
   // Upload to Cloudinary
-const handleUpload = (image) => {
-  const data = new FormData();
-    data.append('file', image);
-    data.append('upload_preset', '_SideLick');
-    data.append('cloud_name', 'hala');
-  fetch('https://api.cloudinary.com/v1_1/hala/image/upload', {
-    method: 'post',
-    body: data,
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      setImg(data.url);
-      saveImageURL(data.url);
-    });
-};
-  const PostImageHandler = async() => {
-  let permission = await ImagePicker.requestCameraPermissionsAsync();
-  if (!permission.granted) {
-    return;
-  }
-  let data = await ImagePicker.launchImageLibraryAsync({
-    mediaTypes: ImagePicker.MediaTypeOptions.Images,
-  });
-  if (data.cancelled) {
-    return;
-  }
-  let selectedImage = {
-    uri: data.uri,
-    type: `profile/${data.uri.split('.')[1]}`,
-    name: `profile.${data.uri.split('.')[1]}`,
+  const handleUpload = (image) => { 
+    const data = new FormData();
+    data.append("file", image);
+    data.append("upload_preset", "_SideLick");
+    data.append("cloud_name", "hala");
+    fetch("https://api.cloudinary.com/v1_1/hala/image/upload", {
+      method: "post",
+      body: data,
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setImg(data.url);
+        saveImageURL(data.url);
+      });
   };
-  handleUpload(selectedImage);
-};
-
-const saveImageURL = async(img_URL) => {
-  let result;
-      await getValueFor("userToken").then((value) => {
-        result = value;
-      });
-      let savedImage = await fetch(Image_URL, {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          "auth-token": result
-        },
-        body: JSON.stringify({
-          image: img_URL
-        }),
-      });
-      if (!savedImage.ok) {
-        const message = `Image: An error has occured`;
-        console.log("message: ",message);
-      } else {
-        alert("Image changed successfully!")
-      }
+  const PostImageHandler = async () => {
+    let permission = await ImagePicker.requestCameraPermissionsAsync();
+    if (!permission.granted) {
+      return;
+    }let data = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+    });
+    if (data.cancelled) {
+      return;
+    }
+    let selectedImage = {
+      uri: data.uri,
+      type: `profile/${data.uri.split(".")[1]}`,
+      name: `profile.${data.uri.split(".")[1]}`,
     };
+    handleUpload(selectedImage);
+  };
+
+  const saveImageURL = async (img_URL) => {
+    let result;
+    await getValueFor("userToken").then((value) => {
+      result = value;
+    });
+    let savedImage = await fetch(Image_URL, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "auth-token": result,
+      },
+      body: JSON.stringify({
+        image: img_URL,
+      }),
+    });
+    if (!savedImage.ok) {
+      const message = `Image: An error has occured`;
+      console.log("message: ", message);
+    } else {
+      alert("Image changed successfully!");
+    }
+  };
 
   const UpdateProfile = async () => {
     let result;
     await getValueFor("userToken").then((value) => {
       result = value;
     });
+    if (name=="" || name== " "){
+      alert("Name cannot be empty")
+    }
+    if(email=="" || email==" "){
+      alert("Email cannot be empty")
+    }
+    if( name === namedb && email === emaildb){
+      return alert("No changes has been made");
+    }
     let userData = await fetch(Update_URL, {
       method: "POST",
       headers: {
@@ -116,10 +125,11 @@ const saveImageURL = async(img_URL) => {
       }),
     });
     if (!userData.ok || userData.status !== 201) {
-      const message = `An error has occured`;
-      console.log("Message: ", message);
+      userData = await userData.json();
+      alert(userData.message);
     } else {
       alert("Changes saved!");
+      setPassword("");
     }
   };
 
@@ -133,7 +143,16 @@ const saveImageURL = async(img_URL) => {
             margin: "5%",
           }}
         >
-          <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
+          <TouchableWithoutFeedback
+            onPress={() =>
+            //   navigation.navigate(() => navigation.goBack())
+			navigation.navigate({
+				name: 'Profile',
+        params: {img:img, name:name},
+				merge: true,
+			  })
+            }
+          >
             <Icon name="chevron-thin-left" size={25} color="#000" />
           </TouchableWithoutFeedback>
         </View>
@@ -163,12 +182,14 @@ const saveImageURL = async(img_URL) => {
           </Text>
         </TouchableOpacity>
         <View style={styles.inputContainer}>
-          <Input placeholder={"Full Name"} value={name} setValue={setName} />
-          <Input placeholder={"Email"} value={email} setValue={setEmail} />
+          <Input placeholder={"Full Name"} value={name} setValue={text => setName(text)} />
+          <Input placeholder={"Email"} value={email} setValue={text=> setEmail(text)} />
+          <Text style={{marginTop: 10, fontStyle:'italic'}}>Enter your password to confirm the changes</Text>
           <Input
             placeholder={"Password"}
             value={password}
-            setValue={setPassword}
+            setValue={text => setPassword(text)}
+            secureTextEntry={true}
           />
         </View>
         <View style={styles.footer}>

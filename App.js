@@ -16,6 +16,7 @@ import WalkerProfile from "./app/screens/components/WalkerProfile";
 import EditProfile from "./app/screens/components/EditProfile";
 import EditWalkerProfile from "./app/screens/components/EditWalkerProfile";
 import ImageUpload from "./app/screens/ReusableComponents/PostImage";
+import UserProfile from "./app/screens/components/UserProfile";
 
 const App = () => {
   const Stack = createNativeStackNavigator();
@@ -26,6 +27,7 @@ const App = () => {
          <Stack.Screen name="SignUp" component={SignUp} />
         <Stack.Screen name="SignIn" component={SignIn} /> 
          <Stack.Screen name="Tabs" component={Tabs} />
+        <Stack.Screen name="UserProfile" component={UserProfile} /> 
         <Stack.Screen name="EditProfile" component={EditProfile} /> 
         <Stack.Screen name="EditWalkerProfile" component={EditWalkerProfile} />
         <Stack.Screen name="WalkerProfile" component={WalkerProfile} />
