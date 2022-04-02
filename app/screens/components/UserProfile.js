@@ -21,18 +21,22 @@ const UserProfile = ({navigation,route}) => {
   // const navigation = useNavigation();
   const { width, height } = Dimensions.get("window");
   const [userData, setUserData] = useState([]);
-  const [picture,setPicture] = useState(userData.image);
-  const [name,setName] = useState(userData.fullName);
+  const [picture,setPicture] = useState();
+  const [name,setName] = useState();
   
   useEffect(() => {
     getUser();
+    setPicture(userData.image);
+    setName(userData.fullName);
   }, [])
 
   useEffect(() => {
+    getUser();
     setPicture(route.params?.img)
   }, [route.params?.img]);
 
   useEffect(() => {
+    getUser();
     setName(route.params?.name)
   }, [route.params?.name]);
   

@@ -7,13 +7,15 @@ import {
   TouchableWithoutFeedback,
   Pressable,
   ScrollView,
-  TextInput,
   Image,
   TouchableOpacity,
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Entypo";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import * as SecureStore from "expo-secure-store";
 
 import * as ImagePicker from "expo-image-picker";
@@ -27,10 +29,11 @@ const EditProfile = ({navigation,route}) => {
   const { userData } = route.params;
   const namedb = userData.fullName;
   const emaildb = userData.email;
+  const imagedb = userData.image;
   const [name, setName] = useState(namedb);
   const [email, setEmail] = useState(emaildb);
   const [password, setPassword] = useState("");
-  const [img, setImg] = useState(userData.image);
+  const [img, setImg] = useState();
   const Update_URL = "http://192.168.1.108:3000/api/users/update-user";
   const Image_URL = "http://192.168.1.108:3000/api/users/post-image";
 
@@ -38,6 +41,10 @@ const EditProfile = ({navigation,route}) => {
     let result = await SecureStore.getItemAsync(key);
     return result;
   }
+
+  useEffect(() => {
+    setImg(imagedb);
+  }, [])
 
   // Upload to Cloudinary
   const handleUpload = (image) => { 
@@ -51,7 +58,6 @@ const EditProfile = ({navigation,route}) => {
     })
       .then((res) => res.json())
       .then((data) => {
-        setImg(data.url);
         saveImageURL(data.url);
       });
   };
@@ -93,6 +99,7 @@ const EditProfile = ({navigation,route}) => {
       const message = `Image: An error has occured`;
       console.log("message: ", message);
     } else {
+      setImg(img_URL);
       alert("Image changed successfully!");
     }
   };
@@ -181,6 +188,11 @@ const EditProfile = ({navigation,route}) => {
             {name}
           </Text>
         </TouchableOpacity>
+        <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={{flex:1}}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.inputContainer}>
           <Input placeholder={"Full Name"} value={name} setValue={text => setName(text)} />
           <Input placeholder={"Email"} value={email} setValue={text=> setEmail(text)} />
@@ -192,6 +204,8 @@ const EditProfile = ({navigation,route}) => {
             secureTextEntry={true}
           />
         </View>
+        </TouchableWithoutFeedback>
+        </KeyboardAvoidingView>
         <View style={styles.footer}>
           <Pressable onPress={() => UpdateProfile()}>
             <Text style={styles.footerText}>
