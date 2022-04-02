@@ -8,6 +8,8 @@ const PostImage = () => {
 
 const [img, setImg] = useState("https://cdn3.iconfinder.com/data/icons/vector-icons-6/96/256-512.png")
 
+const Image_URL = "http://192.168.1.108:3000/api/users/post-image";
+
   // Upload to Cloudinary
 const handleUpload = (image) => {
   const data = new FormData();
