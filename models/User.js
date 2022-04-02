@@ -9,29 +9,6 @@ const locationSchema = new mongoose.Schema({
 	},
 });
 
-const requestSchema = new mongoose.Schema({
-	from: {
-		type: String,
-	},
-	to : {
-		type: String,
-	},
-	status: {
-		type: String,
-		default: "pending",
-	},
-	createdAt: {
-		type: Date,
-		immutable: true,
-		default: Date.now
-		// default: () => Date.now(),
-	},
-	updatedAt: {
-		type: Date,
-		default: Date.now
-	}
-});
-
 const userSchema = new mongoose.Schema({
 	fullName: {
 		type: String,
@@ -56,6 +33,9 @@ const userSchema = new mongoose.Schema({
 		type: Boolean,
 		default: false,
 	},
+	age:{
+		type: Number,
+	},
 	gender:{
 		type: String,
 	},
@@ -65,9 +45,10 @@ const userSchema = new mongoose.Schema({
 	location: {
 		type: locationSchema,
 	},
-	request:{
-		type: requestSchema,
-	},
+	request:[{
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'Request',
+	}],
 	image:{
 		type: String,
 	},
