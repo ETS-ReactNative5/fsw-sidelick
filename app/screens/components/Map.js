@@ -11,9 +11,6 @@ import {
   ActivityIndicator,
 } from "react-native";
 import MapView, { Callout, Marker, PROVIDER_GOOGLE } from "react-native-maps";
-// import { check, request, PERMISSIONS, RESULTS } from "react-native-permissions"
-// import Geolocation from "react-native-geolocation-service"
-// import Constants from 'expo-constants';
 import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Entypo";
 import * as Location from "expo-location";
@@ -22,7 +19,6 @@ import * as SecureStore from "expo-secure-store";
 const Map = () => {
   const [location, setLocation] = useState({lat:30, long:30, latDelta: 20, longDelta:20 });
   const [errorMsg, setErrorMsg] = useState(null);
-  const [isLoading, setLoading] = useState(true);
   const [userData, setUserData] = useState([]);
   
   const navigation = useNavigation();
@@ -54,7 +50,7 @@ const Map = () => {
     return result;
   }
 
-  const getLocation = () => {
+  const getLocation = async() => {
     let result;
     Location.getCurrentPositionAsync({}).then(
       async (position) => {
@@ -135,7 +131,6 @@ const Map = () => {
 
 {userData &&
           userData.map(item => {
-            console.log("LIST OF ITEMS: ", item)
             return (
               <View key={item[0].id}>
                 <Marker
