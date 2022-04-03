@@ -22,10 +22,12 @@ const WalkerProfile = ({ route, navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const { item } = route.params;
   const [ image, setImage ] = useState();
+  const [ age, setAge ] = useState();
   console.log("USER DATA:", JSON.stringify(item));
 
   useEffect(() => {
     setImage(item[4].image);
+    setAge(item[5].age);
   }, [])
 
   const sendRequest_URL = "http://192.168.1.108:3000/api/users/send-request";
@@ -146,7 +148,7 @@ const WalkerProfile = ({ route, navigation }) => {
                 letterSpacing: -0.41,
               }}
             >
-            24{" "}Years
+            {age}{" "}Years
             </Text>
           </View>
           <View>
