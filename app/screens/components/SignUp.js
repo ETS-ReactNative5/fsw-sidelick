@@ -41,6 +41,7 @@ const SignUp = ({navigation}) => {
       fullName: '',
       email: '', 
       password: '' ,
+      age: '',
       phoneNumber: '',
     }}
     onSubmit={
@@ -56,6 +57,7 @@ const SignUp = ({navigation}) => {
             email: values.email,
             password: values.password,
             status: isEnabled,
+            age: values.age,
             phoneNumber: values.phoneNumber,
             gender: chosenOption,
           }),
@@ -85,6 +87,10 @@ const SignUp = ({navigation}) => {
         .min(6)
         .max(30, 'Password should not exceed 30 chars.')
         .required(),
+        age: yup
+        .number()
+        .required("This field is Required")
+        .max(2),
       phoneNumber: yup
       .string()
       .required("This field is Required")
@@ -141,6 +147,16 @@ const SignUp = ({navigation}) => {
             {touched.password && errors.password &&
               <Text style={{ fontSize: 12, color: '#FF0D10' }}>{errors.password}</Text>
             }
+            <TextInput
+              value={values.age}
+              style={styles.inputStyle}
+              onChangeText={handleChange('age')}
+              onBlur={() => setFieldTouched('age')}
+              placeholder="Age"
+            />
+            {touched.email && errors.email &&
+              <Text style={{ fontSize: 12, color: '#FF0D10' }}>{errors.email}</Text>
+            }
             <PhoneInput
               ref={phoneInput}
               defaultValue={values.phoneNumber}
@@ -165,7 +181,7 @@ const SignUp = ({navigation}) => {
         }} //if the user changes options, set the new value
       />
     </View>
-          <View style={styles.switcheucontainer}>
+          {/* <View style={styles.switcheucontainer}>
             <View style={styles.switchContainer}>
               <Text style={styles.switchText}>Walker</Text>
               <Switch
@@ -176,7 +192,7 @@ const SignUp = ({navigation}) => {
                 value={isEnabled}
               />
             </View>
-          </View>
+          </View> */}
           <CustomButton btnText={"Sign up"}
               onPress={handleSubmit} />
           <Pressable onPress={() => navigation.navigate("SignIn")}>
