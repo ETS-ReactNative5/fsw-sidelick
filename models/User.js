@@ -20,7 +20,6 @@ const userSchema = new mongoose.Schema({
 		type: String,
 		lowercase: true,
 		trim:true,
-		unique: true,
 		min: 6,
 		max: 255
 	},
@@ -45,7 +44,7 @@ const userSchema = new mongoose.Schema({
 	location: {
 		type: locationSchema,
 	},
-	requests: [{
+	request: [{
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'Request'
 	  }],
