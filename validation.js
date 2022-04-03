@@ -14,6 +14,9 @@ const registerValidation = data => {
   			.email(),
 		phoneNumber: Joi.number()
 			.required(),
+		age: Joi.number()
+			.max(100)
+			.required(),
 		gender: Joi.string().trim()
 			.required(),
   		password: Joi.string().trim()

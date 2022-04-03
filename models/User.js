@@ -45,12 +45,13 @@ const userSchema = new mongoose.Schema({
 	location: {
 		type: locationSchema,
 	},
-	request:[{
+	requests: [{
 		type: mongoose.Schema.Types.ObjectId,
-		ref: 'Request',
-	}],
+		ref: 'Request'
+	  }],
 	image:{
 		type: String,
+		default: "https://cdn3.iconfinder.com/data/icons/vector-icons-6/96/256-512.png"
 	},
 	createdAt: {
 		type: Date,

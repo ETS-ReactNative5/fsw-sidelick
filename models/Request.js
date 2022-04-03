@@ -1,14 +1,18 @@
 const mongoose = require('mongoose');
 
 const requestSchema = new mongoose.Schema({
-	from: {
+	user: {
 		type: mongoose.Schema.Types.ObjectId,
-		ref: 'User',
-	},
-	to : {
-		type: mongoose.Schema.Types.ObjectId,
-		ref: 'User',
-	},
+		ref: 'User'
+	  },
+	from:[ {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+    }],
+    to :[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+    }],
 	Reqstatus: {
 		type: String,
 		default: "pending",
@@ -26,4 +30,4 @@ const requestSchema = new mongoose.Schema({
 });
 
 
-module.exports = mongoose.model("Request", requestSchema);
+module.exports = mongoose.model('Request', requestSchema);

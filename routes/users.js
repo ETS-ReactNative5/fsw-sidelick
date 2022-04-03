@@ -12,6 +12,9 @@ router.get("/get-walkers", verifyToken, async (req, res) => {
       { fullName: walker.fullName },
       { latitude: walker.location.latitude },
       { longitude: walker.location.longitude },
+      { image : walker.image },
+      { age: walker.age },
+      { phoneNumber: walker.phoneNumber}
     ]);
 
     return res.status(201).json(walkersInfo);
@@ -33,25 +36,30 @@ router.post("/location", verifyToken, async (req, res) => {
         new: true,
       }
     );
-    res.status(201).json(updatedDocument);
+    return res.status(201).json(updatedDocument);
   } catch (err) {
-    res.status(400).json(err);
+    return res.status(400).json(err);
   }
 });
 
-router.post("/update", verifyToken, async (req, res) => {
+router.post("/update-user", verifyToken, async (req, res) => {
   try {
+    const user = await User.findById(req.user._id);
     const emailExist = await User.findOne({ email: req.body.email });
-    if (emailExist)
-      return res.status(400).json({ message: "Email Already Exists" });
-
+    
+    if (emailExist && user.email !== req.body.email){
+      return res.status(400).json({ message: "Email Already Exists"});}
+    
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
+
+    const validPass = await bcrypt.compare(req.body.password, user.password);
+  if (!validPass)
+    return res.status(400).json({ message: "Password is incorrect" });
 
     const update = {
       fullName: req.body.fullName,
       email: req.body.email,
-      password: hashedPassword,
     };
     const updatedDocument = await User.findOneAndUpdate(
       { _id: req.user._id },
@@ -79,7 +87,7 @@ router.post("/post-image", verifyToken, async(req, res) => {
         new: true,
       }
     );
-    res.status(200).json(updatedDocument);
+    return res.status(200).json(updatedDocument);
   } catch (err) {
     return res.status(400).json(err);
   }
@@ -94,57 +102,32 @@ router.get("/get-user", verifyToken, async(req,res) => {
   }
 })
 
-router.get("/update-user", verifyToken, async(req,res) => {
-  try{
-    const update = {
-      User: { fullName: req.body.fullName, email: req.body.email, password: req.body.password },
-    };
-    const updatedDocument = await User.findOneAndUpdate(
-      { _id: req.user._id },
-      update,
-      {
-        new: true,
-      }
-    );
-    res.status(200).json(updatedDocument);
-  } catch (err) {
-    return res.status(400).json(err);
-  }
-})
-
 router.post("/send-request", verifyToken, async (req, res) => {
   try {
-    // const person = await User.findById(req.user._id);
-    // console.log("PERSON:",person); 
-    // (!await person.request) ? console.log("No requests found" ) : 
-    // console.log("PERSON REQ:",personReq, "PERSON REQ ENDS")
-    // const reqExists = await personReq?.map((data) => {console.log("DATA:",data)(
-    //   data.to === request.body.user_id
-    //     ? ( data.status == "pending"
-    //       ? { message: "Request already sent" }
-    //       : { message: "Request sent!" } )
-    //     : { message: "No requests found" }
+    // const reqs = await User.findById(req.user._id);
+    // console.log("REQUESTS:", reqs);
+    // (!await reqs) ? console.log("ONE No requests found" ) : 
+    // await reqs?.map((data) => {console.log("DATA:",data)(
+    //   data.from == reqs[0].from
+    //     ? ( data.Reqstatus == 'pending'
+    //       ? console.log("Request already sent")
+    //       : console.log("Request sent!") )
+    //     : console.log("TWO No requests found")
     //   )}
     // );
-
     // #######################
-    const newreq = new Request({from:req.body.from, to:req.body.to, Reqstatus: req.body.Reqstatus});
-   await newreq.save();
+    const user = await User.findOne(req.user._id);
+    const request = new Request({
+      from: 'Hello',
+      to: 'Try something',
+      user: req.user._id
+    });
+    await request.save();
+    console.log(request);
+    user.requests.push(request);
+    await user.save();
     // #######################
-
-    // const receiver = req.body.to;
-    // if (personReq)
-    // if (reqexist)
-    //   return res.status(400).json({ message: "Request Already Exists" });
-    // const update = { request: { to: req.body.to } };
-    // const updatedDocument = await User.findOneAndUpdate(
-      //   { _id: req.user._id },
-      //   update,
-      //   {
-        //     new: true,
-        //   }
-        // );
-        res.status(200).json(newreq);
+        res.status(200).json("Success");
       } catch (err) {
         return res.status(400).json(err);
       }
