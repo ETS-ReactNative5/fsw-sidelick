@@ -14,6 +14,7 @@ import {
   Platform,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import Icon from "react-native-vector-icons/Entypo";
 import React, { useEffect, useState } from "react";
 import * as SecureStore from "expo-secure-store";
@@ -142,6 +143,7 @@ const EditProfile = ({navigation,route}) => {
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
+      <KeyboardAwareScrollView>
       <SafeAreaView style={[styles.root, { height: height, width: width }]}>
         <View
           style={{
@@ -188,11 +190,8 @@ const EditProfile = ({navigation,route}) => {
             {name}
           </Text>
         </TouchableOpacity>
-        <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={{flex:1}}
-    >
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        
+      <TouchableWithoutFeedback>
         <View style={styles.inputContainer}>
           <Input placeholder={"Full Name"} value={name} setValue={text => setName(text)} />
           <Input placeholder={"Email"} value={email} setValue={text=> setEmail(text)} />
@@ -205,7 +204,7 @@ const EditProfile = ({navigation,route}) => {
           />
         </View>
         </TouchableWithoutFeedback>
-        </KeyboardAvoidingView>
+        
         <View style={styles.footer}>
           <Pressable onPress={() => UpdateProfile()}>
             <Text style={styles.footerText}>
@@ -216,6 +215,7 @@ const EditProfile = ({navigation,route}) => {
           </Pressable>
         </View>
       </SafeAreaView>
+      </KeyboardAwareScrollView>
     </ScrollView>
   );
 };
