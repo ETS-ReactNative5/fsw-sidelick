@@ -88,9 +88,8 @@ const SignUp = ({navigation}) => {
         .max(30, 'Password should not exceed 30 chars.')
         .required(),
         age: yup
-        .number()
-        .required("This field is Required")
-        .max(2),
+        .string()
+        .required("This field is Required"),
       phoneNumber: yup
       .string()
       .required("This field is Required")
