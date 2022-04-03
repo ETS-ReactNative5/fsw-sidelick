@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   Alert,
   Modal,
+  Linking,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Entypo";
@@ -57,12 +58,30 @@ const WalkerProfile = ({ route, navigation }) => {
     console.log("successful");
   };
 
+  const DirectToWhatsapp = () => {
+    // Using 961 for Lebanon
+    // You can change 961 with your country code
+    const whatsAppMsg= "Hello, I found you on SideLick!";
+    const mobileNumber = item[6].phoneNumber;
+    let url =
+      'whatsapp://send?text=' + 
+       whatsAppMsg +
+      '&phone=961' + mobileNumber;
+    Linking.openURL(url)
+      .then(
+        console.log('WhatsApp Opened')
+      )
+      .catch(() => {
+        alert('Make sure Whatsapp installed on your device');
+      });
+  };
+
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <View>
         <ImageBackground
           // source={require("../../../assets/dog-walking.png")}
-          source={{uri: item[4].image}}
+          source={{uri: image}}
           style={[styles.root, { height: height * 0.5, width: width }]}
         >
           <View
@@ -139,7 +158,7 @@ const WalkerProfile = ({ route, navigation }) => {
             </Pressable> */}
           </View>
           <View>
-            <Text style={[styles.subText, { marginTop: "5%" }]}>Age</Text>
+            <Text style={[styles.subText, { marginTop: "4%" }]}>Age</Text>
             <Text
               style={{
                 fontWeight: "500",
@@ -152,7 +171,7 @@ const WalkerProfile = ({ route, navigation }) => {
             </Text>
           </View>
           <View>
-            <Text style={[styles.subText, { marginTop: "5%" }]}>
+            <Text style={[styles.subText, { marginTop: "4%" }]}>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam, quis nostrud exercitation ullamco laboris
@@ -184,7 +203,7 @@ const WalkerProfile = ({ route, navigation }) => {
           <Pressable
             style={[
               styles.btn,
-              { backgroundColor: "#ff8500", marginVertical: "5%" },
+              { backgroundColor: "#ff8500", marginTop: "3%", marginBottom:"2%" },
             ]}
             onPress={
               sendRequest
@@ -192,6 +211,17 @@ const WalkerProfile = ({ route, navigation }) => {
             }
           >
             <Text style={styles.textStyle}>Book a walk</Text>
+          </Pressable>
+          <Pressable
+            style={[
+              styles.btn,
+              { backgroundColor: "#A25400", },
+            ]}
+            onPress={
+              DirectToWhatsapp
+            }
+          >
+            <Text style={styles.textStyle}>Connect with {item[1].fullName}</Text>
           </Pressable>
         </View>
       </View>
