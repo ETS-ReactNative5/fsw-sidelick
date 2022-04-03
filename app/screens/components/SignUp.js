@@ -11,6 +11,7 @@ import {
   TextInput,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import Icon from "react-native-vector-icons/Entypo";
 import React, { useState, useRef } from "react";
 import {Picker} from '@react-native-community/picker';
@@ -101,6 +102,7 @@ const SignUp = ({navigation}) => {
    >
     {({ values, handleChange, errors, setFieldTouched, touched, isValid, handleSubmit }) => (
     <ScrollView showsVerticalScrollIndicator={false}>
+      <KeyboardAwareScrollView>
       <SafeAreaView style={[styles.root, { height: height, width: width }]}>
         <View style={styles.header}>
           <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
@@ -152,6 +154,7 @@ const SignUp = ({navigation}) => {
               onChangeText={handleChange('age')}
               onBlur={() => setFieldTouched('age')}
               placeholder="Age"
+        keyboardType="numeric"
             />
             {touched.email && errors.email &&
               <Text style={{ fontSize: 12, color: '#FF0D10' }}>{errors.email}</Text>
@@ -216,6 +219,7 @@ const SignUp = ({navigation}) => {
           </Text>
         </View>
       </SafeAreaView>
+      </KeyboardAwareScrollView>
     </ScrollView>
     )}
     </Formik>
