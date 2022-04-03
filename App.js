@@ -15,8 +15,8 @@ import Tabs from "./app/Routes/Tabs";
 import WalkerProfile from "./app/screens/components/WalkerProfile";
 import EditProfile from "./app/screens/components/EditProfile";
 import EditWalkerProfile from "./app/screens/components/EditWalkerProfile";
-import ImageUpload from "./app/screens/ReusableComponents/PostImage";
 import UserProfile from "./app/screens/components/UserProfile";
+import PetsProfile from "./app/screens/components/PetsProfile";
 
 const App = () => {
   const Stack = createNativeStackNavigator();
@@ -29,9 +29,9 @@ const App = () => {
          <Stack.Screen name="Tabs" component={Tabs} />
         <Stack.Screen name="UserProfile" component={UserProfile} /> 
         <Stack.Screen name="EditProfile" component={EditProfile} /> 
+        <Stack.Screen name="PetsProfile" component={PetsProfile} /> 
         <Stack.Screen name="EditWalkerProfile" component={EditWalkerProfile} />
         <Stack.Screen name="WalkerProfile" component={WalkerProfile} />
-        {/* <Stack.Screen name="ImageUpload" component={ImageUpload} /> */}
       </Stack.Navigator>
     </NavigationContainer>
   );

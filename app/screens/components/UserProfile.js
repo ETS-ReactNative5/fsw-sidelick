@@ -108,7 +108,7 @@ const UserProfile = ({navigation,route}) => {
         //       size={20}
         //       color="orange"
         //     />,
-            "Edit Pets"} type="outline" />
+            "Edit Pets"} type="outline" onPress={() => navigation.navigate("PetsProfile")}/>
         </View>
 		<View style={styles.footer}>
 			<Pressable onPress={onLogOut}>
