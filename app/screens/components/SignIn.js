@@ -33,7 +33,7 @@ const SignIn = ({navigation}) => {
       phoneNumber: '',
     }}
     onSubmit= {
-      async(values) => {
+      async(values,{resetForm}) => {
         let userData = await fetch(Login_URL, {
           method: 'POST',
           headers: {
@@ -45,6 +45,7 @@ const SignIn = ({navigation}) => {
             password: values.password,
           })
         })
+        resetForm({});
         userData = await userData.json().then(data => {
           const message = `An error has occured: ${userData.status}`;
         !userData.ok ? 

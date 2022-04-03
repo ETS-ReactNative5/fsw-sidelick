@@ -46,7 +46,7 @@ const SignUp = ({navigation}) => {
       phoneNumber: '',
     }}
     onSubmit={
-      async (values) => {
+      async (values,{resetForm}) => {
         let userData = await fetch(Register_URL, {
           method: "POST",
           headers: {
@@ -70,6 +70,7 @@ const SignUp = ({navigation}) => {
           // console.log(userData.message);
         } 
         else {
+          resetForm({});
           navigation.navigate("SignIn");
         }
         // userData = await userData.json();
