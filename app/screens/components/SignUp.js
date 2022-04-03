@@ -145,7 +145,7 @@ const SignUp = ({navigation}) => {
               ref={phoneInput}
               defaultValue={values.phoneNumber}
               value={values.phoneNumber}
-              defaultCode="US"
+              defaultCode="LB"
               layout="first"
               containerStyle={[styles.inputStyle, styles.phoneNumberView]}
               onChangeText={handleChange('phoneNumber')}
