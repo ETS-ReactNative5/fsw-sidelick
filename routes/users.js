@@ -12,9 +12,9 @@ router.get("/get-walkers", verifyToken, async (req, res) => {
       { fullName: walker.fullName },
       { latitude: walker.location.latitude },
       { longitude: walker.location.longitude },
-      { image: walker.image },
+      { image : walker.image },
       { age: walker.age },
-      { phoneNumber: walker.phoneNumber },
+      { phoneNumber: walker.phoneNumber}
     ]);
 
     return res.status(201).json(walkersInfo);
@@ -28,10 +28,13 @@ router.post("/location", verifyToken, async (req, res) => {
     const update = {
       location: { latitude: req.body.latitude, longitude: req.body.longitude },
     };
-    const filter = req.user._id;
-    const updatedDocument = await User.findOneAndUpdate(req.user._id, update, {
-      new: true,
-    });
+    const updatedDocument = await User.findOneAndUpdate(
+      { _id: req.user._id },
+      update,
+      {
+        new: true,
+      }
+    );
     return res.status(201).json(updatedDocument);
   } catch (err) {
     return res.status(400).json(err);
@@ -40,27 +43,30 @@ router.post("/location", verifyToken, async (req, res) => {
 
 router.post("/update-user", verifyToken, async (req, res) => {
   try {
-    const user = await User.findById(req.user._id);
+    const user = await User.findById({_id:req.user._id});
     const emailExist = await User.findOne({ email: req.body.email });
-
-    if (emailExist && user.email !== req.body.email) {
-      return res.status(400).json({ message: "Email Already Exists" });
-    }
-
+    
+    if (emailExist && user.email !== req.body.email){
+      return res.status(400).json({ message: "Email Already Exists"});}
+    
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
 
     const validPass = await bcrypt.compare(req.body.password, user.password);
-    if (!validPass)
-      return res.status(400).json({ message: "Password is incorrect" });
+  if (!validPass)
+    return res.status(400).json({ message: "Password is incorrect" });
 
     const update = {
       fullName: req.body.fullName,
       email: req.body.email,
     };
-    const updatedDocument = await User.findOneAndUpdate(req.user._id, update, {
-      new: true,
-    });
+    const updatedDocument = await User.findOneAndUpdate(
+      { _id: req.user._id },
+      update,
+      {
+        new: true,
+      }
+    );
 
     return res.status(201).json(updatedDocument);
   } catch (err) {
@@ -68,34 +74,38 @@ router.post("/update-user", verifyToken, async (req, res) => {
   }
 });
 
-router.post("/post-image", verifyToken, async (req, res) => {
-  try {
+router.post("/post-image", verifyToken, async(req, res) => {
+  try{
     const update = {
-      image: req.body.image,
+      image: req.body.image
     };
-    const updatedDocument = await User.findOneAndUpdate(req.user._id, update, {
-      new: true,
-    });
+    const updatedDocument = await User.findOneAndUpdate(
+      { _id: req.user._id },
+      update,
+      {
+        new: true,
+      }
+    );
     return res.status(200).json(updatedDocument);
   } catch (err) {
     return res.status(400).json(err);
   }
 });
 
-router.get("/get-user", verifyToken, async (req, res) => {
-  try {
-    const user = await User.findById(req.user._id);
+router.get("/get-user", verifyToken, async(req,res) => {
+  try{
+    const user = await User.findById({_id:req.user._id})
     return res.status(201).json(user);
-  } catch (err) {
+  }catch(err){
     return res.status(400).json(err);
   }
-});
+})
 
 router.post("/send-request", verifyToken, async (req, res) => {
   try {
     // const reqs = await User.findById(req.user._id);
     // console.log("REQUESTS:", reqs);
-    // (!await reqs) ? console.log("ONE No requests found" ) :
+    // (!await reqs) ? console.log("ONE No requests found" ) : 
     // await reqs?.map((data) => {console.log("DATA:",data)(
     //   data.from == reqs[0].from
     //     ? ( data.Reqstatus == 'pending'
@@ -105,7 +115,7 @@ router.post("/send-request", verifyToken, async (req, res) => {
     //   )}
     // );
     // #######################
-    const user = await User.findOne({ _id: req.user._id });
+    const user = await User.findOne({_id:req.user._id});
     console.log("USER BEFORE NEW REQUEST ");
     const request = new Request({
       from: "NOW",
@@ -119,15 +129,15 @@ router.post("/send-request", verifyToken, async (req, res) => {
     await user.save();
     console.log("USER SAVED: ", user);
     // #######################
-    return res.status(200).json("Success");
-  } catch (err) {
-    return res.status(400).json(err);
-  }
-});
+        return res.status(200).json("Success");
+      } catch (err) {
+        return res.status(400).json(err);
+      }
+    });
 
 router.get("/get-request", verifyToken, async (req, res) => {
   try {
-    const userRequest = await User.findById(req.user._id);
+    const userRequest = await User.findById({_id:req.user._id});
     if (!userRequest.request)
       return res.status(400).json({ message: "No request sent" });
     const requestInfo = await userRequest.map((data) => [
