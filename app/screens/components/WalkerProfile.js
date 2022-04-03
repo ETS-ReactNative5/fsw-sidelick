@@ -13,7 +13,7 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Entypo";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import * as SecureStore from "expo-secure-store";
 import { BlurView } from "expo-blur";
 
@@ -21,7 +21,12 @@ const WalkerProfile = ({ route, navigation }) => {
   const { width, height } = Dimensions.get("window");
   const [modalVisible, setModalVisible] = useState(false);
   const { item } = route.params;
+  const [ image, setImage ] = useState();
   console.log("USER DATA:", JSON.stringify(item));
+
+  useEffect(() => {
+    setImage(item[4].image);
+  }, [])
 
   const sendRequest_URL = "http://192.168.1.108:3000/api/users/send-request";
 
@@ -54,7 +59,8 @@ const WalkerProfile = ({ route, navigation }) => {
     <ScrollView showsVerticalScrollIndicator={false}>
       <View>
         <ImageBackground
-          source={require("../../../assets/dog-walking.png")}
+          // source={require("../../../assets/dog-walking.png")}
+          source={{uri: item[4].image}}
           style={[styles.root, { height: height * 0.5, width: width }]}
         >
           <View
