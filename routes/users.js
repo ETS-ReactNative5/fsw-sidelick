@@ -12,9 +12,9 @@ router.get("/get-walkers", verifyToken, async (req, res) => {
       { fullName: walker.fullName },
       { latitude: walker.location.latitude },
       { longitude: walker.location.longitude },
-      { image : walker.image },
+      { image: walker.image },
       { age: walker.age },
-      { phoneNumber: walker.phoneNumber}
+      { phoneNumber: walker.phoneNumber },
     ]);
 
     return res.status(201).json(walkersInfo);
@@ -43,18 +43,19 @@ router.post("/location", verifyToken, async (req, res) => {
 
 router.post("/update-user", verifyToken, async (req, res) => {
   try {
-    const user = await User.findById({_id:req.user._id});
+    const user = await User.findById({ _id: req.user._id });
     const emailExist = await User.findOne({ email: req.body.email });
-    
-    if (emailExist && user.email !== req.body.email){
-      return res.status(400).json({ message: "Email Already Exists"});}
-    
+
+    if (emailExist && user.email !== req.body.email) {
+      return res.status(400).json({ message: "Email Already Exists" });
+    }
+
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
 
     const validPass = await bcrypt.compare(req.body.password, user.password);
-  if (!validPass)
-    return res.status(400).json({ message: "Password is incorrect" });
+    if (!validPass)
+      return res.status(400).json({ message: "Password is incorrect" });
 
     const update = {
       fullName: req.body.fullName,
@@ -74,10 +75,10 @@ router.post("/update-user", verifyToken, async (req, res) => {
   }
 });
 
-router.post("/post-image", verifyToken, async(req, res) => {
-  try{
+router.post("/post-image", verifyToken, async (req, res) => {
+  try {
     const update = {
-      image: req.body.image
+      image: req.body.image,
     };
     const updatedDocument = await User.findOneAndUpdate(
       { _id: req.user._id },
@@ -92,52 +93,58 @@ router.post("/post-image", verifyToken, async(req, res) => {
   }
 });
 
-router.get("/get-user", verifyToken, async(req,res) => {
-  try{
-    const user = await User.findById({_id:req.user._id})
+router.get("/get-user", verifyToken, async (req, res) => {
+  try {
+    const user = await User.findById({ _id: req.user._id });
     return res.status(201).json(user);
-  }catch(err){
+  } catch (err) {
     return res.status(400).json(err);
   }
-})
+});
 
 router.post("/send-request", verifyToken, async (req, res) => {
   try {
-    // const reqs = await User.findById(req.user._id);
-    // console.log("REQUESTS:", reqs);
-    // (!await reqs) ? console.log("ONE No requests found" ) : 
-    // await reqs?.map((data) => {console.log("DATA:",data)(
-    //   data.from == reqs[0].from
-    //     ? ( data.Reqstatus == 'pending'
-    //       ? console.log("Request already sent")
-    //       : console.log("Request sent!") )
-    //     : console.log("TWO No requests found")
-    //   )}
-    // );
+    let bool = false;
+    const user = await User.findById({ _id: req.user._id });
+    const userReq = await Request.find({ _id: user.request });
+    !userReq
+      ? CreateRequest.call()
+      : await userReq?.map((data) => {
+          if (data.to === req.body.to && data.Reqstatus === "pending") {
+            bool = true;
+            return;
+          }
+        });
+    if (!bool) {
+      CreateRequest.call();
+    } else {
+      return res.status(406).json("Request already sent!");
+    }
     // #######################
-    const user = await User.findOne({_id:req.user._id});
-    console.log("USER BEFORE NEW REQUEST ");
-    const request = new Request({
-      from: "NOW",
-      to: "Trying",
-      Reqstatus: "Pending",
-    });
-    console.log("BEFORE SAVE ");
-    await request.save();
-    console.log("REQUEST SAVED: ", request);
-    user.request.push(request);
-    await user.save();
-    console.log("USER SAVED: ", user);
+    async function CreateRequest () {
+      console.log("USER BEFORE NEW REQUEST ");
+      const request = new Request({
+        from: req.body.from,
+        to: req.body.to,
+        Reqstatus: "pending",
+      });
+      console.log("BEFORE SAVE ");
+      await request.save();
+      console.log("REQUEST SAVED: ", request);
+      user.request.push(request);
+      await user.save();
+      console.log("USER SAVED: ", user);
+    };
     // #######################
-        return res.status(200).json("Success");
-      } catch (err) {
-        return res.status(400).json(err);
-      }
-    });
+    return res.status(200).json("Success");
+  } catch (err) {
+    return res.status(400).json(err);
+  }
+});
 
 router.get("/get-request", verifyToken, async (req, res) => {
   try {
-    const userRequest = await User.findById({_id:req.user._id});
+    const userRequest = await User.findById({ _id: req.user._id });
     if (!userRequest.request)
       return res.status(400).json({ message: "No request sent" });
     const requestInfo = await userRequest.map((data) => [
