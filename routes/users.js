@@ -141,16 +141,17 @@ router.post("/send-request", verifyToken, async (req, res) => {
 router.get("/get-request", verifyToken, async (req, res) => {
   try {
     const user = await User.findById({ _id: req.user._id });
-    console.log("USER : ", user);
     const userReq = await Request.find({ _id: user.request });
-    console.log("USER REQUEST: ", userReq);
+    console.log(userReq);
     if (!userReq)
       return res.status(400).json({ message: "No request sent" });
     const requestInfo = await userReq.map((data) => [
+      { id: data._id},
       { from: data.from },
       { to: data.to },
       { Reqstatus: data.Reqstatus },
-    ]);
+    ]
+);
     return res.status(201).json(requestInfo);
   } catch (err) {
     return res.status(400).json(err);
