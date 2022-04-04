@@ -32,6 +32,21 @@ This project was developed using React Native, NodeJs, MongoDB.
 
 ![Readme](./assets/ReadMeImages/title5.svg)
 
+![OnBoardingScreen](./assets/ReadMeImages/page1.png)
+![SignUp](./assets/ReadMeImages/page2.png)
+![SignIn](./assets/ReadMeImages/page3.png)
+![Map](./assets/ReadMeImages/page4.png)
+![WalkerProfile](./assets/ReadMeImages/page4a.png)
+![Requests](./assets/ReadMeImages/page5.png)
+![UserProfile](./assets/ReadMeImages/page6.png)
+![EditProfile](./assets/ReadMeImages/page6a.png)
+![EditPets](./assets/ReadMeImages/page6b.png)
+
+
+
+
+
+
 
 
 
