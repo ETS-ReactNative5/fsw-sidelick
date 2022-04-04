@@ -24,8 +24,6 @@ This project was developed using React Native, NodeJs, MongoDB.
 
 ![Readme](./assets/ReadMeImages/title4.svg)
 
-# Tech Stacks :
-
 * React Native
 * NodeJs
 * Express
