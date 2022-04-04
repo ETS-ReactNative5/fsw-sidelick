@@ -165,11 +165,13 @@ const EditProfile = ({navigation,route}) => {
             <Icon name="chevron-thin-left" size={25} color="#000" />
           </TouchableWithoutFeedback>
         </View>
+        <View 
+          style={styles.header} >
         <TouchableOpacity
-          style={styles.header}
+        style={{alignItems:'center'}}
           onPress={() => PostImageHandler()}
         >
-          <View style={{ position: "absolute", top: 0, right: 130 }}>
+          <View style={{ position: "absolute", top: 5, right:5 }}>
             <View
               style={{
                 backgroundColor: "#F0F0F0",
@@ -190,7 +192,7 @@ const EditProfile = ({navigation,route}) => {
             {name}
           </Text>
         </TouchableOpacity>
-        
+        </View>
       <TouchableWithoutFeedback>
         <View style={styles.inputContainer}>
           <Input placeholder={"Full Name"} value={name} setValue={text => setName(text)} />
@@ -227,8 +229,7 @@ const styles = StyleSheet.create({
   },
   header: {
     flex: 1,
-    marginTop: "5%",
-    marginBottom: "5%",
+    marginVertical:"5%",
     justifyContent: "center",
     alignItems: "center",
   },
