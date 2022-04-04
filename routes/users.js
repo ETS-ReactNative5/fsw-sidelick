@@ -122,18 +122,14 @@ router.post("/send-request", verifyToken, async (req, res) => {
     }
     // #######################
     async function CreateRequest () {
-      console.log("USER BEFORE NEW REQUEST ");
       const request = new Request({
-        from: req.body.from,
+        from: user.fullName,
         to: req.body.to,
         Reqstatus: "pending",
       });
-      console.log("BEFORE SAVE ");
       await request.save();
-      console.log("REQUEST SAVED: ", request);
       user.request.push(request);
       await user.save();
-      console.log("USER SAVED: ", user);
     };
     // #######################
     return res.status(200).json("Success");
@@ -144,10 +140,13 @@ router.post("/send-request", verifyToken, async (req, res) => {
 
 router.get("/get-request", verifyToken, async (req, res) => {
   try {
-    const userRequest = await User.findById({ _id: req.user._id });
-    if (!userRequest.request)
+    const user = await User.findById({ _id: req.user._id });
+    console.log("USER : ", user);
+    const userReq = await Request.find({ _id: user.request });
+    console.log("USER REQUEST: ", userReq);
+    if (!userReq)
       return res.status(400).json({ message: "No request sent" });
-    const requestInfo = await userRequest.map((data) => [
+    const requestInfo = await userReq.map((data) => [
       { from: data.from },
       { to: data.to },
       { Reqstatus: data.Reqstatus },
