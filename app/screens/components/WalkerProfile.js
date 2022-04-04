@@ -22,11 +22,12 @@ const WalkerProfile = ({ route, navigation }) => {
   const { width, height } = Dimensions.get("window");
   const [modalVisible, setModalVisible] = useState(false);
   const { item } = route.params;
+  const [ name , setName ] = useState();
   const [ image, setImage ] = useState();
   const [ age, setAge ] = useState();
-  console.log("USER DATA:", JSON.stringify(item));
 
   useEffect(() => {
+    setName(item[1].fullName);
     setImage(item[4].image);
     setAge(item[5].age);
   }, [])
@@ -37,30 +38,31 @@ const WalkerProfile = ({ route, navigation }) => {
     let result = await SecureStore.getItemAsync(key);
     return result;
   }
-  async function save(key, value) {
-    await SecureStore.setItemAsync(key, value);
-  }
 
-  // const sendRequest = async () => {
-  //   let result;
-  //   await getValueFor("userToken").then((value) => {
-  //     result = value;
-  //   });
-    
-    // let requestInfo = await fetch(sendRequest_URL, {
-    //   method: "POST",
-    //   headers: {
-    //     Accept: "application/json",
-    //     "Content-Type": "application/json",
-    //     "auth-token": result,
-    //   },
-    //   body: JSON.stringify({
-    //     to: "Alex Murray",
-    //   }),
-    // });
-    // !requestInfo ? alert("Error") : setModalVisible(true);
-    // console.log("successful");
-  // };
+  const sendRequest = async () => {
+    let result;
+    await getValueFor("userToken").then((value) => {
+      result = value;
+    });
+    let requestInfo = await fetch(sendRequest_URL, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "auth-token": result,
+      },
+      body: JSON.stringify({
+        to: name
+      }),
+    });
+    if (requestInfo.status === 200 || requestInfo.status === 201) {
+      setModalVisible(true);
+    } 
+    else {
+      requestInfo = await requestInfo.json();
+      alert(requestInfo);
+    }
+  };
 
   const DirectToWhatsapp = () => {
     // Using 961 for Lebanon
@@ -210,8 +212,8 @@ const WalkerProfile = ({ route, navigation }) => {
               { backgroundColor: "#ff8500", marginTop: "3%", marginBottom:"2%" },
             ]}
             onPress={
-              // sendRequest
-              () => setModalVisible(true)
+              sendRequest
+              // () => setModalVisible(true)
             }
           >
             <Text style={styles.textStyle}>Book a walk</Text>
