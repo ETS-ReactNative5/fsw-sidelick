@@ -1,43 +1,53 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Text, View, StyleSheet, FlatList, Button, Image, Dimensions, SafeAreaView } from 'react-native';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
+import * as SecureStore from "expo-secure-store";
 
 import Constants from 'expo-constants';
 
-const DATA = [
-  {
-      id: 1,
-      date: "10:45 • 29/3/2022",
-      walker: "Hala Zbib",
-      age: '21',
-      location: "Beirut",
-      image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRAd7SeoDA2PxCcdbtBxBAHYw1xiP_CpXmRFyKSyyiC2Pr_A_vf34p816fwajWCCR9eHBo&usqp=CAU'
-    },
-    {
-      id: 2,
-      date: "16:20 • 29/3/2022",
-      walker: "Charbel Daoud",
-      age: '32',
-      location: "Beirut",
-      image: 'https://icon-library.com/images/avatar-icon-png/avatar-icon-png-25.jpg'
-    },
-    {
-      id: 3,
-      date: "9:13 • 29/3/2022",
-      walker: "Saad",
-      age: '30',
-      location: "Jbeil",
-      image: 'https://e7.pngegg.com/pngimages/341/821/png-clipart-art-rick-sanchez-adult-swim-meeseeks-and-destroy-pickle-rick-rick-and-morty-portal-food-vehicle.png'
-    },
-];
-
-export default function App() {
+export default function Requests({navigation}) {
   const [status, setStatus] = useState("Pending...");
   const { width, height } = Dimensions.get("window");
-  const [listData, setListData] = useState(DATA);
+  const [ requests, setRequests ] = useState([])
   let row = [];
   let prevOpenedRow;
+
+  useEffect(() => {
+    GetRequests();
+  }, []);
+
+  const GetRequests_URL = "http://192.168.1.108:3000/api/users/get-request";
+
+  async function getValueFor(key) {
+    let result = await SecureStore.getItemAsync(key);
+    return result;
+  }
+
+  const GetRequests = async() => {
+    let result;
+    await getValueFor("userToken").then((value) => {
+      result = value;
+    });
+    try {
+     const response = await fetch(GetRequests_URL,  {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "auth-token": result,
+      }});
+      if(!response.ok || response.status !== 201){
+        response = await response.json();
+        alert(response);
+      }
+     const data = await response.json();
+     setRequests(data); 
+     console.log("GET REQUEST SUCCESSFULL")
+   } catch (error) {
+     console.error(error);
+   }
+  }
 
   /**
    *
@@ -59,9 +69,9 @@ export default function App() {
             margin: 0,
             alignContent: 'center',
             justifyContent: 'center',
-            width: 70,
+            width: 85,
           }}>
-          <Button color="red" onPress={onClick} title="DELETE"></Button>
+          <Button color="orange" onPress={onClick} title="DELETE"></Button>
         </View>
       );
     };
@@ -74,14 +84,15 @@ export default function App() {
         onSwipeableOpen={() => closeRow(index)}
         ref={(ref) => (row[index] = ref)}
         rightOpenValue={-100}>
+          <View style={{justifyContent:'center', marginHorizontal: 10}}>
         <View
           style={styles.container}>
-                      <Image style={{width:80, height:80, borderRadius: 50, shadowOpacity: 0.3, marginHorizontal: 10, }}source={{uri: item.image}}/>
+                      <Image style={{width:80, height:80, borderRadius: 50, shadowOpacity: 0.3, marginHorizontal: 10, }}source={{uri: "https://cdn3.iconfinder.com/data/icons/vector-icons-6/96/256-512.png"}}/>
         <View style={{justifyContent:'center'}}>
-            <Text style={styles.text}>{item.walker}, {item.age}</Text>
-            <Text style={styles.date}>{item.date}</Text>
-            <Text style={styles.subtext}>{status}</Text>
+            <Text style={styles.text}>{item[2].to}</Text>
+          <Text style={styles.subtext}>{item[3].Reqstatus}...</Text>
             </View>
+        </View>
         </View>
       </Swipeable>
     );
@@ -103,24 +114,24 @@ export default function App() {
 
   const deleteItem = ({ item, index }) => {
     console.log(item, index);
-    let a = listData;
+    let a = requests;
     a.splice(index, 1);
     console.log(a);
-    setListData([...a]);
+    setRequests([...a]);
   };
 
   return (
     <SafeAreaView style={[styles.root, { height: height, width: width }]}>
     <Text style={styles.title}>Your Requests</Text>
       <FlatList
-        data={listData}
+        data={requests}
         renderItem={(v) =>
           renderItem(v, () => {
             console.log('Pressed', v);
             deleteItem(v);
           })
         }
-        keyExtractor={(item) => item.id}></FlatList>
+        keyExtractor={(item) => item[0].id}></FlatList>
     </SafeAreaView>
   );
 }
@@ -165,137 +176,3 @@ const styles = StyleSheet.create({
     letterSpacing: 0.5,
   }, 
 });
-
-// ############################################################
-
-// import {
-//   View,
-//   Text,
-//   SafeAreaView,
-//   StyleSheet,
-//   Dimensions,
-//   FlatList,
-//   TouchableOpacity,
-//   Pressable,
-//   Image,
-// } from "react-native";
-// import { useNavigation } from "@react-navigation/native";
-// import React, { useState } from "react";
-// import Icon from "react-native-vector-icons/AntDesign";
-// import Swipeable from 'react-native-gesture-handler/Swipeable';
-
-// const Requests = ({ data }) => {
-//   const navigation = useNavigation();
-//   const { width, height } = Dimensions.get("window");
-//   const [status, setStatus] = useState("Pending...");
-//   const [request, setRequest] = useState([
-//     {
-//       id: 1,
-//       date: "10:45 • 29/3/2022",
-//       walker: "Hala Zbib",
-//       age: '21',
-//       location: "Beirut",
-//       image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRAd7SeoDA2PxCcdbtBxBAHYw1xiP_CpXmRFyKSyyiC2Pr_A_vf34p816fwajWCCR9eHBo&usqp=CAU'
-//     },
-//     {
-//       id: 2,
-//       date: "16:20 • 29/3/2022",
-//       walker: "Charbel Daoud",
-//       age: '32',
-//       location: "Beirut",
-//       image: 'https://icon-library.com/images/avatar-icon-png/avatar-icon-png-25.jpg'
-//     },
-//     {
-//       id: 3,
-//       date: "9:13 • 29/3/2022",
-//       walker: "Saad",
-//       age: '30',
-//       location: "Jbeil",
-//       image: 'https://e7.pngegg.com/pngimages/341/821/png-clipart-art-rick-sanchez-adult-swim-meeseeks-and-destroy-pickle-rick-rick-and-morty-portal-food-vehicle.png'
-//     },
-//   ]);
-
-//   const ListEmptyComponent = () => {
-//     return (
-//       <View
-//         style={{
-//           justifyContent: "center",
-//           alignItems: "center",
-//           marginVertical: "10%",
-//         }}
-//       >
-//         <Text>No requests found</Text>
-//       </View>
-//     );
-//   };
-
-//   return (
-//     <SafeAreaView style={[styles.root, { height: height, width: width }]}>
-// 		<Text style={styles.title}>Your Requests</Text>
-//       <FlatList
-//         style={{ paddingHorizontal: "5%" }}
-//         renderItem={({ item }) => (
-//           <View style={styles.container}>
-//             <Image style={{width:80, height:80, borderRadius: 50, shadowOpacity: 0.3, marginHorizontal: 10, }}source={{uri: item.image}}/>
-// 			  {/* <Pressable style={{alignItems:"flex-end"}} >
-// 			  <Icon name="close" size={14}/>
-// 			  </Pressable> */}
-//         <View style={{justifyContent:'center'}}>
-//             <Text style={styles.text}>{item.walker}, {item.age}</Text>
-//             <Text style={styles.date}>{item.date}</Text>
-//             <Text style={styles.subtext}>{status}</Text>
-//             </View>
-//           </View>
-//         )}
-//         data={request}
-//         keyExtractor={(item) => String(item.id)}
-//         ListEmptyComponent={ListEmptyComponent}
-//       />
-//     </SafeAreaView>
-//   );
-// };
-
-// const styles = StyleSheet.create({
-//   root: {
-//     flex: 1,
-//     backgroundColor: "#f0f0f0",
-//   },
-//   container: {
-//     flex: 1,
-//     flexDirection: "row",
-//     paddingVertical: 20,
-//     paddingHorizontal: 20,
-//     width: "100%",
-//     marginVertical: 10,
-//     borderRadius: 30,
-// 	backgroundColor: "white",
-// 	shadowOpacity: 0.3,
-//   },
-//   text: {
-//     fontSize: 22,
-//     fontWeight: "500",
-//     letterSpacing: 1,
-//   },
-//   subtext: {
-//     color: "grey",
-//     fontSize: 14,
-//     letterSpacing: 0.5,
-//   },
-//   title:{
-// 	fontWeight: "400",
-//     fontStyle: "normal",
-//     fontSize: 36,
-//     lineHeight: 51,
-//     letterSpacing: 0.4,
-// 	marginVertical: "2%",
-//   marginHorizontal: '5%',
-//   },
-//   date:{
-//     fontSize: 14,
-//     letterSpacing: 0.5,
-//   },
-// });
-
-// export default Requests;
-
-// ############################################################
