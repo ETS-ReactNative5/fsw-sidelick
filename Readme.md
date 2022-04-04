@@ -42,6 +42,7 @@ This project was developed using React Native, NodeJs, MongoDB.
 ![EditProfile](./assets/ReadMeImages/page6a.png)
 ![EditPets](./assets/ReadMeImages/page6b.png)
 
+![Readme](./assets/ReadMeImages/title6.svg)
 
 
 
