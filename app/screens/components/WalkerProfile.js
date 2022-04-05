@@ -178,10 +178,7 @@ const WalkerProfile = ({ route, navigation }) => {
           </View>
           <View>
             <Text style={[styles.subText, { marginTop: "4%" }]}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat.
+            {item[1].fullName} has loved dogs since childhood. He is currently a veterinary student. Visits the dog shelter we...
             </Text>
             {/* <Text style={{color: '#FB724C',}}>Read more</Text> */}
           </View>
