@@ -164,7 +164,7 @@ const WalkerProfile = ({ route, navigation }) => {
             </Pressable> */}
           </View>
           <View>
-            <Text style={[styles.subText, { marginTop: "4%" }]}>Age</Text>
+            <Text style={[styles.subText, { marginTop: "4%",textAlign:'center' }]}>Age</Text>
             <Text
               style={{
                 fontWeight: "500",
