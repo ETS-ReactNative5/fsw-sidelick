@@ -17,7 +17,7 @@ import * as Location from "expo-location";
 import * as SecureStore from "expo-secure-store";
 
 const Map = ({navigation}) => {
-  const [location, setLocation] = useState({lat:30, long:30, latDelta: 20, longDelta:20 });
+  const [location, setLocation] = useState({lat:33.8547, long:35.8623, latDelta: 1, longDelta:1.5 });
   const [errorMsg, setErrorMsg] = useState(null);
   const [userData, setUserData] = useState([]);
   
