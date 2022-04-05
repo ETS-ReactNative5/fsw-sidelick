@@ -180,7 +180,7 @@ const WalkerProfile = ({ route, navigation }) => {
             <Text style={[styles.subText, { marginTop: "4%" }]}>
             {item[1].fullName} has loved dogs since childhood. He is currently a veterinary student. Visits the dog shelter we...
             </Text>
-            {/* <Text style={{color: '#FB724C',}}>Read more</Text> */}
+            <Text style={{color: '#FB724C',}}>Read more</Text>
           </View>
           <Modal
             animationType="slide"
