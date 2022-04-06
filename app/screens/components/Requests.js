@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { Text, View, StyleSheet, FlatList, Button, Image, Dimensions, SafeAreaView } from 'react-native';
+import { useIsFocused } from '@react-navigation/native'
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import * as SecureStore from "expo-secure-store";
 
@@ -12,10 +13,11 @@ export default function Requests({navigation}) {
   const [ requests, setRequests ] = useState([])
   let row = [];
   let prevOpenedRow;
+  const isFocused = useIsFocused()
 
   useEffect(() => {
     GetRequests();
-  }, []);
+  } , [isFocused])
 
   const GetRequests_URL = "http://192.168.1.108:3000/api/users/get-request";
 
@@ -87,7 +89,7 @@ export default function Requests({navigation}) {
           <View style={{justifyContent:'center', marginHorizontal: 10}}>
         <View
           style={styles.container}>
-                      <Image style={{width:80, height:80, borderRadius: 50, shadowOpacity: 0.3, marginHorizontal: 10, }}source={{uri: "https://cdn3.iconfinder.com/data/icons/vector-icons-6/96/256-512.png"}}/>
+                      <Image style={{width:80, height:80, borderRadius: 50, shadowOpacity: 0.3, marginHorizontal: 10, }}source={{uri: "https://images.theconversation.com/files/223381/original/file-20180615-85822-1o2y44i.jpg?ixlib=rb-1.1.0&q=45&auto=format&w=754&h=514&fit=crop&dpr=1"}}/>
         <View style={{justifyContent:'center'}}>
             <Text style={styles.text}>{item[2].to}</Text>
           <Text style={styles.subtext}>{item[3].Reqstatus}...</Text>
