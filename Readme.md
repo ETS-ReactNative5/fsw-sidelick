@@ -4,7 +4,7 @@
 
 > Hello world! SideLick is a dog walking app, where clients can simply log in and look for nearby walkers, book them, and contact them via WhatsApp.
 
-**[PROJECT PHILOSOPHY](https://github.com/HalaZbib22/SideLick---Frontend-react-native-#project-philosophy) • [WIREFRAMES](https://github.com/HalaZbib22/SideLick---Frontend-react-native-#wireframes) • [TECH STACK](https://github.com/HalaZbib22/SideLick---Frontend-react-native-#tech-stack) • [IMPLEMENTATION](https://github.com/HalaZbib22/SideLick---Frontend-react-native-#-impplementation) • [HOW TO RUN?](https://github.com/HalaZbib22/SideLick---Frontend-react-native-#how-to-run)**
+**[PROJECT PHILOSOPHY](https://github.com/HalaZbib22/SideLick---Frontend-react-native-#-project-philosophy) • [WIREFRAMES](https://github.com/HalaZbib22/SideLick---Frontend-react-native-#-wireframes) • [TECH STACK](https://github.com/HalaZbib22/SideLick---Frontend-react-native-#-tech-stack) • [IMPLEMENTATION](https://github.com/HalaZbib22/SideLick---Frontend-react-native-#-impplementation) • [HOW TO RUN?](https://github.com/HalaZbib22/SideLick---Frontend-react-native-#-how-to-run)**
 
 </div>
 
