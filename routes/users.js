@@ -158,4 +158,13 @@ router.get("/get-request", verifyToken, async (req, res) => {
   }
 });
 
+router.delete("/delete-request/:_id", verifyToken, async(req,res)=>{
+  try{
+    const data = await Request.deleteOne(req.params)
+  return res.status(201).json({message:"Request deleted successfully"})
+}catch(err){
+  return res.status(400).json(err);
+}
+})
+
 module.exports = router;
