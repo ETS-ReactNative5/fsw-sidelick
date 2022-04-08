@@ -14,6 +14,7 @@
 <img src="./assets/ReadMeImages/title2.svg"/>
 
 ### User Stories
+
 - As a user, I want to find a nearby walker, so that I can book them.
 - As a user, I want to connect with the walkers, so that I can exchange more information.
 - As a user, I want to change my profile, so that I can show exact information about me.
