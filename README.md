@@ -96,11 +96,11 @@ Here's a brief high-level overview of the tech stack SideLick uses:
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/HalaZbib22/SideLick.git
+   git clone https://github.com/HalaZbib22/fsw-sidelick.git
    ```
 2. Navigate to the Frontend folder and install dependencies
    ```sh
-   cd SideLick/Frontend
+   cd fsw-sidelick/SideLick--Frontend
    npm install
    ```
 3. Run the start up command
