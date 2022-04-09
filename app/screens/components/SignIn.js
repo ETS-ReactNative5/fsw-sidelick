@@ -45,12 +45,12 @@ const SignIn = ({navigation}) => {
             password: values.password,
           })
         })
-        resetForm({});
         userData = await userData.json().then(data => {
           const message = `An error has occured: ${userData.status}`;
         !userData.ok ? 
           alert(data.message) :
-          [save('userToken', data.token), navigation.navigate("Tabs")];
+          [save('userToken', data.token), 
+          resetForm({}),navigation.navigate("Tabs")];
           });
 
           async function save(key, value) {
