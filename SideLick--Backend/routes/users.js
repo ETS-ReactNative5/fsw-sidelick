@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const {verifyToken} = require("./verifyToken");
 const {getWalkers, getLocation, updateUser, getUser, uploadImage, sendRequest, getRequest, deleteRequest} = require("../controllers/userController");
 
 router.get("/get-walkers",verifyToken, getWalkers);
