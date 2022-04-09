@@ -5,7 +5,8 @@ const requestSchema = new mongoose.Schema({
         type: String,
     },
     to :{
-        type: String,
+        type:  mongoose.Schema.Types.ObjectId,
+		ref: 'User',
     },
 	email:{
 		type:String,
