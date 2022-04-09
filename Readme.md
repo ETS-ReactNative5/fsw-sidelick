@@ -77,14 +77,20 @@ Here's a brief high-level overview of the tech stack SideLick uses:
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
+* Download and install [Node.js](https://nodejs.org/en/)
 
-- [Initializing the project](https://docs.expo.dev/get-started/create-a-new-app/)
-- Run the command below in your directory, it will create a project named my-app. Select the "blank" template when prompted.
-
+* npm
   ```sh
-  expo init my-app
+  npm install npm@latest -g
   ```
+* Expo CLI
+  ```sh
+  npm install --global expo-cli
+  ```
+* Expo Go app for iOS and Android  
+
+  > 🤖 [Android Play Store](https://play.google.com/store/apps/details?id=host.exp.exponent) - Android Lollipop (5) and greater.  
+  > 🍎 [iOS App Store](https://apps.apple.com/app/expo-go/id982107779) - iOS 11 and greater.
 
 ### Installation
 
@@ -92,26 +98,16 @@ This is an example of how to list things you need to use the software and how to
    ```sh
    git clone https://github.com/HalaZbib22/SideLick.git
    ```
-2. Enter the project's lib directory
-
+2. Navigate to the Frontend folder and install dependencies
    ```sh
-   cd SideLick
+   cd SideLick/Frontend
+   npm install
    ```
-3. Install the required dependencies 
-
+3. Run the start up command
    ```sh
-   npm install 
+   expo start
    ```
-   OR 
-   ```sh
-   yarn install 
-   ```
-
-4. Run the following command and choose your device ( preferably an iPhone as I had used an iPhone 11 for this project ), or emulator to get the app running
-
-   ```sh
-   npm start 
-   ```
+4. Scan the generated QR code with your camera (ios) or through the Expo Go application (android)
 
 
 
