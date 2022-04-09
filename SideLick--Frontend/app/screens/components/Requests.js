@@ -9,8 +9,6 @@ import {
   Image,
   Dimensions,
   SafeAreaView,
-  RefreshControl,
-  ScrollView,
 } from "react-native";
 import { useIsFocused } from "@react-navigation/native";
 import Swipeable from "react-native-gesture-handler/Swipeable";
@@ -183,15 +181,7 @@ export default function Requests({ navigation }) {
 
   return (
     <SafeAreaView style={[styles.root, { height: height, width: width }]}>
-      <ScrollView
-        contentContainerStyle={styles.scrollView}
-        refreshControl={
-          <RefreshControl
-            refreshing={refreshing}
-            onRefresh={onRefresh}
-          />
-        }
-      >
+      
       <Text style={styles.title}>Your Requests</Text>
       <FlatList
         data={requests}
@@ -204,7 +194,6 @@ export default function Requests({ navigation }) {
         keyExtractor={(item) => item[0].id}
         ListEmptyComponent={ListEmptyComponent}
       ></FlatList>
-      </ScrollView>
     </SafeAreaView>
   );
 }
@@ -247,10 +236,5 @@ const styles = StyleSheet.create({
   date: {
     fontSize: 14,
     letterSpacing: 0.5,
-  },
-  scrollView: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 });
