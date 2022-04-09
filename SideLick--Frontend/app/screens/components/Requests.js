@@ -28,9 +28,9 @@ export default function Requests({ navigation }) {
     GetRequests();
   }, [isFocused]);
 
-  const GetRequests_URL = "http://192.168.1.108:3000/api/users/get-request";
+  const GetRequests_URL = "http://ec2-18-222-103-41.us-east-2.compute.amazonaws.com:3000/api/users/get-request";
   const DeleteRequests_URL =
-    "http://192.168.1.108:3000/api/users/delete-request/";
+    "http://ec2-18-222-103-41.us-east-2.compute.amazonaws.com:3000/api/users/delete-request/";
 
   async function getValueFor(key) {
     let result = await SecureStore.getItemAsync(key);

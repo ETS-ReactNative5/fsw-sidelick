@@ -35,8 +35,8 @@ const EditProfile = ({navigation,route}) => {
   const [email, setEmail] = useState(emaildb);
   const [password, setPassword] = useState("");
   const [img, setImg] = useState();
-  const Update_URL = "http://192.168.1.108:3000/api/users/update-user";
-  const Image_URL = "http://192.168.1.108:3000/api/users/post-image";
+  const Update_URL = "http://ec2-18-222-103-41.us-east-2.compute.amazonaws.com:3000/api/users/update-user";
+  const Image_URL = "http://ec2-18-222-103-41.us-east-2.compute.amazonaws.com:3000/api/users/post-image";
 
   async function getValueFor(key) {
     let result = await SecureStore.getItemAsync(key);
