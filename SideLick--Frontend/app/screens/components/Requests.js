@@ -248,4 +248,9 @@ const styles = StyleSheet.create({
     fontSize: 14,
     letterSpacing: 0.5,
   },
+  scrollView: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 });
