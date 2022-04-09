@@ -32,7 +32,8 @@ const WalkerProfile = ({ route, navigation }) => {
     setAge(item[5].age);
   }, []);
 
-  const sendRequest_URL = "http://192.168.1.234:3000/api/users/send-request";
+  const sendRequest_URL =
+    "http://ec2-18-222-103-41.us-east-2.compute.amazonaws.com:3000/api/users/send-request";
 
   async function getValueFor(key) {
     let result = await SecureStore.getItemAsync(key);

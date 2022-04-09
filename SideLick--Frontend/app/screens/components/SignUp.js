@@ -35,7 +35,8 @@ const SignUp = ({ navigation }) => {
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
 
-  const Register_URL = "http://192.168.1.234:3000/api/auth/register";
+  const Register_URL =
+    "http://ec2-18-222-103-41.us-east-2.compute.amazonaws.com:3000/api/auth/register";
   return (
     <Formik
       initialValues={{

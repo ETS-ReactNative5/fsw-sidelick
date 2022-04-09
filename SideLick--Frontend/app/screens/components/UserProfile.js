@@ -40,7 +40,8 @@ const UserProfile = ({ navigation, route }) => {
     setName(route.params?.name);
   }, [route.params?.name]);
 
-  const GetUser_URL = "http://192.168.1.234:3000/api/users/get-user";
+  const GetUser_URL =
+    "http://ec2-18-222-103-41.us-east-2.compute.amazonaws.com:3000/api/users/get-user";
 
   async function getValueFor(key) {
     let result = await SecureStore.getItemAsync(key);

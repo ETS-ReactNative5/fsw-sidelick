@@ -17,8 +17,8 @@ import * as SecureStore from "expo-secure-store";
 import Constants from "expo-constants";
 
 const wait = (timeout) => {
-  return new Promise(resolve => setTimeout(resolve, timeout));
-}
+  return new Promise((resolve) => setTimeout(resolve, timeout));
+};
 
 export default function Requests({ navigation }) {
   const [status, setStatus] = useState("Pending...");
@@ -34,14 +34,14 @@ export default function Requests({ navigation }) {
     wait(2000).then(() => setRefreshing(false));
   }, []);
 
-
   useEffect(() => {
     GetRequests();
   }, [isFocused]);
 
-  const GetRequests_URL = "http://192.168.1.234:3000/api/users/get-request";
+  const GetRequests_URL =
+    "http://ec2-18-222-103-41.us-east-2.compute.amazonaws.com:3000/api/users/get-request";
   const DeleteRequests_URL =
-    "http://192.168.1.234:3000/api/users/delete-request/";
+    "http://ec2-18-222-103-41.us-east-2.compute.amazonaws.com:3000/api/users/delete-request/";
 
   async function getValueFor(key) {
     let result = await SecureStore.getItemAsync(key);
@@ -79,20 +79,20 @@ export default function Requests({ navigation }) {
     await getValueFor("userToken").then((value) => {
       result = value;
     });
-      let req = await fetch(DeleteRequests_URL+r, {
-        method: "DELETE",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          "auth-token": result,
-        }
-      });
-      if (!req.ok || req.status !== 201) {
-        req = await req.json();
-        alert(req);
-      }
-      const res = await req.json();
-      alert(res.message);
+    let req = await fetch(DeleteRequests_URL + r, {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "auth-token": result,
+      },
+    });
+    if (!req.ok || req.status !== 201) {
+      req = await req.json();
+      alert(req);
+    }
+    const res = await req.json();
+    alert(res.message);
   };
 
   /**
@@ -181,7 +181,6 @@ export default function Requests({ navigation }) {
 
   return (
     <SafeAreaView style={[styles.root, { height: height, width: width }]}>
-      
       <Text style={styles.title}>Your Requests</Text>
       <FlatList
         data={requests}

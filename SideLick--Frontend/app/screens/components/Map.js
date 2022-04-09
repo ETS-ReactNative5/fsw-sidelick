@@ -28,8 +28,10 @@ const Map = ({ navigation }) => {
 
   // const navigation = useNavigation();
 
-  const Location_URL = "http://192.168.1.234:3000/api/users/location";
-  const Walkers_URL = "http://192.168.1.234:3000/api/users/get-walkers";
+  const Location_URL =
+    "http://ec2-18-222-103-41.us-east-2.compute.amazonaws.com:3000/api/users/location";
+  const Walkers_URL =
+    "http://ec2-18-222-103-41.us-east-2.compute.amazonaws.com:3000/api/users/get-walkers";
 
   const handleLocationPermission = async () => {
     if (Platform.OS === "android") {
