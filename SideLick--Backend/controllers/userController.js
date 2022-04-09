@@ -1,7 +1,6 @@
 const User = require("../models/User");
 const Request = require("../models/Request");
 const bcrypt = require("bcryptjs");
-const verifyToken = require("./verifyToken");
 
 const getWalkers = async (req, res) => {
 	try {
@@ -151,6 +150,11 @@ const getLocation = async (req, res) => {
 		{ Reqstatus: data.Reqstatus },
 	  ]
   );
+
+  const senders = await requestInfo.map((data) => {
+	  console.log(data.to);
+  })
+
 	  return res.status(201).json(requestInfo);
 	} catch (err) {
 	  return res.status(400).json(err);
