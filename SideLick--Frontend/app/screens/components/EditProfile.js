@@ -14,7 +14,7 @@ import {
   Platform,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import Icon from "react-native-vector-icons/Entypo";
 import React, { useEffect, useState } from "react";
 import * as SecureStore from "expo-secure-store";
@@ -23,9 +23,8 @@ import * as ImagePicker from "expo-image-picker";
 
 import Input from "../ReusableComponents/Input";
 
-const EditProfile = ({navigation,route}) => {
-
-//   const navigation = useNavigation();
+const EditProfile = ({ navigation, route }) => {
+  //   const navigation = useNavigation();
   const { width, height } = Dimensions.get("window");
   const { userData } = route.params;
   const namedb = userData.fullName;
@@ -35,8 +34,8 @@ const EditProfile = ({navigation,route}) => {
   const [email, setEmail] = useState(emaildb);
   const [password, setPassword] = useState("");
   const [img, setImg] = useState();
-  const Update_URL = "http://ec2-18-222-103-41.us-east-2.compute.amazonaws.com:3000/api/users/update-user";
-  const Image_URL = "http://ec2-18-222-103-41.us-east-2.compute.amazonaws.com:3000/api/users/post-image";
+  const Update_URL = "http://192.168.1.234:3000/api/users/update-user";
+  const Image_URL = "http://192.168.1.234:3000/api/users/post-image";
 
   async function getValueFor(key) {
     let result = await SecureStore.getItemAsync(key);
@@ -45,10 +44,10 @@ const EditProfile = ({navigation,route}) => {
 
   useEffect(() => {
     setImg(imagedb);
-  }, [])
+  }, []);
 
   // Upload to Cloudinary
-  const handleUpload = (image) => { 
+  const handleUpload = (image) => {
     const data = new FormData();
     data.append("file", image);
     data.append("upload_preset", "_SideLick");
@@ -66,7 +65,8 @@ const EditProfile = ({navigation,route}) => {
     let permission = await ImagePicker.requestCameraPermissionsAsync();
     if (!permission.granted) {
       return;
-    }let data = await ImagePicker.launchImageLibraryAsync({
+    }
+    let data = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
     });
     if (data.cancelled) {
@@ -110,13 +110,13 @@ const EditProfile = ({navigation,route}) => {
     await getValueFor("userToken").then((value) => {
       result = value;
     });
-    if (name=="" || name== " "){
-      alert("Name cannot be empty")
+    if (name == "" || name == " ") {
+      alert("Name cannot be empty");
     }
-    if(email=="" || email==" "){
-      alert("Email cannot be empty")
+    if (email == "" || email == " ") {
+      alert("Email cannot be empty");
     }
-    if( name === namedb && email === emaildb){
+    if (name === namedb && email === emaildb) {
       return alert("No changes has been made");
     }
     let userData = await fetch(Update_URL, {
@@ -144,79 +144,88 @@ const EditProfile = ({navigation,route}) => {
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <KeyboardAwareScrollView>
-      <SafeAreaView style={[styles.root, { height: height, width: width }]}>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            margin: "5%",
-          }}
-        >
-          <TouchableWithoutFeedback
-            onPress={() =>
-            //   navigation.navigate(() => navigation.goBack())
-			navigation.navigate({
-				name: 'Profile',
-        params: {img:img, name:name},
-				merge: true,
-			  })
-            }
-          >
-            <Icon name="chevron-thin-left" size={25} color="#000" />
-          </TouchableWithoutFeedback>
-        </View>
-        <View 
-          style={styles.header} >
-        <TouchableOpacity
-        style={{alignItems:'center'}}
-          onPress={() => PostImageHandler()}
-        >
-          <View style={{ position: "absolute", top: 5, right:5 }}>
-            <View
-              style={{
-                backgroundColor: "#F0F0F0",
-                borderRadius: 30,
-                padding: 8,
-              }}
-            >
-              <Icon name="edit" size={22} />
-            </View>
-          </View>
-          <Image
-            source={{
-              uri: img,
+        <SafeAreaView style={[styles.root, { height: height, width: width }]}>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              margin: "5%",
             }}
-            style={styles.profilepicture}
-          />
-          <Text style={styles.userName} value={name}>
-            {name}
-          </Text>
-        </TouchableOpacity>
-        </View>
-      <TouchableWithoutFeedback>
-        <View style={styles.inputContainer}>
-          <Input placeholder={"Full Name"} value={name} setValue={text => setName(text)} />
-          <Input placeholder={"Email"} value={email} setValue={text=> setEmail(text)} />
-          <Text style={{marginTop: 10, fontStyle:'italic'}}>Enter your password to confirm the changes</Text>
-          <Input
-            placeholder={"Password"}
-            value={password}
-            setValue={text => setPassword(text)}
-            secureTextEntry={true}
-          />
-        </View>
-        </TouchableWithoutFeedback>
-        
-        <View style={styles.footer}>
-          <Pressable onPress={() => UpdateProfile()}>
-            <Text style={styles.footerText}>
-              <Icon name="download" size={22} color="orange" />
-              <View style={{ paddingHorizontal: "3%" }} />
-              Save
-            </Text>
-          </Pressable>
-        </View>
-      </SafeAreaView>
+          >
+            <TouchableWithoutFeedback
+              onPress={() =>
+                //   navigation.navigate(() => navigation.goBack())
+                navigation.navigate({
+                  name: "Profile",
+                  params: { img: img, name: name },
+                  merge: true,
+                })
+              }
+            >
+              <Icon name="chevron-thin-left" size={25} color="#000" />
+            </TouchableWithoutFeedback>
+          </View>
+          <View style={styles.header}>
+            <TouchableOpacity
+              style={{ alignItems: "center" }}
+              onPress={() => PostImageHandler()}
+            >
+              <View style={{ position: "absolute", top: 5, right: 5 }}>
+                <View
+                  style={{
+                    backgroundColor: "#F0F0F0",
+                    borderRadius: 30,
+                    padding: 8,
+                  }}
+                >
+                  <Icon name="edit" size={22} />
+                </View>
+              </View>
+              <Image
+                source={{
+                  uri: img,
+                }}
+                style={styles.profilepicture}
+              />
+              <Text style={styles.userName} value={name}>
+                {name}
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <TouchableWithoutFeedback>
+            <View style={styles.inputContainer}>
+              <Input
+                placeholder={"Full Name"}
+                value={name}
+                setValue={(text) => setName(text)}
+              />
+              <Input
+                placeholder={"Email"}
+                value={email}
+                setValue={(text) => setEmail(text)}
+              />
+              <Text style={{ marginTop: 10, fontStyle: "italic" }}>
+                Enter your password to confirm the changes
+              </Text>
+              <Input
+                placeholder={"Password"}
+                value={password}
+                setValue={(text) => setPassword(text)}
+                secureTextEntry={true}
+              />
+            </View>
+          </TouchableWithoutFeedback>
+
+          <View style={styles.footer}>
+            <Pressable onPress={() => UpdateProfile()}>
+              <Text style={styles.footerText}>
+                <Icon name="download" size={22} color="orange" />
+                <View style={{ paddingHorizontal: "3%" }} />
+                Save
+              </Text>
+            </Pressable>
+          </View>
+        </SafeAreaView>
       </KeyboardAwareScrollView>
     </ScrollView>
   );
@@ -229,7 +238,7 @@ const styles = StyleSheet.create({
   },
   header: {
     flex: 1,
-    marginVertical:"5%",
+    marginVertical: "5%",
     justifyContent: "center",
     alignItems: "center",
   },

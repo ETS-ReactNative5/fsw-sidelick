@@ -39,9 +39,9 @@ export default function Requests({ navigation }) {
     GetRequests();
   }, [isFocused]);
 
-  const GetRequests_URL = "http://ec2-18-222-103-41.us-east-2.compute.amazonaws.com:3000/api/users/get-request";
+  const GetRequests_URL = "http://192.168.1.234:3000/api/users/get-request";
   const DeleteRequests_URL =
-    "http://ec2-18-222-103-41.us-east-2.compute.amazonaws.com:3000/api/users/delete-request/";
+    "http://192.168.1.234:3000/api/users/delete-request/";
 
   async function getValueFor(key) {
     let result = await SecureStore.getItemAsync(key);
@@ -75,7 +75,7 @@ export default function Requests({ navigation }) {
   };
   const DeleteRequests = async (i) => {
     let result;
-    let r = i[0].id;
+    let r = i._id;
     await getValueFor("userToken").then((value) => {
       result = value;
     });
@@ -143,12 +143,12 @@ export default function Requests({ navigation }) {
                 marginHorizontal: 10,
               }}
               source={{
-                uri: "https://images.theconversation.com/files/223381/original/file-20180615-85822-1o2y44i.jpg?ixlib=rb-1.1.0&q=45&auto=format&w=754&h=514&fit=crop&dpr=1",
+                uri: `${item.to.image}`,
               }}
             />
             <View style={{ justifyContent: "center" }}>
-              <Text style={styles.text}>{item[2].to}</Text>
-              <Text style={styles.subtext}>{item[3].Reqstatus}...</Text>
+              <Text style={styles.text}>{item.to.fullName}</Text>
+              <Text style={styles.subtext}>{item.Reqstatus}...</Text>
             </View>
           </View>
         </View>
@@ -191,7 +191,7 @@ export default function Requests({ navigation }) {
             deleteItem(v);
           })
         }
-        keyExtractor={(item) => item[0].id}
+        keyExtractor={(item) => item._id}
         ListEmptyComponent={ListEmptyComponent}
       ></FlatList>
     </SafeAreaView>

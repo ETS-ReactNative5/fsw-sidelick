@@ -22,17 +22,17 @@ const WalkerProfile = ({ route, navigation }) => {
   const { width, height } = Dimensions.get("window");
   const [modalVisible, setModalVisible] = useState(false);
   const { item } = route.params;
-  const [ name , setName ] = useState();
-  const [ image, setImage ] = useState();
-  const [ age, setAge ] = useState();
+  const [name, setName] = useState();
+  const [image, setImage] = useState();
+  const [age, setAge] = useState();
 
   useEffect(() => {
     setName(item[1].fullName);
     setImage(item[4].image);
     setAge(item[5].age);
-  }, [])
+  }, []);
 
-  const sendRequest_URL = "http://ec2-18-222-103-41.us-east-2.compute.amazonaws.com:3000/api/users/send-request";
+  const sendRequest_URL = "http://192.168.1.234:3000/api/users/send-request";
 
   async function getValueFor(key) {
     let result = await SecureStore.getItemAsync(key);
@@ -52,13 +52,12 @@ const WalkerProfile = ({ route, navigation }) => {
         "auth-token": result,
       },
       body: JSON.stringify({
-        to: name
+        to: name,
       }),
     });
     if (requestInfo.status === 200 || requestInfo.status === 201) {
       setModalVisible(true);
-    } 
-    else {
+    } else {
       requestInfo = await requestInfo.json();
       alert(requestInfo);
     }
@@ -67,18 +66,14 @@ const WalkerProfile = ({ route, navigation }) => {
   const DirectToWhatsapp = () => {
     // Using 961 for Lebanon
     // You can change 961 with your country code
-    const whatsAppMsg= "Hello, I found you on SideLick!";
+    const whatsAppMsg = "Hello, I found you on SideLick!";
     const mobileNumber = item[6].phoneNumber;
     let url =
-      'whatsapp://send?text=' + 
-       whatsAppMsg +
-      '&phone=961' + mobileNumber;
+      "whatsapp://send?text=" + whatsAppMsg + "&phone=961" + mobileNumber;
     Linking.openURL(url)
-      .then(
-        console.log('WhatsApp Opened')
-      )
+      .then(console.log("WhatsApp Opened"))
       .catch(() => {
-        alert('Make sure Whatsapp installed on your device');
+        alert("Make sure Whatsapp installed on your device");
       });
   };
 
@@ -87,7 +82,7 @@ const WalkerProfile = ({ route, navigation }) => {
       <View>
         <ImageBackground
           // source={require("../../../assets/dog-walking.png")}
-          source={{uri: image}}
+          source={{ uri: image }}
           style={[styles.root, { height: height * 0.5, width: width }]}
         >
           <View
@@ -164,7 +159,11 @@ const WalkerProfile = ({ route, navigation }) => {
             </Pressable> */}
           </View>
           <View>
-            <Text style={[styles.subText, { marginTop: "4%",textAlign:'center' }]}>Age</Text>
+            <Text
+              style={[styles.subText, { marginTop: "4%", textAlign: "center" }]}
+            >
+              Age
+            </Text>
             <Text
               style={{
                 fontWeight: "500",
@@ -173,14 +172,15 @@ const WalkerProfile = ({ route, navigation }) => {
                 letterSpacing: -0.41,
               }}
             >
-            {age}{" "}Years
+              {age} Years
             </Text>
           </View>
           <View>
             <Text style={[styles.subText, { marginTop: "4%" }]}>
-            {item[1].fullName} has loved dogs since childhood. He is currently a veterinary student. Visits the dog shelter we...
+              {item[1].fullName} has loved dogs since childhood. He is currently
+              a veterinary student. Visits the dog shelter we...
             </Text>
-            <Text style={{color: '#FB724C',}}>Read more</Text>
+            <Text style={{ color: "#FB724C" }}>Read more</Text>
           </View>
           <Modal
             animationType="slide"
@@ -193,7 +193,9 @@ const WalkerProfile = ({ route, navigation }) => {
           >
             <View style={styles.centeredView}>
               <View style={styles.modalView}>
-                <Text style={styles.modalText}>Request Sent to {item[1].fullName}!</Text>
+                <Text style={styles.modalText}>
+                  Request Sent to {item[1].fullName}!
+                </Text>
                 <Pressable
                   style={[styles.button, styles.buttonClose]}
                   onPress={() => setModalVisible(!modalVisible)}
@@ -206,7 +208,11 @@ const WalkerProfile = ({ route, navigation }) => {
           <Pressable
             style={[
               styles.btn,
-              { backgroundColor: "#ff8500", marginTop: "3%", marginBottom:"2%" },
+              {
+                backgroundColor: "#ff8500",
+                marginTop: "3%",
+                marginBottom: "2%",
+              },
             ]}
             onPress={
               sendRequest
@@ -216,15 +222,12 @@ const WalkerProfile = ({ route, navigation }) => {
             <Text style={styles.textStyle}>Book a walk</Text>
           </Pressable>
           <Pressable
-            style={[
-              styles.btn,
-              { backgroundColor: "#A25400", },
-            ]}
-            onPress={
-              DirectToWhatsapp
-            }
+            style={[styles.btn, { backgroundColor: "#A25400" }]}
+            onPress={DirectToWhatsapp}
           >
-            <Text style={styles.textStyle}>Connect with {item[1].fullName}</Text>
+            <Text style={styles.textStyle}>
+              Connect with {item[1].fullName}
+            </Text>
           </Pressable>
         </View>
       </View>
