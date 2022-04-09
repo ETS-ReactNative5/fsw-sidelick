@@ -9,12 +9,18 @@ import {
   Image,
   Dimensions,
   SafeAreaView,
+  RefreshControl,
+  ScrollView,
 } from "react-native";
 import { useIsFocused } from "@react-navigation/native";
 import Swipeable from "react-native-gesture-handler/Swipeable";
 import * as SecureStore from "expo-secure-store";
 
 import Constants from "expo-constants";
+
+const wait = (timeout) => {
+  return new Promise(resolve => setTimeout(resolve, timeout));
+}
 
 export default function Requests({ navigation }) {
   const [status, setStatus] = useState("Pending...");
@@ -23,6 +29,13 @@ export default function Requests({ navigation }) {
   let row = [];
   let prevOpenedRow;
   const isFocused = useIsFocused();
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    wait(2000).then(() => setRefreshing(false));
+  }, []);
+
 
   useEffect(() => {
     GetRequests();
@@ -170,6 +183,15 @@ export default function Requests({ navigation }) {
 
   return (
     <SafeAreaView style={[styles.root, { height: height, width: width }]}>
+      <ScrollView
+        contentContainerStyle={styles.scrollView}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+          />
+        }
+      >
       <Text style={styles.title}>Your Requests</Text>
       <FlatList
         data={requests}
@@ -182,6 +204,7 @@ export default function Requests({ navigation }) {
         keyExtractor={(item) => item[0].id}
         ListEmptyComponent={ListEmptyComponent}
       ></FlatList>
+      </ScrollView>
     </SafeAreaView>
   );
 }
