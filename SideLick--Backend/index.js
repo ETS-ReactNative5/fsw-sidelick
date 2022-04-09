@@ -5,7 +5,6 @@ const mongoose = require('mongoose');
 
 // import routes
 const authRoute = require('./routes/auth');
-const postRoute = require('./routes/posts');
 const clientRoute = require('./routes/users')
 
 dotenv.config();
