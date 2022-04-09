@@ -73,9 +73,9 @@ const EditProfile = ({ navigation, route }) => {
       return;
     }
     let selectedImage = {
-      uri: data.uri,
-      type: `profile/${data.uri.split(".")[1]}`,
-      name: `profile.${data.uri.split(".")[1]}`,
+      uri: data?.uri,
+      type: `profile/${data?.uri.split(".")[1]}`,
+      name: `profile.${data?.uri.split(".")[1]}`,
     };
     handleUpload(selectedImage);
   };

@@ -143,12 +143,12 @@ export default function Requests({ navigation }) {
                 marginHorizontal: 10,
               }}
               source={{
-                uri: `${item.to.image}`,
+                uri: `${item?.to.image}`,
               }}
             />
             <View style={{ justifyContent: "center" }}>
-              <Text style={styles.text}>{item.to.fullName}</Text>
-              <Text style={styles.subtext}>{item.Reqstatus}...</Text>
+              <Text style={styles.text}>{item?.to?.fullName}</Text>
+              <Text style={styles.subtext}>{item?.Reqstatus}...</Text>
             </View>
           </View>
         </View>
@@ -191,7 +191,7 @@ export default function Requests({ navigation }) {
             deleteItem(v);
           })
         }
-        keyExtractor={(item) => item._id}
+        keyExtractor={(item) => item?._id}
         ListEmptyComponent={ListEmptyComponent}
       ></FlatList>
     </SafeAreaView>
