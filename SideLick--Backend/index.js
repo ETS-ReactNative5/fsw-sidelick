@@ -20,7 +20,6 @@ app.use(express.json());
 // when we navigate to api/auth then I wanna run this authRoute
 // this means that this is always gonna have this prefix in the authRoute
 app.use('/api/auth', authRoute);
-app.use('/api/posts', postRoute);
 app.use('/api/users', clientRoute);
 
 app.listen(3000, () => console.log('Server Up and Running'));
