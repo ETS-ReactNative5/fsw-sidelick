@@ -137,25 +137,21 @@ const getLocation = async (req, res) => {
   };
 
   const getRequest = async (req, res) => {
-	try {
+	  try {
 	  const user = await User.findById({ _id: req.user._id });
-	  const userReq = await Request.find({ _id: user.request });
-	  console.log(userReq);
-	  if (!userReq)
+	  const receivers = await Request.find({ _id: user.request}).populate("to", "fullName image")
+	  console.log(receivers)
+// 	  const userReq = await Request.find({ _id: user.request });
+// 	  console.log(userReq);
+	  if (!receivers)
 		return res.status(400).json({ message: "No request sent" });
-	  const requestInfo = await userReq.map((data) => [
-		{ id: data._id},
-		{ from: data.from },
-		{ to: data.to },
-		{ Reqstatus: data.Reqstatus },
-	  ]
-  );
-
-  const senders = await requestInfo.map((data) => {
-	  console.log(data.to);
-  })
-
-	  return res.status(201).json(requestInfo);
+// 	  const requestInfo = await userReq.map(async(data) => 
+// [		{ id: data._id},
+// 		{ from: data.from },
+// 		{ to: data.to },
+// 		{ Reqstatus: data.Reqstatus },]
+//   );
+	  return res.status(201).json(receivers);
 	} catch (err) {
 	  return res.status(400).json(err);
 	}
