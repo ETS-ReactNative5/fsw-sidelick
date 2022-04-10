@@ -3,13 +3,13 @@ import { useNavigation } from "@react-navigation/native";
 
 export default function SplashScreen() {
 	const navigation = useNavigation();
-  setTimeout(() => {
-    navigation.navigate('OnBoardingScreen')
-  }, 3000); 
+  // setTimeout(() => {
+  //   navigation.navigate('OnBoardingScreen')
+  // }, 3000); 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.container}>
-        <Image source={require("../../../assets/LOGO.png")} style={{ marginBottom: 20 }} />
+        <Image source={require("../../../assets/LOGO.png")} />
       </View>
     </SafeAreaView>
   );
@@ -18,13 +18,9 @@ export default function SplashScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#5A7FCC',
+    backgroundColor: "#FCFCFC",
     color: 'white',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  titleText: {
-    color: 'white',
-    fontSize: 28,
-  },
+  }
 });
