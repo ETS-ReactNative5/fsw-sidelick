@@ -5,7 +5,7 @@ import {
   StyleSheet,
   Dimensions,
   TouchableWithoutFeedback,
-  Pressable,
+  TouchableOpacity,
   ScrollView,
   TextInput,
   Image,
@@ -67,13 +67,13 @@ const EditWalkerProfile = ({navigation}) => {
           <Input placeholder={"Bio"} value={bio} setValue={setBio} multiline={true} />
         </View>
         <View style={styles.footer}>
-          <Pressable>
+          <TouchableOpacity>
             <Text style={styles.footerText}>
               <Icon name="download" size={22} color="orange" />
               <View style={{ paddingHorizontal: "3%" }} />
               Save
             </Text>
-          </Pressable>
+          </TouchableOpacity>
         </View>
       </SafeAreaView>
     </ScrollView>

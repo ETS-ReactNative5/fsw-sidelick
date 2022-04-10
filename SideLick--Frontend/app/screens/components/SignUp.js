@@ -5,7 +5,7 @@ import {
   StyleSheet,
   Dimensions,
   TouchableWithoutFeedback,
-  Pressable,
+  TouchableOpacity,
   ScrollView,
   Switch,
   TextInput,
@@ -213,12 +213,12 @@ const SignUp = ({ navigation }) => {
             </View>
           </View> */}
                 <CustomButton btnText={"Sign up"} onPress={handleSubmit} />
-                <Pressable onPress={() => navigation.navigate("SignIn")}>
+                <TouchableOpacity onPress={() => navigation.navigate("SignIn")}>
                   <Text style={styles.subtext}>
                     Already have an account?
                     <Text style={{ color: "#ff8500" }}> Sign in</Text>
                   </Text>
-                </Pressable>
+                </TouchableOpacity>
               </View>
               <View style={styles.footer}>
                 <Text style={styles.footerText}>

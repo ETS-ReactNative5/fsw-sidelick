@@ -1,11 +1,11 @@
 import React from 'react';
-import { Text, StyleSheet, Pressable } from 'react-native';
+import { Text, StyleSheet, TouchableOpacity } from 'react-native';
 
 export default function SignUpButton() {
   return (
-    <Pressable style={styles.button}>
+    <TouchableOpacity style={styles.button}>
       <Text style={styles.text}>Sign Up</Text>
-    </Pressable>
+    </TouchableOpacity>
   );
 }
 const styles = StyleSheet.create({

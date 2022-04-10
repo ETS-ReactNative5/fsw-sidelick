@@ -5,7 +5,7 @@ import {
   StyleSheet,
   Dimensions,
   TouchableWithoutFeedback,
-  Pressable,
+  TouchableOpacity,
   ScrollView,
   TextInput,
 } from "react-native";
@@ -114,12 +114,12 @@ const SignIn = ({ navigation }) => {
                   {errors.password}
                 </Text>
               )}
-              <Pressable onPress={() => navigation.navigate("SignUp")}>
+              <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
                 <Text style={styles.subtext}>
                   Don't have an account?
                   <Text style={{ color: "#ff8500" }}> Sign up</Text>
                 </Text>
-              </Pressable>
+              </TouchableOpacity>
               <View style={{ marginVertical: "8%" }} />
               <CustomButton btnText={"Sign in"} onPress={handleSubmit} />
             </View>

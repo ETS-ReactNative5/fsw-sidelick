@@ -6,7 +6,7 @@ import {
   View,
   Image,
   Text,
-  Pressable,
+  TouchableOpacity,
 } from "react-native";
 import { BlurView } from "expo-blur";
 import { useNavigation } from "@react-navigation/native";
@@ -33,7 +33,7 @@ const OnBoardingScreen = () => {
           <CustomButton btnText={"Join our community"} onPress={onJoinPressed}/>
           </View>
           <View>
-            <Pressable onPress={() => navigation.navigate("SignIn")}>
+            <TouchableOpacity onPress={() => navigation.navigate("SignIn")}>
               <Text style={styles.subtext}>
                 Already a member?
                 <Text style={{ color: "#ff8500", fontWeight: "bold" }}>
@@ -41,7 +41,7 @@ const OnBoardingScreen = () => {
                   Sign in
                 </Text>
               </Text>
-            </Pressable>
+            </TouchableOpacity>
           </View>
         </BlurView>
       </View>

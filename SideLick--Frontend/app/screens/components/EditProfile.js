@@ -219,13 +219,13 @@ const EditProfile = ({ navigation, route }) => {
           </TouchableWithoutFeedback>
 
           <View style={styles.footer}>
-            <Pressable onPress={() => UpdateProfile()}>
+            <TouchableOpacity onPress={() => UpdateProfile()}>
               <Text style={styles.footerText}>
                 <Icon name="download" size={22} color="orange" />
                 <View style={{ paddingHorizontal: "3%" }} />
                 Save
               </Text>
-            </Pressable>
+            </TouchableOpacity>
           </View>
         </SafeAreaView>
       </KeyboardAwareScrollView>

@@ -8,7 +8,7 @@ LogBox.ignoreLogs([
   "[react-native-gesture-handler] Seems like you\'re using an old API with gesture components, check out new Gestures system!",
 ]);
 
-import SplashScreen from "./app/screens/components/Splash";
+import SplashScreen from "./app/screens/components/SplashScreen";
 import OnBoardingScreen from "./app/screens/components/OnBoardingScreen";
 import SignIn from "./app/screens/components/SignIn";
 import SignUp from "./app/screens/components/SignUp";
