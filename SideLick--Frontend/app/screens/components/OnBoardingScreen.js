@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React from "react";
 import {
   StyleSheet,
   Dimensions,
@@ -11,23 +11,8 @@ import {
 import { BlurView } from "expo-blur";
 import { useNavigation } from "@react-navigation/native";
 import CustomButton from "../ReusableComponents/CustomButton";
-import SplashScreen from "./SplashScreen";
 
 const { width, height } = Dimensions.get("window");
-
-useEffect(() => {
-  setTimeout(() => SplashScreen(), 3000).then(OnBoardingScreen());
-}, []);
-
-const SplashScreen = () => {
-  return (
-    <SafeAreaView>
-      <View style={styles.splashcontainer}>
-        <Image source={require("../../../assets/LOGO.png")} />
-      </View>
-    </SafeAreaView>
-  );
-}
 
 const OnBoardingScreen = () => {
   const navigation = useNavigation();
@@ -93,11 +78,5 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     width: "100%",
   },
-  splashcontainer: {
-    flex: 1,
-    backgroundColor: "#FCFCFC",
-    alignItems: 'center',
-    justifyContent: 'center',
-  }
 });
 export default OnBoardingScreen;
