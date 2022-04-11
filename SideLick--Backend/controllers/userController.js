@@ -139,7 +139,7 @@ const getLocation = async (req, res) => {
   const getRequest = async (req, res) => {
 	  try {
 	  const user = await User.findById({ _id: req.user._id });
-	  const receivers = await Request.find({ _id: user.request}).populate("to", "fullName image")
+	  const receivers = await Request.find({ _id: user.request}).populate("to", "fullName image age")
 	  console.log(receivers)
 // 	  const userReq = await Request.find({ _id: user.request });
 // 	  console.log(userReq);
